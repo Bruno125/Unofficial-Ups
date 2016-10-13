@@ -2,7 +2,7 @@ package com.brunoaybar.unofficalupc.data.source.remote;
 
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.AuthResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CoursesResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
 import com.brunoaybar.unofficalupc.utils.CryptoUtils;
@@ -34,7 +34,7 @@ public class UpcServiceDataSource{
         return mService.login(new LoginRequest(user, CryptoUtils.encryptPassword(password),"A"))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(AuthResponse::transform);
+                .map(LoginResponse::transform);
     }
 
     public Observable<TimetableResponse> getTimeTable(String userCode, String token) {

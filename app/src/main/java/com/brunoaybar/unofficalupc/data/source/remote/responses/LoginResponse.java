@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class AuthResponse {
+public class LoginResponse {
 
     @SerializedName("Codigo")
     @Expose

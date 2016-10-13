@@ -1,7 +1,7 @@
 package com.brunoaybar.unofficalupc.data.source.remote;
 
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.AuthResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CoursesResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
 
@@ -20,7 +20,7 @@ interface UpcServiceInterface {
 
     @POST("Autenticarp2")
     @Headers("Content-Type: application/json")
-    Observable<AuthResponse> login(@Body LoginRequest request);
+    Observable<LoginResponse> login(@Body LoginRequest request);
 
     @GET("Horario/?CodAlumno/")
     Observable<TimetableResponse> getTimeTable(@Query("userCode") String userCode,

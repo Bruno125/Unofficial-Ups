@@ -9,16 +9,9 @@ import android.text.TextUtils;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.CoursesResponse;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
 import com.brunoaybar.unofficalupc.utils.CryptoUtils;
 
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func2;
-import rx.functions.Func3;
-import rx.schedulers.Schedulers;
 
 /**
  * View Model for the Login Activity.

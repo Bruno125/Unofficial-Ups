@@ -6,7 +6,14 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- Para -->
+
+    <!-- Main options -->
+    <string name="option_timetable">Horario</string>
+    <string name="option_courses">Cursos</string>
+    <string name="option_attendance">Inasistencia</string>
+    <string name="option_logout">Cerrar sesion</string>
+
+    <!-- Login -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="text_warning_application">
         Esta es una version NO oficial del app UPC, la cual fue hecha con el unico fin de
@@ -17,5 +24,8 @@
     <string name="prompt_user">Usuario</string>
     <string name="prompt_password">Contrasena</string>
     <string name="text_login">Iniciar sesion</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

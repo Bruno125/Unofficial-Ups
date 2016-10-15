@@ -5,7 +5,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
 
+    <!-- Para -->
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="text_warning_application">
+        Esta es una version NO oficial del app UPC, la cual fue hecha con el unico fin de
+        ofrecer una mejor experiencia a los alumnos. \n\n
+        Descuida, tu informacion personal no sera almacenada en nigun momento.
+    </string>
+    <string name="text_understood">OK, Entendido!</string>
+    <string name="prompt_user">Usuario</string>
+    <string name="prompt_password">Contrasena</string>
+    <string name="text_login">Iniciar sesion</string>
 
 </resources>

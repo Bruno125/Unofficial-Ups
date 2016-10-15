@@ -1,16 +1,36 @@
 package com.brunoaybar.unofficalupc.data.models;
 
+import android.text.TextUtils;
+
 /**
  * Model class for a User
  */
 
 public class User {
 
+    private String userCode;
     private String names;
     private String lastnames;
     private String genre;
     private String token;
     private String currentSemester;
+    private String savedPassword;
+
+    public User(){}
+    public User(String token, String userCode, String password){
+        setToken(token);
+        setUserCode(userCode);
+        setSavedPassword(password);
+    }
+
+    public boolean hasValidSession(){
+        return !TextUtils.isEmpty(token) && !TextUtils.isEmpty(userCode);
+    }
+
+    public boolean hasValidCredentials(){
+        return !TextUtils.isEmpty(userCode) && !TextUtils.isEmpty(savedPassword);
+    }
+
 
     public String getNames() {
         return names;
@@ -50,5 +70,22 @@ public class User {
 
     public void setCurrentSemester(String currentSemester) {
         this.currentSemester = currentSemester;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
+
+    public String getSavedPassword() {
+        return savedPassword;
+    }
+
+    public User setSavedPassword(String savedPassword) {
+        this.savedPassword = savedPassword;
+        return this;
     }
 }

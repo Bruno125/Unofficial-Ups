@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginResponse {
+public class LoginResponse extends BaseResponse {
 
     @SerializedName("Codigo")
     @Expose
@@ -40,18 +40,15 @@ public class LoginResponse {
     @SerializedName("Datos")
     @Expose
     private Datos datos;
-    @SerializedName("CodError")
-    @Expose
-    private String codError;
-    @SerializedName("MsgError")
-    @Expose
-    private String msgError;
 
 
     public User transform(){
         User user = new User();
         checkNotNull(token);
         user.setToken(token);
+
+        checkNotNull(codigo);
+        user.setUserCode(codigo);
 
         user.setNames(nombres);
         user.setLastnames(apellidos);
@@ -238,42 +235,6 @@ public class LoginResponse {
      */
     public void setDatos(Datos datos) {
         this.datos = datos;
-    }
-
-    /**
-     *
-     * @return
-     * The codError
-     */
-    public String getCodError() {
-        return codError;
-    }
-
-    /**
-     *
-     * @param codError
-     * The CodError
-     */
-    public void setCodError(String codError) {
-        this.codError = codError;
-    }
-
-    /**
-     *
-     * @return
-     * The msgError
-     */
-    public String getMsgError() {
-        return msgError;
-    }
-
-    /**
-     *
-     * @param msgError
-     * The MsgError
-     */
-    public void setMsgError(String msgError) {
-        this.msgError = msgError;
     }
 
     public class Datos {

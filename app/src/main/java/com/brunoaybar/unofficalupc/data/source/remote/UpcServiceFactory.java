@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by brunoaybar on 13/10/2016.
  */
 
-public class UpcServiceFactory {
+class UpcServiceFactory {
 
     public static UpcServiceInterface createDefaultRetrofitService(){
         return createRetrofitService(UpcServiceInterface.class);

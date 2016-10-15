@@ -1,14 +1,19 @@
 package com.brunoaybar.unofficalupc.data.source.remote;
 
+import android.text.TextUtils;
+
 import com.brunoaybar.unofficalupc.data.models.User;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.BaseResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CoursesResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.ServiceException;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
 import com.brunoaybar.unofficalupc.utils.CryptoUtils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -29,12 +34,24 @@ public class UpcServiceDataSource{
         return INSTANCE;
     }
 
+    public Observable<Boolean> validateToken(String userCode, String token){
+        if(TextUtils.isEmpty(userCode) || TextUtils.isEmpty(token))
+            return Observable.just(false);
+        return mService.getCourses(userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map( r -> true);
+    }
 
     public Observable<User> login(String user, String password) {
-        return mService.login(new LoginRequest(user, CryptoUtils.encryptPassword(password),"A"))
+        return mService.login(new LoginRequest(user, password,"A"))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(LoginResponse::transform);
+                .map(response -> {
+                    if(!response.isError())
+                        return response.transform();
+                    else
+                        throw new ServiceException(response);
+                });
     }
 
     public Observable<TimetableResponse> getTimeTable(String userCode, String token) {
@@ -48,4 +65,5 @@ public class UpcServiceDataSource{
     public Observable<CoursesResponse> getCourseDetail(String courseCode, String userCode, String token) {
         return null;
     }
+
 }

@@ -43,11 +43,13 @@ dependencies {
 
     //General dependencies
     compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile "com.google.guava:guava:18.0"
 
     // RxJava
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'

@@ -20,7 +20,7 @@ public class CryptoUtils {
         } catch (Exception e) {
             return "";
         }
-        return Base64.encodeToString(encrypted,Base64.DEFAULT);
+        return Base64.encodeToString(encrypted,Base64.DEFAULT).replace("\n","");
     }
 
 

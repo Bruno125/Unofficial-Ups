@@ -25,6 +25,12 @@
     <string name="prompt_password">Contrasena</string>
     <string name="text_login">Iniciar sesion</string>
 
+    <!-- Courses -->
+    <string name="text_hint_course_progress">
+        Al &lt;font color=\'#EE0000\'&gt; &lt;b&gt;90%&lt;/b&gt;&lt;/font&gt; del curso, tienes una nota de &lt;font color=\'#EE0000\'&gt; &lt;b&gt;10.4&lt;/b&gt;&lt;/font&gt;
+    </string>
+    
+    
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

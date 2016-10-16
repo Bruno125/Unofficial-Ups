@@ -4,11 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.brunoaybar.unofficalupc.modules.courses.CoursesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tviCourse"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rviCourses"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="COURSES:\n" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

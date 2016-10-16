@@ -9,6 +9,13 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
+    <color name="material_green">#8BC34A</color>
+    <color name="material_amber">#FFC107</color>
+    <color name="material_purple">#9C27B0</color>
+    <color name="material_indigo">#3F51B5</color>
+    <color name="material_blue">#448AFF</color>
+    <color name="material_orange">#FF9800</color>
+
     <color name="week_picker_inactive">#999</color>
 </resources>
 

@@ -6,12 +6,15 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brunoaybar.unofficalupc.R;
@@ -43,6 +46,16 @@ public class UiUtils {
         int color = a.getColor(0, 0);
         a.recycle();
         return color;
+    }
+
+    public static void setHtmlText(TextView textView,String htmlText){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(htmlText,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(htmlText);
+        }
+        textView.setText(result);
     }
 
     /**

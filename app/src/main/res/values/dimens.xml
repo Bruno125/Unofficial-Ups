@@ -11,6 +11,9 @@
     <!-- Login Screen -->
     <dimen name="activity_login_logo_size">80dp</dimen>
 
+    <!-- Courses screen -->
+    <dimen name="left_indicator_size">16dp</dimen>
+
 
     <!-- Week picker -->
     <dimen name="week_picker_height">80dp</dimen>

@@ -2,6 +2,8 @@ package com.brunoaybar.unofficalupc.modules.courses;
 
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ public class CoursesFragment extends BaseFragment {
 
 
     private CoursesViewModel mViewModel;
+    private CoursesAdapter mAdapter;
 
 
     public static CoursesFragment newInstance(){
@@ -35,8 +38,7 @@ public class CoursesFragment extends BaseFragment {
         setFragmentTitle(R.string.option_courses);
     }
 
-
-    @BindView(R.id.tviCourse) TextView tviCourse;
+    @BindView(R.id.rviCourses) RecyclerView rviCourses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +49,12 @@ public class CoursesFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_courses, container, false);
         ButterKnife.bind(this,view);
+
+        //Set recyclerView
+        rviCourses.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new CoursesAdapter(getContext());
+        rviCourses.setAdapter(mAdapter);
+
         return view;
     }
 
@@ -55,13 +63,7 @@ public class CoursesFragment extends BaseFragment {
         super.bind();
         mSubscription.add(mViewModel.getCoursesStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addCourse,this::displayError));
-    }
-
-    private void addCourse(Course course){
-        String current = tviCourse.getText().toString();
-        current = current.concat(course.getName() + "\n");
-        tviCourse.setText(current);
+                .subscribe(mAdapter::addCourse,this::displayError));
     }
 
 }

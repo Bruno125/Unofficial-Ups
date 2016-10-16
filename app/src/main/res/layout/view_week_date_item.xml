@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:picker="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <com.brunoaybar.unofficalupc.modules.timetable.RoundCircleView
+            android:id="@+id/roundCircleView"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_centerInParent="true"/>
+
+        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+            android:id="@+id/tviDateNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:text="16"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="L"
+        android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>

@@ -10,4 +10,10 @@
     </declare-styleable>
 
 
+    <declare-styleable name="WeekPickerAttrs">
+        <attr name="isSelected" format="boolean" />
+        <attr name="pickerColor" format="color" />
+        <attr name="selectedIndex" format="integer"/>
+    </declare-styleable>
+
 </resources>

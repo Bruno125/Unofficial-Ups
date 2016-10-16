@@ -3,14 +3,18 @@ package com.brunoaybar.unofficalupc.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.brunoaybar.unofficalupc.R;
 
 /**
  * Created by brunoaybar on 14/10/2016.
@@ -33,6 +37,13 @@ public class UiUtils {
         }
     }
 
+    public static int getPrimaryColor(Context context){
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorPrimary });
+        int color = a.getColor(0, 0);
+        a.recycle();
+        return color;
+    }
 
     /**
      * Blend {@code color1} and {@code color2} using the given ratio.

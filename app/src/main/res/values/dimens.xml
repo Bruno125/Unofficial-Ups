@@ -12,5 +12,8 @@
     <dimen name="activity_login_logo_size">80dp</dimen>
 
 
+    <!-- Week picker -->
+    <dimen name="week_picker_height">80dp</dimen>
+    <dimen name="week_picker_inner_margins">8dp</dimen>
 
 </resources>

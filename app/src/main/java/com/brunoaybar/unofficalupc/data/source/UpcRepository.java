@@ -111,6 +111,10 @@ public class UpcRepository {
         return mServiceSource.getCourses(user.getUserCode(),user.getToken());
     }
 
+    public Observable<Course> getCourseDetail(User user, String courseCode){
+        return mServiceSource.getCourseDetail(courseCode,user.getUserCode(),user.getToken());
+    }
+
     public Observable<List<Absence>> getAbsences(User user){
         return mServiceSource.getAbsences(user.getUserCode(),user.getToken());
     }

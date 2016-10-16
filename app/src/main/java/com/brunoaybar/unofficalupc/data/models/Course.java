@@ -62,13 +62,13 @@ public final class Course {
         this.mAssesments = assesments;
     }
 
-    public class Assessment {
+    public static class Assessment {
         private String mCode;
         private String mName;
         private String mNickname;
         private String mIndex;
         private double mWeight;
-        private double mGrade;
+        private String mGrade;
 
         public String getCode() {
             return mCode;
@@ -110,11 +110,11 @@ public final class Course {
             this.mWeight = weight;
         }
 
-        public double getGrade() {
+        public String getGrade() {
             return mGrade;
         }
 
-        public void setGrade(double grade) {
+        public void setGrade(String grade) {
             this.mGrade = grade;
         }
     }

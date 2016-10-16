@@ -68,11 +68,11 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         holder.tviName.setText(course.getName());
 
         int color = getColorForPosition(position);
-        String hexColor = String.format("#%06X", (0xFFFFFF & color));
         holder.viewColorIndicator.setBackgroundColor(color);
 
-        String hint = mContext.getString(R.string.text_hint_course_progress);
-        hint = hint.replace("#EE0000","#888888");
+        String hint = mContext.getString(R.string.text_hint_course_progress)
+                .replace("{pct}",String.valueOf(course.getCurrentProgress()))
+                .replace("{grade}",String.valueOf(course.getCurrentGrade()));
         UiUtils.setHtmlText(holder.tviHintProgress,hint);
     }
 

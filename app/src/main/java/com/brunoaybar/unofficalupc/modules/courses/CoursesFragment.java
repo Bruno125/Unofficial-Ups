@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.brunoaybar.unofficalupc.R;
@@ -39,6 +40,7 @@ public class CoursesFragment extends BaseFragment {
     }
 
     @BindView(R.id.rviCourses) RecyclerView rviCourses;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,15 +57,24 @@ public class CoursesFragment extends BaseFragment {
         mAdapter = new CoursesAdapter(getContext());
         rviCourses.setAdapter(mAdapter);
 
+        progressBar.setIndeterminate(true);
+
         return view;
     }
 
     @Override
     protected void bind() {
         super.bind();
+
+        progressBar.setVisibility(View.VISIBLE);
         mSubscription.add(mViewModel.getCoursesStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mAdapter::addCourse,this::displayError));
+                .subscribe(this::addCourse,this::displayError));
+    }
+
+    private void addCourse(Course course){
+        progressBar.setVisibility(View.GONE);
+        mAdapter.addCourse(course);
     }
 
 }

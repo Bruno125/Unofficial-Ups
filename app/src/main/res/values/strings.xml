@@ -27,7 +27,7 @@
 
     <!-- Courses -->
     <string name="text_hint_course_progress">
-        Al &lt;font color=\'#EE0000\'&gt; &lt;b&gt;90%&lt;/b&gt;&lt;/font&gt; del curso, tienes una nota de &lt;font color=\'#EE0000\'&gt; &lt;b&gt;10.4&lt;/b&gt;&lt;/font&gt;
+        Al &lt;font color=\'#777777\'&gt; &lt;b&gt;{pct}%&lt;/b&gt;&lt;/font&gt; del curso, tienes una nota de &lt;font color=\'#777777\'&gt; &lt;b&gt;{grade}&lt;/b&gt;&lt;/font&gt;
     </string>
     
     

@@ -31,10 +31,11 @@ public class CoursesViewModel {
                 mRepository.getSession().subscribe(user -> {
                     //Use current session to get courses
                     mRepository.getCourses(user)
-                            .flatMap(Observable::from)
+                            .flatMap(courses -> Observable.from(courses)
+                                    .flatMap(course ->mRepository.getCourseDetail(user,course.getCode())).toList())
+                            .flatMapIterable(courses -> courses)
                             .subscribe(subscriber::onNext,subscriber::onError);
                 }));
 
     }
-
 }

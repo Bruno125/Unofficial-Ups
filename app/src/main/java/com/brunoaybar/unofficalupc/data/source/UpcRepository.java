@@ -2,16 +2,19 @@ package com.brunoaybar.unofficalupc.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.brunoaybar.unofficalupc.data.models.Course;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 
 import java.util.Date;
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.exceptions.Exceptions;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by brunoaybar on 15/10/2016.
@@ -83,7 +86,14 @@ public class UpcRepository {
                 });
             }
         });
+    }
 
+    public Observable<User> getSession(){
+        return Observable.zip(
+                getToken().subscribeOn(Schedulers.immediate()),
+                getUserCode().subscribeOn(Schedulers.immediate()),
+                (token,userCode) -> new User(token,userCode,null))
+                .subscribeOn(Schedulers.io());
     }
 
     public Observable<Boolean> login(String userCode, String password){
@@ -94,6 +104,10 @@ public class UpcRepository {
 
     public Observable<Timetable> getTimeTable(String userCode, String token){
         return mServiceSource.getTimeTable(userCode,token);
+    }
+
+    public Observable<List<Course>> getCourses(User user){
+        return mServiceSource.getCourses(user.getUserCode(),user.getToken());
     }
 
 }

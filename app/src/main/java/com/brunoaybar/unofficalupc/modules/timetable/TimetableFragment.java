@@ -61,8 +61,4 @@ public class TimetableFragment extends BaseFragment {
         Toast.makeText(getActivity().getApplicationContext(), "PAINTING TIMETABLE", Toast.LENGTH_SHORT).show();
     }
 
-    private void displayError(Throwable error){
-        Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-    }
-
 }

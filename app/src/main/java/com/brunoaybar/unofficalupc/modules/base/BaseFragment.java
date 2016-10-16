@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -28,6 +29,9 @@ public abstract class BaseFragment extends Fragment {
         this.mTitle = title;
     }
 
+    public void displayError(Throwable error){
+        Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onResume() {

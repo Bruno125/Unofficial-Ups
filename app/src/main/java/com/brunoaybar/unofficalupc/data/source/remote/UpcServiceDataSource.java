@@ -2,6 +2,7 @@ package com.brunoaybar.unofficalupc.data.source.remote;
 
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficalupc.data.models.Course;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.BaseResponse;
@@ -11,6 +12,8 @@ import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.ServiceException;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
 import com.brunoaybar.unofficalupc.utils.CryptoUtils;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -62,8 +65,10 @@ public class UpcServiceDataSource{
                 .map(TimetableResponse::transform);
     }
 
-    public Observable<CoursesResponse> getCourses(String userCode, String token) {
-        return null;
+    public Observable<List<Course>> getCourses(String userCode, String token) {
+        return mService.getCourses(userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(CoursesResponse::transform);
     }
 
     public Observable<CoursesResponse> getCourseDetail(String courseCode, String userCode, String token) {

@@ -33,6 +33,7 @@ public class WeekDatePicker extends RelativeLayout{
     private View mLine;
     private int mNumberOfDays = 7;
     private List<WeekDayItemView> mWeekDayItems;
+    private int mSelectedIndex = -1;
 
     public WeekDatePicker(Context context) {
         super(context);
@@ -60,7 +61,6 @@ public class WeekDatePicker extends RelativeLayout{
             mLine.setLayoutParams(lineParams);
             mLine.setBackgroundColor(ContextCompat.getColor(context,R.color.week_picker_inactive));
             addView(mLine,lineParams);
-
         }
 
         //Create container layout
@@ -73,8 +73,10 @@ public class WeekDatePicker extends RelativeLayout{
         addView(mBulletsLayout);
 
         //Create items for each day
-        Calendar c = GregorianCalendar.getInstance();
+        Calendar c = Calendar.getInstance();
+        // Set the calendar to monday of the current week
         c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         setDatesStartingIn(context,c.getTime(),new Date());
 
     }
@@ -94,6 +96,8 @@ public class WeekDatePicker extends RelativeLayout{
         for(int i=0; i<mNumberOfDays ;i++){
             Date currentDate = c.getTime();
             boolean isSelected = Utils.sameDay(currentDate,selectedDate);
+            if(isSelected)
+                mSelectedIndex = i;
             //Create day item
             WeekDayItemView item = new WeekDayItemView(context,currentDate,isSelected);
             LinearLayout.LayoutParams itemParams = new LinearLayout.LayoutParams(
@@ -106,6 +110,11 @@ public class WeekDatePicker extends RelativeLayout{
 
             //Increase date
             c.add(Calendar.DATE,1);
+
+            //Set listener
+            final int index = i;
+            item.setClickable(true);
+            item.setOnClickListener(v -> updateSelection(index));
         }
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -119,6 +128,7 @@ public class WeekDatePicker extends RelativeLayout{
                 updateLineMargins(mWeekDayItems.get(0));
             }
         });
+
     }
 
     private void updateLineMargins(WeekDayItemView item){
@@ -126,6 +136,18 @@ public class WeekDatePicker extends RelativeLayout{
         LayoutParams params = (LayoutParams) mLine.getLayoutParams();
         params.setMargins(positionX,item.getCircleCenter(),positionX,0);
         mLine.setLayoutParams(params);
+    }
+
+    private void updateSelection(int selected){
+        //If selected the same, do nothing
+        if(mSelectedIndex == selected)
+            return;
+        //Set previous selected item to inactive state
+        if(mSelectedIndex!=-1)
+            mWeekDayItems.get(mSelectedIndex).setSelected(false);
+        //Update selected
+        mSelectedIndex = selected;
+        mWeekDayItems.get(selected).setSelected(true);
     }
 
 }

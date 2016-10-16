@@ -67,7 +67,7 @@ public class RoundCircleView extends View {
             intermediateColors[i-1] = UiUtils.blendColors(destinationColor,currentColor,0.1f*i);
 
         // Timer observable that will emit every half second.
-        Observable<Long> timerObservable = Observable.interval(0, 50, TimeUnit.MILLISECONDS);
+        Observable<Long> timerObservable = Observable.interval(0, 20, TimeUnit.MILLISECONDS);
         Observable<Integer> colorsObservable = Observable.from(intermediateColors);
         // First, zip the timer and circle views observables, so that we get one circle view every half a second.
         Observable.zip(colorsObservable, timerObservable, (color, aLong) -> color)

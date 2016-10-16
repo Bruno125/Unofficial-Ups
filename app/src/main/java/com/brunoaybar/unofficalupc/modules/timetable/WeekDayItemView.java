@@ -77,13 +77,13 @@ public class WeekDayItemView extends LinearLayout {
             ViewCompat.animate(roundCircleView)
                     .scaleX(isSelected ? 2.0f : 1.0f)
                     .scaleY(isSelected ? 2.0f : 1.0f)
-                    .setDuration(500);
+                    .setDuration(200);
             roundCircleView.setState(isSelected);
 
             ViewCompat.animate(tviDateNumber)
                     .scaleX(isSelected ? 1.0f : 0.0f)
                     .scaleY(isSelected ? 1.0f : 0.0f)
-                    .setDuration(500);
+                    .setDuration(200);
         }
     }
 

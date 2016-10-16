@@ -63,7 +63,11 @@ public class LoginViewModel {
                         });
                     //Verification failed
                     }else {
-                        new Handler().postDelayed(() -> subscriber.onError(new Throwable()), 600);
+                        try {
+                            Thread.sleep(600);
+                        } catch (InterruptedException e) {
+                        }
+                        subscriber.onError(new Throwable());
                     }
                 }));
     }
@@ -72,9 +76,9 @@ public class LoginViewModel {
         return loginWithEncryptedPass(userCode, CryptoUtils.encryptPassword(password));
     }
 
-    public Observable<Boolean> loginWithEncryptedPass(String userCode, String encryptedPassword){
+    private Observable<Boolean> loginWithEncryptedPass(String userCode, String encryptedPassword){
         return mRemoteDataSource.login(userCode,encryptedPassword)
-                .map(user -> mDataSource.saveUser(user,encryptedPassword))
+                .map(mDataSource::saveUser)
                 .map(User::hasValidSession);
     }
 

@@ -1,12 +1,7 @@
 package com.brunoaybar.unofficalupc.modules.general;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,18 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.brunoaybar.unofficalupc.R;
-import com.brunoaybar.unofficalupc.data.models.User;
-import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.attendance.AttendanceFragment;
+import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficalupc.modules.courses.CoursesFragment;
 import com.brunoaybar.unofficalupc.modules.timetable.TimetableFragment;
-import com.brunoaybar.unofficalupc.utils.CryptoUtils;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,8 +39,6 @@ public class MainActivity extends AppCompatActivity
         setupDrawer();
         setupFragments();
 
-
-
     }
 
     public void setupDrawer(){
@@ -56,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

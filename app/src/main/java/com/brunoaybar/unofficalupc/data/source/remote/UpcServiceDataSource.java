@@ -2,6 +2,7 @@ package com.brunoaybar.unofficalupc.data.source.remote;
 
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.BaseResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
@@ -45,17 +46,20 @@ public class UpcServiceDataSource{
     public Observable<User> login(String user, String password) {
         return mService.login(new LoginRequest(user, password,"A"))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(response -> {
-                    if(!response.isError())
-                        return response.transform();
-                    else
+                    if(!response.isError()) {
+                        User userResponse = response.transform();
+                        userResponse.setSavedPassword(password);
+                        return userResponse;
+                    } else
                         throw new ServiceException(response);
                 });
     }
 
-    public Observable<TimetableResponse> getTimeTable(String userCode, String token) {
-        return null;
+    public Observable<Timetable> getTimeTable(String userCode, String token) {
+        return mService.getTimeTable(userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(TimetableResponse::transform);
     }
 
     public Observable<CoursesResponse> getCourses(String userCode, String token) {

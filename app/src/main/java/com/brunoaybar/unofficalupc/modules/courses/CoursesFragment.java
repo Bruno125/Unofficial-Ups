@@ -2,13 +2,12 @@ package com.brunoaybar.unofficalupc.modules.courses;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.brunoaybar.unofficalupc.R;
-import com.brunoaybar.unofficalupc.modules.general.BaseFragment;
+import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 
 /**
  * Fragment that displays the courses in which the user is currently enrolled

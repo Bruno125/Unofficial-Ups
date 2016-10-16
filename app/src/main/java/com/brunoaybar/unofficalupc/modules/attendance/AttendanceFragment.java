@@ -2,13 +2,12 @@ package com.brunoaybar.unofficalupc.modules.attendance;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.brunoaybar.unofficalupc.R;
-import com.brunoaybar.unofficalupc.modules.general.BaseFragment;
+import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 
 /**
  * Fragment that shows the attendance record for the user

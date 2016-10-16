@@ -22,19 +22,19 @@ interface UpcServiceInterface {
     @Headers("Content-Type: application/json")
     Observable<LoginResponse> login(@Body LoginRequest request);
 
-    @GET("Horario/?CodAlumno/")
-    Observable<TimetableResponse> getTimeTable(@Query("userCode") String userCode,
-                                               @Query("token") String token);
+    @GET("Horario/")
+    Observable<TimetableResponse> getTimeTable(@Query("CodAlumno") String userCode,
+                                               @Query("Token") String token);
 
 
     @GET("CursoAlumno/")
-    Observable<CoursesResponse> getCourses(@Query("userCode") String userCode,
-                                           @Query("token") String token);
+    Observable<CoursesResponse> getCourses(@Query("CodAlumno") String userCode,
+                                           @Query("Token") String token);
 
 
     @GET("Nota/")
-    Observable<CoursesResponse> getCourseDetail(@Query("courseCode") String courseCode,
-                                                @Query("userCode") String userCode,
-                                                @Query("token") String token);
+    Observable<CoursesResponse> getCourseDetail(@Query("CodCurso") String courseCode,
+                                                @Query("CodAlumno") String userCode,
+                                                @Query("Token") String token);
 
 }

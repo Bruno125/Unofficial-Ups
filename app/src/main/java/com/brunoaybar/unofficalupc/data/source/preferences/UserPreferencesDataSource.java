@@ -8,7 +8,14 @@ import android.text.TextUtils;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.utils.CryptoUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import rx.Observable;
+import rx.Subscriber;
+import rx.exceptions.Exceptions;
 import rx.functions.Func1;
 
 /**
@@ -17,6 +24,7 @@ import rx.functions.Func1;
 
 public class UserPreferencesDataSource {
 
+    private static final String KEY_LAST_UPDATE = "key_last_update";
     private static final String KEY_TOKEN = "key_token";
     private static final String KEY_USER_CODE = "key_user_code";
     private static final String KEY_PASS = "key_pass";
@@ -25,6 +33,10 @@ public class UserPreferencesDataSource {
 
     public UserPreferencesDataSource(@NonNull Context context){
         mContext = context;
+    }
+
+    public Observable<Boolean> userAgreeToSaveSession(){
+        return Observable.just(true);
     }
 
     public Observable<String> getToken(){
@@ -42,11 +54,37 @@ public class UserPreferencesDataSource {
         return Observable.just(userCode);
     }
 
-    public User saveUser(User user,String password){
-        user.setSavedPassword(password);
+    public Observable<User> getSession(){
+        return Observable.zip(getToken(),getUserCode(),getSavedPassword(),(User::new));
+    }
+
+    private static final SimpleDateFormat updateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
+    public Observable<Date> getLastUpdateTime(){
+        String timestamp = PreferenceUtils.getString(mContext,KEY_LAST_UPDATE);
+        try {
+            if(TextUtils.isEmpty(timestamp))
+                return Observable.just(new Date(0));
+            else {
+                Date lastUpdateTime = updateFormat.parse(timestamp);
+                return Observable.just(lastUpdateTime);
+            }
+        } catch (ParseException e) {
+            return Observable.error(Exceptions.propagate(e));
+        }
+    }
+
+    public User saveUser(User user){
+        //Save user info
         PreferenceUtils.saveString(mContext,KEY_TOKEN,user.getToken());
         PreferenceUtils.saveString(mContext,KEY_USER_CODE,user.getUserCode());
         PreferenceUtils.saveString(mContext,KEY_PASS,user.getSavedPassword());
+
+        //Update last update timestamp
+        String currentDateandTime = updateFormat.format(new Date());
+        PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateandTime);
+
+        //Return the user instance
         return user;
     }
+
 }

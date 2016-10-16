@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.brunoaybar.unofficalupc.R;
-import com.brunoaybar.unofficalupc.modules.attendance.AttendanceFragment;
+import com.brunoaybar.unofficalupc.modules.attendance.AbsencesFragment;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficalupc.modules.courses.CoursesFragment;
 import com.brunoaybar.unofficalupc.modules.timetable.TimetableFragment;
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_courses) {
             setFragment(CoursesFragment.newInstance());
         } else if (id == R.id.nav_attendance) {
-            setFragment(AttendanceFragment.newInstance());
+            setFragment(AbsencesFragment.newInstance());
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

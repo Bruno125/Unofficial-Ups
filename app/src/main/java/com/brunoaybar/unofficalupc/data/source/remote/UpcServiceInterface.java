@@ -1,9 +1,13 @@
 package com.brunoaybar.unofficalupc.data.source.remote;
 
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.AbsencesResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseListResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.CoursesResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
+
+import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -28,13 +32,16 @@ interface UpcServiceInterface {
 
 
     @GET("CursoAlumno/")
-    Observable<CoursesResponse> getCourses(@Query("CodAlumno") String userCode,
-                                           @Query("Token") String token);
-
+    Observable<CourseListResponse> getCourses(@Query("CodAlumno") String userCode,
+                                              @Query("Token") String token);
 
     @GET("Nota/")
-    Observable<CoursesResponse> getCourseDetail(@Query("CodCurso") String courseCode,
-                                                @Query("CodAlumno") String userCode,
-                                                @Query("Token") String token);
+    Observable<CourseResponse> getCourseDetail(@Query("CodCurso") String courseCode,
+                                               @Query("CodAlumno") String userCode,
+                                               @Query("Token") String token);
+
+    @GET("Inasistencia/")
+    Observable<AbsencesResponse> getAbsences(@Query("CodAlumno") String userCode,
+                                                 @Query("Token") String token);
 
 }

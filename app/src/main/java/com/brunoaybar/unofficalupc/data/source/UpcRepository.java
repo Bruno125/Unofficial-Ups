@@ -2,6 +2,7 @@ package com.brunoaybar.unofficalupc.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.brunoaybar.unofficalupc.data.models.Absence;
 import com.brunoaybar.unofficalupc.data.models.Course;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
@@ -110,4 +111,7 @@ public class UpcRepository {
         return mServiceSource.getCourses(user.getUserCode(),user.getToken());
     }
 
+    public Observable<List<Absence>> getAbsences(User user){
+        return mServiceSource.getAbsences(user.getUserCode(),user.getToken());
+    }
 }

@@ -2,21 +2,21 @@ package com.brunoaybar.unofficalupc.data.source.remote;
 
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficalupc.data.models.Absence;
 import com.brunoaybar.unofficalupc.data.models.Course;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.BaseResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.AbsencesResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.CoursesResponse;
-import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseListResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.ServiceException;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.TimetableResponse;
-import com.brunoaybar.unofficalupc.utils.CryptoUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -68,11 +68,19 @@ public class UpcServiceDataSource{
     public Observable<List<Course>> getCourses(String userCode, String token) {
         return mService.getCourses(userCode,token)
                 .subscribeOn(Schedulers.newThread())
-                .map(CoursesResponse::transform);
+                .map(CourseListResponse::transform);
     }
 
-    public Observable<CoursesResponse> getCourseDetail(String courseCode, String userCode, String token) {
-        return null;
+    public Observable<Course> getCourseDetail(String courseCode, String userCode, String token) {
+        return mService.getCourseDetail(courseCode,userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(CourseResponse::transform);
+    }
+
+    public Observable<List<Absence>> getAbsences(String userCode, String token){
+        return mService.getAbsences(userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(AbsencesResponse::transform);
     }
 
 }

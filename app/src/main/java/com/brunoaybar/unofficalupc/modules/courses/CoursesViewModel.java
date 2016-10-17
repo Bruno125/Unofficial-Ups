@@ -30,17 +30,26 @@ public class CoursesViewModel {
         mRepository = repository;
     }
 
-    public Observable<Course> getCoursesStream(){
-        return Observable.create(subscriber ->
-                //Get current session
-                mRepository.getSession().subscribe(user -> {
-                    //Use current session to get courses
-                    mRepository.getCourses(user)
-                            .flatMap(courses -> Observable.from(courses)
-                                    .flatMap(course ->mRepository.getCourseDetail(user,course.getCode())).toList())
-                            .flatMapIterable(courses -> courses)
-                            .subscribe(subscriber::onNext,subscriber::onError);
-                }));
+    private BehaviorSubject<List<Course>> mCoursesSubject;
+    public Observable<List<Course>> getCoursesStream(){
+        if(mCoursesSubject == null){
+            mCoursesSubject = BehaviorSubject.create();
+            obtainCoursesStream();
+        }
+        return mCoursesSubject.asObservable();
+    }
+
+    private void obtainCoursesStream(){
+        mRepository.getSession().subscribe(user -> {
+            //Use current session to get courses
+            mRepository.getCourses(user)
+                    .flatMap(courses -> Observable.from(courses)
+                            .flatMap(course ->mRepository.getCourseDetail(user,course.getCode())).toList())
+                    //.flatMapIterable(courses -> courses)
+                    .subscribe(course ->{
+                        mCoursesSubject.onNext(course);
+                    },mCoursesSubject::onError);
+        });
 
     }
 

@@ -18,6 +18,8 @@ import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSo
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,6 +39,7 @@ public class CoursesFragment extends BaseFragment {
     }
 
     public CoursesFragment() {
+        super();
         setFragmentTitle(R.string.option_courses);
     }
 
@@ -53,10 +56,8 @@ public class CoursesFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_courses, container, false);
         ButterKnife.bind(this,view);
 
-        //Set recyclerView
-        setRecyclerView();
-
         progressBar.setIndeterminate(true);
+        setRecyclerView();
 
         return view;
     }
@@ -73,20 +74,19 @@ public class CoursesFragment extends BaseFragment {
 
         progressBar.setVisibility(View.VISIBLE);
         setRecyclerView();
-
         mSubscription.add(mViewModel.getCoursesStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addCourse,this::displayError));
-
+                .subscribe(this::addCourses,this::displayError));
 
         mSubscription.add(mViewModel.getCourseDetails()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showCourseDetail,this::displayError));
     }
 
-    private void addCourse(Course course){
+    private void addCourses(List<Course> courses){
         progressBar.setVisibility(View.GONE);
-        mAdapter.addCourse(course);
+        for(Course course : courses)
+            mAdapter.addCourse(course);
     }
 
     private void showCourseDetail(Bundle courseBundle){

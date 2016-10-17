@@ -28,6 +28,7 @@ public class AbsencesFragment extends BaseFragment {
     }
 
     public AbsencesFragment() {
+        super();
         setFragmentTitle(R.string.option_attendance);
     }
 

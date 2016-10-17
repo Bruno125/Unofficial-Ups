@@ -33,6 +33,7 @@ public class TimetableFragment extends BaseFragment {
     }
 
     public TimetableFragment() {
+        super();
         setFragmentTitle(R.string.option_timetable);
     }
 

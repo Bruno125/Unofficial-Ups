@@ -47,6 +47,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile "com.google.guava:guava:18.0"
+    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 
     // RxJava
     compile 'io.reactivex:rxjava:1.1.0'

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviType"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_margin="8dp"
+        android:textColor="#212121"
+        android:gravity="left"/>
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviWeight"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        android:textColor="#212121"
+        android:gravity="center"/>
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviGrade"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        android:textColor="#212121"
+        android:gravity="center"/>
+
+</LinearLayout>

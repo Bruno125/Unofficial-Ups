@@ -16,4 +16,9 @@
         <attr name="selectedIndex" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="AssessmentRowAttrs">
+        <attr name="isFooter" format="boolean" />
+        <attr name="isHeader" format="boolean" />
+    </declare-styleable>
+
 </resources>

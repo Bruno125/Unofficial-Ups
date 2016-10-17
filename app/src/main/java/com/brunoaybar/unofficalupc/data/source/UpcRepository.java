@@ -43,12 +43,12 @@ public class UpcRepository {
         return mPreferencesSource.getSavedPassword();
     }
 
-    private static final int TOKEN_LIFETIME = 5 * 1000; //5 minutes
+    private static final int TOKEN_LIFETIME = 5 * 60 * 1000; //5 minutes
     private Observable<Boolean> tokenIsStillValid(){
         return mPreferencesSource.getLastUpdateTime()
                 .map(lastUpdate -> {
                     long millisecondsEllapsed = new Date().getTime() - lastUpdate.getTime();
-                    return millisecondsEllapsed > TOKEN_LIFETIME;
+                    return millisecondsEllapsed < TOKEN_LIFETIME;
                 });
     }
 

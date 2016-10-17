@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.containerView) View containerView;
         @BindView(R.id.tviCode) TextView tviCode;
         @BindView(R.id.tviName) TextView tviName;
         @BindView(R.id.tviHintProgress) TextView tviHintProgress;
@@ -41,14 +42,16 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
     @NonNull
     private List<Course> mCourses;
     private Context mContext;
+    private OnItemClickListener mListener;
 
-    public CoursesAdapter(Context context){
-        this(context,new ArrayList<>());
+    public CoursesAdapter(@NonNull Context context,@NonNull OnItemClickListener listener){
+        this(context,new ArrayList<>(),listener);
     }
 
-    public CoursesAdapter(@NonNull Context context, @NonNull List<Course> courses) {
+    public CoursesAdapter(@NonNull Context context, @NonNull List<Course> courses,@NonNull OnItemClickListener listener) {
         mContext = context;
         mCourses = courses;
+        mListener = listener;
     }
 
     public void addCourse(Course course){
@@ -74,6 +77,10 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
                 .replace("{pct}",String.valueOf(course.getCurrentProgress()))
                 .replace("{grade}",String.valueOf(course.getCurrentGrade()));
         UiUtils.setHtmlText(holder.tviHintProgress,hint);
+
+        holder.containerView.setClickable(true);
+        holder.containerView.setOnClickListener(v -> mListener.onItemClick(course));
+
     }
 
     @Override
@@ -97,6 +104,8 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         }
     }
 
-
+    public interface OnItemClickListener {
+        void onItemClick(Course course);
+    }
 
 }

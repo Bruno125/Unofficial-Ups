@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="blueColorPrimary" type="color">#2196F3</item>
+    <item name="blueColorPrimaryDark" type="color">#1976D2</item>
+    <item name="blueColorAccent" type="color">#8BC34A</item>
+
+    <item name="greenColorPrimary" type="color">#8BC34A</item>
+    <item name="greenColorPrimaryDark" type="color">#33691e</item>
+    <item name="greenColorAccent" type="color">#8BC34A</item>
+
+    <item name="redColorPrimary" type="color">#F44336</item>
+    <item name="redColorPrimaryDark" type="color">#D32F2F</item>
+    <item name="redColorAccent" type="color">#FF4081</item>
+
+    <item name="pinkColorPrimary" type="color">#FF4081</item>
+    <item name="pinkColorPrimaryDark" type="color">#FE0055</item>
+    <item name="pinkColorAccent" type="color">#FF1262</item>
+
+    <item name="yellowColorPrimary" type="color">#FFC107</item>
+    <item name="yellowColorPrimaryDark" type="color">#FFA000</item>
+    <item name="yellowColorAccent" type="color">#FFA000</item>
+
+    <item name="orangeColorPrimary" type="color">#FF5722</item>
+    <item name="orangeColorPrimaryDark" type="color">#E64A19</item>
+    <item name="orangeColorAccent" type="color">#FF5722</item>
+
+    <item name="purpleColorPrimary" type="color">#673AB7</item>
+    <item name="purpleColorPrimaryDark" type="color">#512DA8</item>
+    <item name="purpleColorAccent" type="color">#E040FB</item>
+
+    <item name="greyColorPrimary" type="color">#607D8B</item>
+    <item name="greyColorPrimaryDark" type="color">#455A64</item>
+    <item name="greyColorAccent" type="color">#9E9E9E</item>
+
+    <item name="background_color" type="color">#fff</item>
+    <item name="blue" type="color">#FF33B5E5</item>
+    <item name="purple" type="color">#FFAA66CC</item>
+    <item name="green" type="color">#FF99CC00</item>
+    <item name="orange" type="color">#FFFFBB33</item>
+    <item name="red" type="color">#FFFF4444</item>
+    <item name="darkblue" type="color">#FF0099CC</item>
+    <item name="darkpurple" type="color">#FF9933CC</item>
+    <item name="darkgreen" type="color">#FF669900</item>
+    <item name="darkorange" type="color">#FFFF8800</item>
+    <item name="darkred" type="color">#FFCC0000</item>
+
+    <color name="semi_white">#ddd</color>
+
+</resources>

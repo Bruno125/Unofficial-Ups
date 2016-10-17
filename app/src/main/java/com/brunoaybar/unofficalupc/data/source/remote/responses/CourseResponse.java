@@ -2,6 +2,7 @@ package com.brunoaybar.unofficalupc.data.source.remote.responses;
 
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficalupc.data.models.Assessment;
 import com.brunoaybar.unofficalupc.data.models.Course;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class CourseResponse extends BaseResponse
         else
             course.setCurrentProgress(Double.parseDouble(getPorcentajeAvance().replace("%","")));
 
-        List<Course.Assessment> assessments = new ArrayList<>();
+        List<Assessment> assessments = new ArrayList<>();
         if(Notas!=null){
             for(Nota nota : Notas)
                 assessments.add(nota.transform());
@@ -101,8 +102,8 @@ public class CourseResponse extends BaseResponse
         private String Peso;
         private String Valor;
 
-        public Course.Assessment transform(){
-            Course.Assessment assessment = new Course.Assessment();
+        public Assessment transform(){
+            Assessment assessment = new Assessment();
             assessment.setCode(getCodNota());
             assessment.setGrade(getValor());
             assessment.setIndex(String.valueOf(NroEvaluacion));

@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficalupc.modules.courses;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,13 +54,17 @@ public class CoursesFragment extends BaseFragment {
         ButterKnife.bind(this,view);
 
         //Set recyclerView
-        rviCourses.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new CoursesAdapter(getContext());
-        rviCourses.setAdapter(mAdapter);
+        setRecyclerView();
 
         progressBar.setIndeterminate(true);
 
         return view;
+    }
+
+    private void setRecyclerView(){
+        rviCourses.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new CoursesAdapter(getContext(),mViewModel::courseAvailable);
+        rviCourses.setAdapter(mAdapter);
     }
 
     @Override
@@ -67,14 +72,27 @@ public class CoursesFragment extends BaseFragment {
         super.bind();
 
         progressBar.setVisibility(View.VISIBLE);
+        setRecyclerView();
+
         mSubscription.add(mViewModel.getCoursesStream()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::addCourse,this::displayError));
+
+
+        mSubscription.add(mViewModel.getCourseDetails()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::showCourseDetail,this::displayError));
     }
 
     private void addCourse(Course course){
         progressBar.setVisibility(View.GONE);
         mAdapter.addCourse(course);
+    }
+
+    private void showCourseDetail(Bundle courseBundle){
+        Intent i = new Intent(getActivity(),CourseDetailActivity.class);
+        i.putExtras(courseBundle);
+        startActivity(i);
     }
 
 }

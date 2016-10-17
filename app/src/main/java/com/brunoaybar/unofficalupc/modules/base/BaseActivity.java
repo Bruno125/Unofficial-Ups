@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficalupc.modules.base;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -36,7 +37,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void displayError(Throwable error){
-        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_SHORT).show();
+        showToast(error.getMessage());
+    }
+
+    public void showToast(@StringRes int message){
+        showToast(getString(message));
+    }
+
+    public void showToast(String message){
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
     }
 
 

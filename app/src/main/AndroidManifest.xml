@@ -9,15 +9,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".modules.general.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar.NoStatus"></activity>
+            android:theme="@style/AppTheme.NoActionBar.NoStatus" />
         <activity
             android:name=".modules.auth.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +24,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".modules.courses.CourseDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".modules.courses.CourseDetailActivity" />
+        <activity
+            android:name=".modules.classmates.ClassmatesActivity"
+            android:label="@string/title_classmates"/>
     </application>
 
 </manifest>

@@ -18,5 +18,9 @@
     <!-- Week picker -->
     <dimen name="week_picker_height">80dp</dimen>
     <dimen name="week_picker_inner_margins">8dp</dimen>
-
+    
+    <!-- Classmates -->
+    <dimen name="classmate_image_size">48dp</dimen>
+    
+    
 </resources>

@@ -3,11 +3,13 @@ package com.brunoaybar.unofficalupc.data.source.remote;
 import android.text.TextUtils;
 
 import com.brunoaybar.unofficalupc.data.models.Absence;
+import com.brunoaybar.unofficalupc.data.models.Classmate;
 import com.brunoaybar.unofficalupc.data.models.Course;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.AbsencesResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.ClassmatesResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseListResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.ServiceException;
@@ -82,5 +84,12 @@ public class UpcServiceDataSource{
                 .subscribeOn(Schedulers.newThread())
                 .map(AbsencesResponse::transform);
     }
+
+    public Observable<List<Classmate>> getClassmates(String courseCode, User user) {
+        return mService.getClassmates(courseCode,user.getUserCode(),user.getToken())
+                .subscribeOn(Schedulers.newThread())
+                .map(ClassmatesResponse::transform);
+    }
+
 
 }

@@ -4,28 +4,26 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-
-
     <!-- Main options -->
     <string name="option_timetable">Horario</string>
     <string name="option_courses">Cursos</string>
     <string name="option_attendance">Inasistencia</string>
-    <string name="option_logout">Cerrar sesion</string>
+    <string name="option_logout">Cerrar sesión</string>
 
     <!-- Login -->
-    <string name="title_activity_login">LoginActivity</string>
     <string name="text_warning_application">
-        Esta es una version NO oficial del app UPC, la cual fue hecha con el unico fin de
+        Esta es una version NO oficial del app UPC, la cual fue hecha con el único fin de
         ofrecer una mejor experiencia a los alumnos. \n\n
-        Descuida, tu informacion personal no sera almacenada en nigun momento.
+        Descuida, tu informacion personal no sera almacenada ni compartida en nigun momento.
     </string>
     <string name="text_understood">OK, Entendido!</string>
     <string name="prompt_user">Usuario</string>
-    <string name="prompt_password">Contrasena</string>
-    <string name="text_login">Iniciar sesion</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="text_login">Iniciar sesión</string>
 
     <!-- Courses -->
+    <string name="action_classmates">Compañeros</string>
+
     <string name="text_hint_course_progress">
         Al &lt;font color=\'#777777\'&gt; &lt;b&gt;{pct}%&lt;/b&gt;&lt;/font&gt; del curso, tienes una nota de &lt;font color=\'#777777\'&gt; &lt;b&gt;{grade}&lt;/b&gt;&lt;/font&gt;
     </string>
@@ -35,6 +33,10 @@
     <string name="text_grade">NOTA</string>
     <string name="format_weight">%1$,.1f%%</string>
     <string name="text_final_assessment">NOTA FINAL</string>
+
+    <!-- Classmates -->
+    <string name="title_classmates">Compañeros de clase</string>
+    <string name="error_getting_classmates">Ocurrió un error al momento de obtener la información</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

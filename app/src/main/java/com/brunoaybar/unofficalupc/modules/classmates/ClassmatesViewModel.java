@@ -1,0 +1,33 @@
+package com.brunoaybar.unofficalupc.modules.classmates;
+
+import com.brunoaybar.unofficalupc.data.models.Classmate;
+import com.brunoaybar.unofficalupc.data.source.UpcRepository;
+
+import java.util.List;
+
+import rx.Observable;
+
+/**
+ * Created by brunoaybar on 17/10/2016.
+ */
+
+public class ClassmatesViewModel {
+
+    private UpcRepository mRepository;
+
+    public ClassmatesViewModel(UpcRepository repository) {
+        mRepository = repository;
+    }
+
+    public Observable<List<Classmate>> getClassmates(String courseCode){
+        return Observable.create(subscriber ->
+                //Get current session
+                mRepository.getSession().subscribe(user -> {
+                    //Use current session to get classmates
+                    mRepository.getClassmates(user,courseCode)
+                            .subscribe(subscriber::onNext,subscriber::onError);
+                }));
+    }
+
+
+}

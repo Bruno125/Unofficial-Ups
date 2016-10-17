@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import com.brunoaybar.unofficalupc.data.source.UpcRepository;
 import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.base.BaseActivity;
+import com.brunoaybar.unofficalupc.modules.classmates.ClassmatesActivity;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import butterknife.BindView;
@@ -25,6 +28,7 @@ public class CourseDetailActivity extends BaseActivity {
 
     @Nullable
     CoursesViewModel mViewModel;
+    Course mCourse;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tviCourseName) TextView tviCourseName;
@@ -58,6 +62,7 @@ public class CourseDetailActivity extends BaseActivity {
     }
 
     private void bindCourse(Course course){
+        mCourse= course;
         //Display course information
         setTitle(course.getName());
         tviCourseName.setText(course.getName());
@@ -77,6 +82,24 @@ public class CourseDetailActivity extends BaseActivity {
         currentGrade.setWeight(course.getCurrentProgress());
         currentGrade.setGrade(String.valueOf(course.getCurrentGrade()));
         footerView.setAssessment(this,currentGrade);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.classmates,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_classmates:
+                if(mCourse!=null)
+                    ClassmatesActivity.startActivity(this,mCourse.getCode());
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

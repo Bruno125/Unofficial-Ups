@@ -2,6 +2,7 @@ package com.brunoaybar.unofficalupc.data.source.remote;
 
 import com.brunoaybar.unofficalupc.data.source.remote.requests.LoginRequest;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.AbsencesResponse;
+import com.brunoaybar.unofficalupc.data.source.remote.responses.ClassmatesResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseListResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficalupc.data.source.remote.responses.CourseResponse;
@@ -44,4 +45,8 @@ interface UpcServiceInterface {
     Observable<AbsencesResponse> getAbsences(@Query("CodAlumno") String userCode,
                                                  @Query("Token") String token);
 
+    @GET("Companeros/")
+    Observable<ClassmatesResponse> getClassmates(@Query("CodCurso") String courseCode,
+                                                 @Query("CodAlumno") String userCode,
+                                                 @Query("Token") String token);
 }

@@ -1,9 +1,6 @@
 package com.brunoaybar.unofficalupc.modules.timetable;
 
 import android.content.Context;
-import android.support.annotation.DimenRes;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.brunoaybar.unofficalupc.R;
+import com.brunoaybar.unofficalupc.data.models.Timetable;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -34,7 +32,8 @@ public class DayScheduleView extends LinearLayout {
         init(context);
     }
 
-    @BindView(R.id.rviHours) RecyclerView rviHours;
+    @BindView(R.id.llaHours) LinearLayout llaHours;
+    @BindView(R.id.rlaEvents) RelativeLayout rlaEvents;
     @BindDimen(R.dimen.schedule_hour_height) int rowHeight;
 
     private void init(Context context){
@@ -42,42 +41,45 @@ public class DayScheduleView extends LinearLayout {
         mInflater.inflate(R.layout.view_day_schedule, this, true);
         ButterKnife.bind(this,this);
 
-        rviHours.setLayoutManager(new LinearLayoutManager(context));
-        rviHours.setAdapter(new HoursAdapter(context,rowHeight));
+        int nHoursPerDay = 24;
+        //Populate hours
+        for(int i=0; i<nHoursPerDay;i++)
+            llaHours.addView(new HourView(context,i,rowHeight));
 
+        ViewGroup.LayoutParams params = rlaEvents.getLayoutParams();
+        params.height = rowHeight * nHoursPerDay;
+        rlaEvents.setLayoutParams(params);
+
+    }
+
+    public void addEvent(Timetable.Class event){
 
     }
 
 
-    class HoursAdapter extends RecyclerView.Adapter<HoursAdapter.ViewHolder>{
+    class HourView extends LinearLayout{
 
-        private int mRowSize;
-        private Context mContext;
 
-        HoursAdapter(Context context,int rowSize){
-            mRowSize = rowSize;
-            mContext = context;
+        @BindView(R.id.containerView) View containerView;
+        @BindView(R.id.tviHour) TextView tviHour;
+
+        HourView(Context context, int position, int rowSize){
+            super(context);
+            init(context,position,rowSize);
         }
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_schedule_hour,parent,false);
-            return new ViewHolder(itemView);
+        private void init(Context context,int position,int rowSize){
+            LayoutInflater  mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater.inflate(R.layout.item_schedule_hour, this, true);
+            ButterKnife.bind(this,this);
+
+            tviHour.setText(getHour(position));
+
+            ViewGroup.LayoutParams params = containerView.getLayoutParams();
+            params.height = rowSize;
+            containerView.setLayoutParams(params);
         }
 
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.tviHour.setText(getHour(position));
-
-            ViewGroup.LayoutParams params = holder.containerView.getLayoutParams();
-            params.height = mRowSize;
-            holder.containerView.setLayoutParams(params);
-        }
-
-        @Override
-        public int getItemCount() {
-            return 24;
-        }
 
         private String getHour(int position){
             String suffix = " AM";
@@ -88,15 +90,6 @@ public class DayScheduleView extends LinearLayout {
             return position + suffix;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            @BindView(R.id.containerView) RelativeLayout containerView;
-            @BindView(R.id.tviHour) TextView tviHour;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                ButterKnife.bind(this,itemView);
-            }
-        }
     }
 
 }

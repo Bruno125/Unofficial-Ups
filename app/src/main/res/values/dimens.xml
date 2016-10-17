@@ -21,6 +21,10 @@
     
     <!-- Classmates -->
     <dimen name="classmate_image_size">48dp</dimen>
-    
-    
+
+
+    <!-- Timetable -->
+    <dimen name="schedule_hour_height">48dp</dimen>
+    <dimen name="schedule_time_width">48dp</dimen>
+
 </resources>

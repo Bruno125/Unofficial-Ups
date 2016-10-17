@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerView"
+    android:orientation="vertical" android:layout_width="match_parent"
+
+    android:layout_height="@dimen/schedule_hour_height">
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviHour"
+        android:layout_width="@dimen/schedule_time_width"
+        android:layout_height="@dimen/schedule_hour_height"
+        android:paddingTop="8dp"
+        android:gravity="center_horizontal"
+        android:textSize="12sp"
+        android:text="12 AM"
+        />
+
+    <View style="@style/divider_horizontal"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

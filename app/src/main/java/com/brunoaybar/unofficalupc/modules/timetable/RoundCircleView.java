@@ -52,7 +52,9 @@ public class RoundCircleView extends View {
         currentSize = 25;
         //Set circle color
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(isSelected ? color : ContextCompat.getColor(context,R.color.week_picker_inactive));
+        if(!isInEditMode()) {
+            mPaint.setColor(isSelected ? color : ContextCompat.getColor(context, R.color.week_picker_inactive));
+        }
     }
 
     public void setState(boolean selected){
@@ -60,6 +62,12 @@ public class RoundCircleView extends View {
     }
 
     public void setColor(@ColorInt Integer destinationColor){
+        if(isInEditMode()){
+            mPaint.setColor(destinationColor);
+            this.invalidate();
+            return;
+        }
+
         int currentColor = mPaint.getColor();
 
         Integer[] intermediateColors = new Integer[10];

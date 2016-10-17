@@ -39,6 +39,9 @@
     <string name="error_getting_classmates">Ocurrió un error al momento de obtener la información</string>
 
 
+    <!-- Timetables -->
+    <string name="text_test">Seccion: <b>CX43</b> </string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

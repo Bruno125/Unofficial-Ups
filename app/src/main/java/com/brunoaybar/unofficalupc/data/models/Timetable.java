@@ -51,7 +51,7 @@ public final class Timetable {
         }
     }
 
-    public class Class{
+    public static class Class{
         private String mCode;
         private String mCourseName;
         private String mCourseShortName;

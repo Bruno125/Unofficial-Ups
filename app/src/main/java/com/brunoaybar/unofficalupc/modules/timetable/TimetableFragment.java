@@ -17,6 +17,8 @@ import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSo
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -37,6 +39,8 @@ public class TimetableFragment extends BaseFragment {
         setFragmentTitle(R.string.option_timetable);
     }
 
+    @BindView(R.id.dayScheduleView) DayScheduleView dayScheduleView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +48,10 @@ public class TimetableFragment extends BaseFragment {
         mViewModel = new TimetableViewModel(new UpcRepository(new UserPreferencesDataSource(getContext()), UpcServiceDataSource.getInstance()));
         //Inflate view
         View v  = inflater.inflate(R.layout.fragment_timetable, container, false);
+        ButterKnife.bind(this,v);
+
+        dayScheduleView.addEvent(new Timetable.Class());
+
         return v;
     }
 
@@ -59,6 +67,7 @@ public class TimetableFragment extends BaseFragment {
 
     private void paintTimetable(Timetable timetable){
         //paint timetable
+
         Toast.makeText(getActivity().getApplicationContext(), "PAINTING TIMETABLE", Toast.LENGTH_SHORT).show();
     }
 

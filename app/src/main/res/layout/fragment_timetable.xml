@@ -10,10 +10,11 @@
     <com.brunoaybar.unofficalupc.modules.timetable.WeekDatePicker
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#eee"
+        android:background="#fff"
         />
 
     <com.brunoaybar.unofficalupc.modules.timetable.DayScheduleView
+        android:id="@+id/dayScheduleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

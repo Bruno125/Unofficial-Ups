@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.models.Classmate;
@@ -28,6 +30,7 @@ public class ClassmatesActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.rviClassmates) RecyclerView rviClassmates;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     private ClassmatesAdapter mAdapter;
     private String courseCode;
@@ -64,6 +67,8 @@ public class ClassmatesActivity extends BaseActivity {
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Set progress
+        progressBar.setIndeterminate(true);
     }
 
     @Override
@@ -71,12 +76,14 @@ public class ClassmatesActivity extends BaseActivity {
         super.bind();
         assert mViewModel != null;
 
+        progressBar.setVisibility(View.VISIBLE);
         mSubscription.add(mViewModel.getClassmates(courseCode)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::setClassmates,this::displayError));
     }
 
     private void setClassmates(List<Classmate> classmates){
+        progressBar.setVisibility(View.GONE);
         for(Classmate classmate : classmates)
             mAdapter.addClassmate(classmate);
     }

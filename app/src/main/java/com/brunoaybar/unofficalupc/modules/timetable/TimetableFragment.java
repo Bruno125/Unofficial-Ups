@@ -17,6 +17,8 @@ import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSo
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,6 +31,8 @@ public class TimetableFragment extends BaseFragment {
 
     @Nullable
     private TimetableViewModel mViewModel;
+    @Nullable
+    private Timetable mTimetable;
 
     public static TimetableFragment newInstance(){
         return new TimetableFragment();
@@ -39,6 +43,7 @@ public class TimetableFragment extends BaseFragment {
         setFragmentTitle(R.string.option_timetable);
     }
 
+    @BindView(R.id.weekDatePicker) WeekDatePicker weekDatePicker;
     @BindView(R.id.dayScheduleView) DayScheduleView dayScheduleView;
 
     @Override
@@ -50,7 +55,7 @@ public class TimetableFragment extends BaseFragment {
         View v  = inflater.inflate(R.layout.fragment_timetable, container, false);
         ButterKnife.bind(this,v);
 
-        dayScheduleView.addEvent(new Timetable.Class());
+        weekDatePicker.setListener(this::updateScheduleForDay);
 
         return v;
     }
@@ -62,13 +67,18 @@ public class TimetableFragment extends BaseFragment {
 
         mSubscription.add(mViewModel.getTimetable()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::paintTimetable,this::displayError));
+                .subscribe(this::setTimetable,this::displayError));
     }
 
-    private void paintTimetable(Timetable timetable){
-        //paint timetable
+    private void setTimetable(Timetable timetable){
+        mTimetable = timetable;
+        updateScheduleForDay(weekDatePicker.getSelectedDate());
+    }
 
-        Toast.makeText(getActivity().getApplicationContext(), "PAINTING TIMETABLE", Toast.LENGTH_SHORT).show();
+    private void updateScheduleForDay(Date selectedDate){
+        if(mTimetable==null)
+            return;
+        dayScheduleView.setDay(mTimetable.getDay(selectedDate));
     }
 
 }

@@ -87,4 +87,8 @@ public class WeekDayItemView extends LinearLayout {
         }
     }
 
+    public Date getDate(){
+        return mDate;
+    }
+
 }

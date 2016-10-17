@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,16 +57,38 @@ public class DayScheduleView extends LinearLayout {
         rlaEvents.setLayoutParams(params);
     }
 
+    public void setDay(Timetable.Day day){
+        rlaEvents.removeAllViews();
+        if(day!=null) {
+            for (Timetable.Class mClass : day.getClasses())
+                addEvent(mClass);
+        }
+    }
+
     public void addEvent(Timetable.Class event){
         EventView eventView = new EventView(getContext(),event);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,rowHeight*3);
-        params.setMargins(rowHeight,rowHeight*3,0,0);
-        rlaEvents.addView(eventView,params);
+        GregorianCalendar time = new GregorianCalendar();
+        time.setTime(event.getDate());
+        int classStartHour = time.get(Calendar.HOUR_OF_DAY);
+
+        int marginTop = (classStartHour - startingHour) * rowHeight;
+        int height = rowHeight*event.getDuration();
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height);
+        params.setMargins(rowHeight,marginTop,0,0);
+        rlaEvents.addView(eventView.getContainerView(),params);
+
     }
 
 
-    class EventView extends CardView{
+    class EventView extends LinearLayout{
+
+        @BindView(R.id.tviCodeAndSection) TextView tviCodeAndSection;
+        @BindView(R.id.tviName) TextView tviName;
+        @BindView(R.id.tviPlace) TextView tviPlace;
+
+        private View containerView;
 
         public EventView(Context context,Timetable.Class event) {
             super(context);
@@ -72,11 +97,19 @@ public class DayScheduleView extends LinearLayout {
 
         private void init(Context context,Timetable.Class event){
             LayoutInflater  mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mInflater.inflate(R.layout.view_schedule_event, this, true);
-            ButterKnife.bind(this,this);
+            containerView = mInflater.inflate(R.layout.view_schedule_event, this, false);
+            ButterKnife.bind(this,containerView);
             setBackgroundColor(Color.TRANSPARENT);
+
+            tviCodeAndSection.setText(event.getCourseCode() + " " + event.getSection());
+            tviName.setText(event.getCourseName());
+            tviPlace.setText(event.getVenue() + " -" + event.getRoom());
+
         }
 
+        public View getContainerView() {
+            return containerView;
+        }
     }
 
     class HourView extends LinearLayout{

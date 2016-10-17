@@ -2,8 +2,11 @@ package com.brunoaybar.unofficalupc.data.models;
 
 import android.support.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -11,20 +14,27 @@ import java.util.Map;
  */
 public final class Timetable {
 
-    @NonNull Map<Integer,Day> mDays;
+    private Map<String,Day> mDays;
 
-    public Map<Integer,Day> getDays(){
-        return mDays;
+    public Timetable(){
+        mDays = new HashMap<>();
     }
 
-    public void setDays(Map<Integer,Day> days){
-        this.mDays = days;
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+
+    public void addDay(Day day){
+        mDays.put(dateFormatter.format(day.getDate()),day);
     }
 
-    public class Day{
-        @NonNull private int mCode;
-        @NonNull private Date mDate;
-        @NonNull  private List<Class> mClasses;
+    public Day getDay(Date date){
+        String dateDesc = dateFormatter.format(date);
+        return mDays.get(dateDesc);
+    }
+
+    public static class Day{
+        private int mCode;
+        private Date mDate;
+        private List<Class> mClasses;
 
         public int getCode() {
             return mCode;
@@ -38,8 +48,8 @@ public final class Timetable {
             return mDate;
         }
 
-        public void setDate(Date mDate) {
-            this.mDate = mDate;
+        public void setDate(Date date) {
+            this.mDate = date;
         }
 
         public List<Class> getClasses() {
@@ -49,24 +59,18 @@ public final class Timetable {
         public void setClasses(List<Class> mClasses) {
             this.mClasses = mClasses;
         }
+
     }
 
     public static class Class{
-        private String mCode;
+        private String mCourseCode;
         private String mCourseName;
         private String mCourseShortName;
         private Date mDate;
         private String mVenue;
         private String mSection;
         private String mRoom;
-
-        public String getCode() {
-            return mCode;
-        }
-
-        public void setCode(String mCode) {
-            this.mCode = mCode;
-        }
+        private int mDuration;
 
         public String getCourseName() {
             return mCourseName;
@@ -114,6 +118,22 @@ public final class Timetable {
 
         public void setRoom(String room) {
             this.mRoom = room;
+        }
+
+        public int getDuration() {
+            return mDuration;
+        }
+
+        public void setDuration(int mDuration) {
+            this.mDuration = mDuration;
+        }
+
+        public String getCourseCode() {
+            return mCourseCode;
+        }
+
+        public void setCourseCode(String mCodeCourse) {
+            this.mCourseCode = mCodeCourse;
         }
     }
 

@@ -29,6 +29,15 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class WeekDatePicker extends RelativeLayout{
 
+    public interface OnDateSelectionListener{
+        void onDateSelected(Date date);
+    }
+
+    private OnDateSelectionListener mListener;
+    public void setListener(OnDateSelectionListener listener) {
+        this.mListener = listener;
+    }
+
     private LinearLayout mBulletsLayout;
     private View mLine;
     private int mNumberOfDays = 7;
@@ -108,13 +117,13 @@ public class WeekDatePicker extends RelativeLayout{
             mBulletsLayout.addView(item);
             mWeekDayItems.add(item);
 
-            //Increase date
-            c.add(Calendar.DATE,1);
-
             //Set listener
             final int index = i;
             item.setClickable(true);
             item.setOnClickListener(v -> updateSelection(index));
+
+            //Increase date
+            c.add(Calendar.DATE,1);
         }
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -148,6 +157,12 @@ public class WeekDatePicker extends RelativeLayout{
         //Update selected
         mSelectedIndex = selected;
         mWeekDayItems.get(selected).setSelected(true);
+
+        if(mListener!=null)
+            mListener.onDateSelected(mWeekDayItems.get(selected).getDate());
     }
 
+    public Date getSelectedDate(){
+        return mWeekDayItems.get(mSelectedIndex).getDate();
+    }
 }

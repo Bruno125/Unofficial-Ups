@@ -88,6 +88,7 @@ public class DayScheduleView extends LinearLayout {
         @BindView(R.id.tviName) TextView tviName;
         @BindView(R.id.tviPlace) TextView tviPlace;
 
+
         private View containerView;
 
         public EventView(Context context,Timetable.Class event) {

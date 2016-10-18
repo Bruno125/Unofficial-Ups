@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -39,6 +40,14 @@ public class UiUtils {
             v.setVisibility(visibility);
         }
     }
+
+    public static void setTextColor(@ColorInt int color, TextView... textViews){
+        for (TextView textView : textViews){
+            if(textView!=null)
+                textView.setTextColor(color);
+        }
+    }
+
 
     public static int getPrimaryColor(Context context){
         TypedValue typedValue = new TypedValue();

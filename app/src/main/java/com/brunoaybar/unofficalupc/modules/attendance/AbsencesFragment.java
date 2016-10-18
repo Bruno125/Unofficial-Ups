@@ -2,6 +2,8 @@ package com.brunoaybar.unofficalupc.modules.attendance;
 
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSo
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -33,14 +37,23 @@ public class AbsencesFragment extends BaseFragment {
     }
 
 
+    @BindView(R.id.rviAbsences) RecyclerView rviAbsences;
+    private AbsencesAdapter mAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Init view model
         mViewModel = new AbsencesViewModel((new UpcRepository(new UserPreferencesDataSource(getContext()), UpcServiceDataSource.getInstance())));
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_attendance, container, false);
+        View v =  inflater.inflate(R.layout.fragment_attendance, container, false);
+        ButterKnife.bind(this,v);
+
+        mAdapter = new AbsencesAdapter(getContext());
+        rviAbsences.setLayoutManager(new LinearLayoutManager(getContext()));
+        rviAbsences.setAdapter(mAdapter);
+
+        return v;
     }
 
     @Override
@@ -48,12 +61,7 @@ public class AbsencesFragment extends BaseFragment {
         super.bind();
         mSubscription.add(mViewModel.getAttendanceStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::showAbsence,this::displayError));
+                .subscribe(mAdapter::addAbsence,this::displayError));
     }
-
-    private void showAbsence(Absence absence){
-        Log.i("TEST","Absence: " + absence.getCourseName() + " - " + absence.getTotal());
-    }
-
 
 }

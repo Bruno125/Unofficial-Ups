@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.models.Assessment;
+import com.brunoaybar.unofficalupc.utils.UiUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +50,7 @@ public class AssessmentRowView extends LinearLayout{
         setBackgroundColor(ContextCompat.getColor(context,R.color.white));
         if(isHeader){
             int color = ContextCompat.getColor(context,R.color.primary_dark);
-            setTextColor(color,tviType,tviWeight,tviGrade);
+            UiUtils.setTextColor(color,tviType,tviWeight,tviGrade);
             tviType.setText(context.getString(R.string.text_type));
             tviWeight.setText(context.getString(R.string.text_weight));
             tviGrade.setText(context.getString(R.string.text_grade));
@@ -66,13 +67,6 @@ public class AssessmentRowView extends LinearLayout{
         String weight = String.format(context.getString(R.string.format_weight),assessment.getWeight());
         tviWeight.setText(weight);
         tviGrade.setText(assessment.getGrade());
-    }
-
-    private void setTextColor(@ColorInt int color,TextView... textViews){
-        for (TextView textView : textViews){
-            if(textView!=null)
-                textView.setTextColor(color);
-        }
     }
 
 }

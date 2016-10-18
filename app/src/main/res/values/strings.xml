@@ -7,7 +7,7 @@
     <!-- Main options -->
     <string name="option_timetable">Horario</string>
     <string name="option_courses">Cursos</string>
-    <string name="option_attendance">Inasistencia</string>
+    <string name="option_attendance">Inasistencias</string>
     <string name="option_logout">Cerrar sesión</string>
 
     <!-- Login -->
@@ -42,6 +42,11 @@
     <!-- Timetables -->
     <string name="text_test">Seccion: <b>CX43</b> </string>
 
+    <!--Attendance -->
+    <string name="text_title_course">CURSO</string>
+    <string name="text_title_total">TOTAL</string>
+    <string name="text_title_maximum">MÁXIMO</string>
+    
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

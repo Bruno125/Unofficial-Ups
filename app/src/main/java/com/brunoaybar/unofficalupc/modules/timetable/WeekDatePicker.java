@@ -165,4 +165,19 @@ public class WeekDatePicker extends RelativeLayout{
     public Date getSelectedDate(){
         return mWeekDayItems.get(mSelectedIndex).getDate();
     }
+
+    public void setSelectedDate(Date date){
+        if(mWeekDayItems==null)
+            return;
+        int index = mSelectedIndex,c = 0;
+        for (WeekDayItemView item : mWeekDayItems){
+            if(Utils.sameDay(item.getDate(),date)){
+                index = c;
+                break;
+            }
+            c++;
+        }
+        updateSelection(index);
+    }
+
 }

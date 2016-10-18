@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             mFragments.put(title,fragment);
         // Insert the fragment by replacing any existing fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft.replace(R.id.flContent, fragment).commit();
         //Set toolbar title and close drawer
         setTitle(title);

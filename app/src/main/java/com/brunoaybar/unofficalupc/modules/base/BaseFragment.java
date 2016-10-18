@@ -17,7 +17,7 @@ import rx.subscriptions.CompositeSubscription;
 public abstract class BaseFragment extends Fragment {
 
     @NonNull
-    protected CompositeSubscription mSubscription;
+    protected CompositeSubscription mSubscription = mSubscription = new CompositeSubscription();
 
     private @StringRes int mTitle;
 
@@ -33,9 +33,6 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_SHORT).show();
     }
 
-    public BaseFragment(){
-        mSubscription = new CompositeSubscription();
-    }
 
     @Override
     public void onResume() {

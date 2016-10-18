@@ -33,7 +33,6 @@ public class AbsencesFragment extends BaseFragment {
     }
 
     public AbsencesFragment() {
-        super();
         setFragmentTitle(R.string.option_attendance);
     }
 
@@ -52,26 +51,20 @@ public class AbsencesFragment extends BaseFragment {
         ButterKnife.bind(this,v);
 
         rviAbsences.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        return v;
-    }
-
-    @Override
-    protected void bind() {
-        super.bind();
-
         progressBar.setVisibility(View.VISIBLE);
-        setAdapter();
-        mSubscription.add(mViewModel.getAttendanceStream()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addAbsence,this::displayError));
-    }
 
-    private void setAdapter(){
-        mAdapter = new AbsencesAdapter(getContext());
+        if(mAdapter==null){
+            mAdapter = new AbsencesAdapter(getContext());
+            mSubscription.add(mViewModel.getAttendanceStream()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::addAbsence,this::displayError));
+        }else{
+            progressBar.setVisibility(View.GONE);
+        }
+
         rviAbsences.setAdapter(mAdapter);
 
+        return v;
     }
 
     private void addAbsence(Absence absence){

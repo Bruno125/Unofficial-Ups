@@ -88,4 +88,8 @@ public class AbsencesAdapter extends RecyclerView.Adapter<AbsencesAdapter.ViewHo
         return mAbsences.size() + 1;
     }
 
+    public List<Absence> getItems(){
+        return mAbsences;
+    }
+
 }

@@ -33,13 +33,13 @@ public class TimetableFragment extends BaseFragment {
     private TimetableViewModel mViewModel;
     @Nullable
     private Timetable mTimetable;
+    private Date mSelectedDate;
 
     public static TimetableFragment newInstance(){
         return new TimetableFragment();
     }
 
     public TimetableFragment() {
-        super();
         setFragmentTitle(R.string.option_timetable);
     }
 
@@ -57,17 +57,17 @@ public class TimetableFragment extends BaseFragment {
 
         weekDatePicker.setListener(this::updateScheduleForDay);
 
+        if(mTimetable == null){
+            mSubscription.add(mViewModel.getTimetable()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::setTimetable,this::displayError));
+        }else{
+            if(mSelectedDate != null)
+                weekDatePicker.setSelectedDate(mSelectedDate);
+            setTimetable(mTimetable);
+        }
+
         return v;
-    }
-
-    @Override
-    protected void bind() {
-        super.bind();
-        assert mViewModel != null;
-
-        mSubscription.add(mViewModel.getTimetable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::setTimetable,this::displayError));
     }
 
     private void setTimetable(Timetable timetable){
@@ -76,6 +76,7 @@ public class TimetableFragment extends BaseFragment {
     }
 
     private void updateScheduleForDay(Date selectedDate){
+        mSelectedDate = selectedDate;
         if(mTimetable==null)
             return;
         dayScheduleView.setDay(mTimetable.getDay(selectedDate));

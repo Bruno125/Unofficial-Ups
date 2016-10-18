@@ -39,12 +39,13 @@ public class CoursesFragment extends BaseFragment {
     }
 
     public CoursesFragment() {
-        super();
         setFragmentTitle(R.string.option_courses);
     }
 
     @BindView(R.id.rviCourses) RecyclerView rviCourses;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    private List<Course> mCourses;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +57,19 @@ public class CoursesFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_courses, container, false);
         ButterKnife.bind(this,view);
 
+        //Setup views
         progressBar.setIndeterminate(true);
         setRecyclerView();
+
+        //Start listening for courses
+        if(mCourses == null) {
+            progressBar.setVisibility(View.VISIBLE);
+            mSubscription.add(mViewModel.getCoursesStream()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::addCourses, this::displayError));
+        }else{
+            addCourses(mCourses);
+        }
 
         return view;
     }
@@ -72,18 +84,13 @@ public class CoursesFragment extends BaseFragment {
     protected void bind() {
         super.bind();
 
-        progressBar.setVisibility(View.VISIBLE);
-        setRecyclerView();
-        mSubscription.add(mViewModel.getCoursesStream()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addCourses,this::displayError));
-
         mSubscription.add(mViewModel.getCourseDetails()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showCourseDetail,this::displayError));
     }
 
     private void addCourses(List<Course> courses){
+        mCourses = courses;
         progressBar.setVisibility(View.GONE);
         for(Course course : courses)
             mAdapter.addCourse(course);

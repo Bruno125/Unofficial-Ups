@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/nav_timetable"
+        icon="@drawable/ic_timetable_24dp"
+        title="@string/option_timetable" />
+    <tab
+        id="@+id/nav_courses"
+        icon="@drawable/ic_course_24dp"
+        title="@string/option_courses" />
+    <tab
+        id="@+id/nav_attendance"
+        icon="@drawable/ic_attendance_24dp"
+        title="@string/option_attendance" />
+    <!--<tab
+        id="@+id/nav_logout"
+        icon="@drawable/ic_logout_24dp"
+        title="@string/option_logout" />-->
+</tabs>

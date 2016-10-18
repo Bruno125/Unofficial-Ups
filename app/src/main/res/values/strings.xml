@@ -21,6 +21,10 @@
     <string name="prompt_password">Contraseña</string>
     <string name="text_login">Iniciar sesión</string>
 
+    <!-- Main -->
+    <string name="logout_dialog_title">Cerrar sesión</string>
+    <string name="logout_dialog_message">¿Realmente deseas cerrar sesión?</string>
+
     <!-- Courses -->
     <string name="action_classmates">Compañeros</string>
 
@@ -47,7 +51,9 @@
     <string name="text_title_total">TOTAL</string>
     <string name="text_title_maximum">MÁXIMO</string>
     
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Common -->
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="text_accept">Aceptar</string>
 
 </resources>

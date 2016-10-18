@@ -1,11 +1,14 @@
 package com.brunoaybar.unofficalupc.modules.general;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,48 +19,36 @@ import com.brunoaybar.unofficalupc.modules.attendance.AbsencesFragment;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficalupc.modules.courses.CoursesFragment;
 import com.brunoaybar.unofficalupc.modules.timetable.TimetableFragment;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private HashMap<String,BaseFragment> mFragments;
 
-    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.nav_view) NavigationView navigationView;
+    @BindView(R.id.bottomBar) BottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setupDrawer();
-        setupFragments();
-
-    }
-
-    public void setupDrawer(){
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        setupFragments();
+        bottomBar.setOnTabSelectListener(this::handleTabSelection);
 
     }
 
     private void setupFragments(){
         mFragments = new HashMap<>();
-        setFragment(TimetableFragment.newInstance());
-        navigationView.setCheckedItem(R.id.nav_timetable);
+        mSelectedTab = R.id.nav_timetable;
     }
 
     public void setFragment(BaseFragment fragment){
@@ -72,33 +63,47 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.flContent, fragment).commit();
         //Set toolbar title and close drawer
         setTitle(title);
-        drawer.closeDrawers();
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_timetable) {
-            // Handle the camera action
+    private @IdRes int mSelectedTab;
+    private void handleTabSelection(int tabId){
+        mSelectedTab = tabId;
+        if (tabId == R.id.nav_timetable) {
             setFragment(TimetableFragment.newInstance());
-        } else if (id == R.id.nav_courses) {
+        } else if (tabId == R.id.nav_courses) {
             setFragment(CoursesFragment.newInstance());
-        } else if (id == R.id.nav_attendance) {
+        } else if (tabId == R.id.nav_attendance) {
             setFragment(AbsencesFragment.newInstance());
         }
-        drawer.closeDrawer(GravityCompat.START);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.option_logout:
+                displayLogout();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void displayLogout(){
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(getString(R.string.logout_dialog_title))
+                .setMessage(getString(R.string.logout_dialog_message))
+                .setPositiveButton(R.string.text_yes, (dialog, which) -> logout())
+                .setNegativeButton(R.string.text_no, null)
+                .create().show();
+    }
+
+    private void logout(){
+    }
+
 }

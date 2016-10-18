@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.models.Absence;
@@ -38,6 +39,7 @@ public class AbsencesFragment extends BaseFragment {
 
 
     @BindView(R.id.rviAbsences) RecyclerView rviAbsences;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
     private AbsencesAdapter mAdapter;
 
     @Override
@@ -49,9 +51,8 @@ public class AbsencesFragment extends BaseFragment {
         View v =  inflater.inflate(R.layout.fragment_attendance, container, false);
         ButterKnife.bind(this,v);
 
-        mAdapter = new AbsencesAdapter(getContext());
         rviAbsences.setLayoutManager(new LinearLayoutManager(getContext()));
-        rviAbsences.setAdapter(mAdapter);
+
 
         return v;
     }
@@ -59,9 +60,23 @@ public class AbsencesFragment extends BaseFragment {
     @Override
     protected void bind() {
         super.bind();
+
+        progressBar.setVisibility(View.VISIBLE);
+        setAdapter();
         mSubscription.add(mViewModel.getAttendanceStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mAdapter::addAbsence,this::displayError));
+                .subscribe(this::addAbsence,this::displayError));
+    }
+
+    private void setAdapter(){
+        mAdapter = new AbsencesAdapter(getContext());
+        rviAbsences.setAdapter(mAdapter);
+
+    }
+
+    private void addAbsence(Absence absence){
+        progressBar.setVisibility(View.GONE);
+        mAdapter.addAbsence(absence);
     }
 
 }

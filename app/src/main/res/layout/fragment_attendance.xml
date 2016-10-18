@@ -1,8 +1,15 @@
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rviAbsences"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.brunoaybar.unofficalupc.modules.attendance.AbsencesFragment">
 
-</android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rviAbsences"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/progress_bar"/>
+
+</RelativeLayout>

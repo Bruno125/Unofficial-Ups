@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +23,16 @@ import com.brunoaybar.unofficalupc.modules.base.BaseActivity;
 import com.brunoaybar.unofficalupc.modules.classmates.ClassmatesActivity;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.functions.Func2;
 
 public class CourseDetailActivity extends BaseActivity {
 
@@ -72,7 +80,7 @@ public class CourseDetailActivity extends BaseActivity {
         setTitle(course.getName());
         tviCourseName.setText(course.getName());
         tviFormula.setText(course.getFormula());
-        progressView.setProgress((int)course.getCurrentProgress());
+        animateToProgress((int)course.getCurrentProgress());
 
         //Display assessments
         llaAssessments.removeAllViews();
@@ -88,6 +96,30 @@ public class CourseDetailActivity extends BaseActivity {
         currentGrade.setGrade(String.valueOf(course.getCurrentGrade()));
         footerView.setAssessment(this,currentGrade);
     }
+
+    private void animateToProgress(int progress){
+        int currentProgress = progressView.getProgress();
+        int var = currentProgress - progress;
+        boolean isIncreasing = currentProgress < progress;
+        List<Integer> states = new ArrayList<>();
+        while(currentProgress!=progress){
+            currentProgress+= isIncreasing ? 1 : -1;
+            states.add(currentProgress);
+        }
+
+        Observable<Long> mTimerObservable = Observable.interval(20,TimeUnit.MILLISECONDS);
+        Observable<Integer> mProgressObservable = Observable.just(states).flatMapIterable(i -> i);
+
+        Observable.zip(mTimerObservable, mProgressObservable,(t,p) -> p)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(p ->{
+                    progressView.setProgress(p);
+                },e ->{
+                    Log.e("ERROR",e.toString());
+                });
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

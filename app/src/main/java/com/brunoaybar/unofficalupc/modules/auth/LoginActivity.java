@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = etePassword.getText().toString();
         mSubscription.add(mViewModel.login(user,password)
                 .subscribe(success -> {
-                    redirectToHome();       //4Oe#9Xzb
+                    redirectToHome();
                 }, throwable -> {
                     Toast.makeText(LoginActivity.this,throwable.getMessage(),Toast.LENGTH_SHORT).show();
                 }));

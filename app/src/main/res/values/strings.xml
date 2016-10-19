@@ -32,6 +32,7 @@
         Al &lt;font color=\'#777777\'&gt; &lt;b&gt;{pct}%&lt;/b&gt;&lt;/font&gt; del curso, tienes una nota de &lt;font color=\'#777777\'&gt; &lt;b&gt;{grade}&lt;/b&gt;&lt;/font&gt;
     </string>
     <string name="text_concluded_evaluations">evaluaciones concluidas</string>
+    <string name="text_loading_course_details">Cargando...</string>
     <string name="text_type">TIPO</string>
     <string name="text_weight">PESO</string>
     <string name="text_grade">NOTA</string>

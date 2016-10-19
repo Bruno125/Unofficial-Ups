@@ -2,6 +2,7 @@ package com.brunoaybar.unofficalupc.modules.timetable;
 
 import android.support.annotation.NonNull;
 
+import com.brunoaybar.unofficalupc.data.models.Course;
 import com.brunoaybar.unofficalupc.data.models.Timetable;
 import com.brunoaybar.unofficalupc.data.models.User;
 import com.brunoaybar.unofficalupc.data.source.UpcRepository;
@@ -37,4 +38,10 @@ public class TimetableViewModel {
                 }));
     }
 
+    public Observable<Course> getCourseFromClass(Timetable.Class mClass){
+        Course course = new Course();
+        course.setCode(mClass.getCourseCode());
+        course.setName(mClass.getCourseShortName());
+        return Observable.just(course);
+    }
 }

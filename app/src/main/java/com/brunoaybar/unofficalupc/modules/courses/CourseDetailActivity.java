@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.brunoaybar.unofficalupc.R;
@@ -30,6 +32,7 @@ public class CourseDetailActivity extends BaseActivity {
     CoursesViewModel mViewModel;
     Course mCourse;
 
+    @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tviCourseName) TextView tviCourseName;
     @BindView(R.id.tviFormula) TextView tviFormula;
@@ -48,6 +51,11 @@ public class CourseDetailActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        mSubscription.add(mViewModel.getCourseFromBundle(getIntent().getExtras())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::bindCourse,this::displayError));
     }
 
 
@@ -55,13 +63,10 @@ public class CourseDetailActivity extends BaseActivity {
     protected void bind() {
         super.bind();
         assert mViewModel != null;
-
-        mSubscription.add(mViewModel.getCourseFromBundle(getIntent().getExtras())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::bindCourse,this::displayError));
     }
 
     private void bindCourse(Course course){
+        progressBar.setVisibility(View.GONE);
         mCourse= course;
         //Display course information
         setTitle(course.getName());

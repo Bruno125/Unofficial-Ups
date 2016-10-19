@@ -77,8 +77,22 @@ public class DayScheduleView extends LinearLayout {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height);
         params.setMargins(rowHeight,marginTop,0,0);
-        rlaEvents.addView(eventView.getContainerView(),params);
+        rlaEvents.addView(eventView,params);
 
+        eventView.setClickable(true);
+        if(mListener!=null)
+            eventView.setOnClickListener(v -> mListener.onSelectedClass(event));
+
+    }
+
+
+    interface OnClassSelectedListener{
+        void onSelectedClass(Timetable.Class mClass);
+    }
+
+    private OnClassSelectedListener mListener;
+    public void setListener(OnClassSelectedListener listener) {
+        mListener = listener;
     }
 
 
@@ -88,8 +102,7 @@ public class DayScheduleView extends LinearLayout {
         @BindView(R.id.tviName) TextView tviName;
         @BindView(R.id.tviPlace) TextView tviPlace;
 
-
-        private View containerView;
+        private View cardView;
 
         public EventView(Context context,Timetable.Class event) {
             super(context);
@@ -98,19 +111,17 @@ public class DayScheduleView extends LinearLayout {
 
         private void init(Context context,Timetable.Class event){
             LayoutInflater  mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            containerView = mInflater.inflate(R.layout.view_schedule_event, this, false);
-            ButterKnife.bind(this,containerView);
+            cardView = mInflater.inflate(R.layout.view_schedule_event, this, false);
+            ButterKnife.bind(this,cardView);
             setBackgroundColor(Color.TRANSPARENT);
 
             tviCodeAndSection.setText(event.getCourseCode() + " " + event.getSection());
             tviName.setText(event.getCourseName());
-            tviPlace.setText(event.getVenue() + " -" + event.getRoom());
+            tviPlace.setText(event.getVenue() + " - " + event.getRoom());
 
+            addView(cardView);
         }
 
-        public View getContainerView() {
-            return containerView;
-        }
     }
 
     class HourView extends LinearLayout{

@@ -27,6 +27,7 @@
 
     <!-- Courses -->
     <string name="action_classmates">Compañeros</string>
+    <string name="action_calculate">Calcular promedio</string>
 
     <string name="text_hint_course_progress">
         Al &lt;font color=\'#777777\'&gt; &lt;b&gt;{pct}%&lt;/b&gt;&lt;/font&gt; del curso, tienes una nota de &lt;font color=\'#777777\'&gt; &lt;b&gt;{grade}&lt;/b&gt;&lt;/font&gt;
@@ -38,6 +39,15 @@
     <string name="text_grade">NOTA</string>
     <string name="format_weight">%1$,.1f%%</string>
     <string name="text_final_assessment">NOTA FINAL</string>
+
+    <string name="text_calculate_hint">¡Ingresa tus notas y calcula tu promedio final!</string>
+    <string name="text_calculate">CALCULAR</string>
+    <string name="text_calculate_result_title">Promedio: %1$,.2f</string>
+    <string name="text_approved_msg">¡Buen trabajo!</string>
+    <string name="text_not_approved_msg">¡Estás desaprobado!</string>
+    <string name="error_fill_fields">Por favor rellena todos los campos</string>
+    <string name="error_grade_out_bounds">Tu notas deben estar entre 0 y 20</string>
+    <string name="error_number_invalid">Tus notas tiene que ser valores numéricos</string>
 
     <!-- Classmates -->
     <string name="title_classmates">Compañeros de clase</string>
@@ -51,7 +61,7 @@
     <string name="text_title_course">CURSO</string>
     <string name="text_title_total">TOTAL</string>
     <string name="text_title_maximum">MÁXIMO</string>
-    
+
     <!-- Common -->
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>

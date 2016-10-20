@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Adapter class that will receive the classmates data, and handle it's display
+ * Adapter class that will receive the menu_course data, and handle it's display
  * within a RecyclerView
  */
 

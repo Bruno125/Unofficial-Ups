@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviType"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_margin="8dp"
+        android:textColor="#212121"
+        android:gravity="left"/>
+
+    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        android:id="@+id/tviWeight"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        android:textColor="#212121"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/eteGrade"
+        android:inputType="numberDecimal"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

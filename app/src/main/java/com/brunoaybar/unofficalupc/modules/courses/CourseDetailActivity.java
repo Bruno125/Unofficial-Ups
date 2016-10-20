@@ -1,14 +1,13 @@
 package com.brunoaybar.unofficalupc.modules.courses;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSo
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficalupc.modules.base.BaseActivity;
 import com.brunoaybar.unofficalupc.modules.classmates.ClassmatesActivity;
+import com.brunoaybar.unofficalupc.modules.courses.calculate.CalculateActivity;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.util.ArrayList;
@@ -31,8 +31,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.functions.Func2;
 
 public class CourseDetailActivity extends BaseActivity {
 
@@ -60,7 +58,7 @@ public class CourseDetailActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        setTitle("");
         mSubscription.add(mViewModel.getCourseFromBundle(getIntent().getExtras())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::bindCourse,this::displayError));
@@ -71,6 +69,10 @@ public class CourseDetailActivity extends BaseActivity {
     protected void bind() {
         super.bind();
         assert mViewModel != null;
+
+        mSubscription.add(mViewModel.getCourseDetails()
+                .subscribe(this::openCalculate));
+
     }
 
     private void bindCourse(Course course){
@@ -123,7 +125,7 @@ public class CourseDetailActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.classmates,menu);
+        getMenuInflater().inflate(R.menu.menu_course,menu);
         return true;
     }
 
@@ -133,10 +135,21 @@ public class CourseDetailActivity extends BaseActivity {
             case R.id.action_classmates:
                 if(mCourse!=null)
                     ClassmatesActivity.startActivity(this,mCourse.getCode());
-                break;
+                return true;
+            case R.id.action_calculate:
+                if(mCourse!=null && mViewModel!=null) {
+                    mViewModel.courseAvailable(mCourse);
+                }
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openCalculate(Bundle bundle){
+        Intent i = new Intent(CourseDetailActivity.this, CalculateActivity.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
     @Override

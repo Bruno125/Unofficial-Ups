@@ -6,9 +6,11 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,10 +23,17 @@ import com.brunoaybar.unofficalupc.modules.general.MainActivity;
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficalupc.data.source.remote.UpcServiceDataSource;
+import com.brunoaybar.unofficalupc.utils.ColorizedDrawable;
+import com.brunoaybar.unofficalupc.utils.UiUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -35,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Nullable private LoginViewModel mViewModel;
 
+    @BindView(R.id.iviBackground) ImageView iviBackground;
     @BindView(R.id.iviLogo) ImageView iviLogo;
     @BindView(R.id.llaContainer) ViewGroup llaContainer;
     @BindView(R.id.llaForm) ViewGroup llaForm;
@@ -59,6 +69,18 @@ public class LoginActivity extends AppCompatActivity {
 
         runInitialLogoAnimation();
 
+        mSubscription = new CompositeSubscription();
+        mSubscription.add(mViewModel.verifyUserSession()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(verified -> { // Token is provided
+                    redirectToHome();
+                }, throwable -> {
+                    displayWarning(true);
+                })
+        );
+
+
     }
 
     private void runInitialLogoAnimation(){
@@ -79,20 +101,46 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.btnUnderstood) void actionUnderstood(){
         displayWarning(false)
                 .withEndAction(() -> new Handler().postDelayed(() -> {
-                    //Hide views
-                    setVisibility(View.GONE,tviWarning,btnUnderstood);
-                    //Show login form
-                    llaForm.setVisibility(View.VISIBLE);
-                    //Animate button login
-                    btnLogin.setScaleX(0);
-                    ViewCompat.animate(btnLogin)
-                            .scaleX(1.0f)
-                            .setStartDelay(500);
+                    List<Integer> states = new ArrayList<>();
+                    for(int i=0;i<=100;i+=2)
+                        states.add(i);
+
+                    Observable<Long> mTimerObservable = Observable.interval(10, TimeUnit.MILLISECONDS);
+                    Observable<Integer> mProgressObservable = Observable.just(states).flatMapIterable(i -> i);
+
+                    Observable.zip(mTimerObservable, mProgressObservable,(t,p) -> p)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(p ->{
+                                //Update background and item color and alpha
+                                update(p);
+                                if(p<100)
+                                    return;
+                                //Finish animating background!
+
+                                //Hide views
+                                setVisibility(View.GONE,tviWarning,btnUnderstood);
+                                //Show login form
+                                llaForm.setVisibility(View.VISIBLE);
+                                //Animate button login
+                                btnLogin.setScaleX(0);
+                                ViewCompat.animate(btnLogin)
+                                        .scaleX(1.0f)
+                                        .setStartDelay(500);
+                            },e ->{
+                            });
                 }, 0));
 
     }
 
+    private void update(int state){
+        float floatState = state / 100.0f;
+        iviBackground.setAlpha(1 - floatState );
+        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.primary),ContextCompat.getColor(this,R.color.white),floatState);
+        ColorizedDrawable.mutateDrawableWithColor(iviLogo.getDrawable(),color);
+    }
+
     private ViewPropertyAnimatorCompat displayWarning(boolean visible){
+        setVisibility(View.GONE,llaForm);
         setVisibility(visible ? View.VISIBLE : View.INVISIBLE,tviWarning,btnUnderstood);
         return ViewCompat.animate(btnUnderstood)
                 .scaleX(visible ? 1.0f : 0.0f)
@@ -132,18 +180,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void bind() {
-        assert mViewModel != null;
-
-        mSubscription = new CompositeSubscription();
-        mSubscription.add(mViewModel.verifyUserSession()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(verified -> { // Token is provided
-                    redirectToHome();
-                }, throwable -> {
-                    displayWarning(true);
-                })
-        );
 
         //Validate user format
         /*Observable<Boolean> userValidation = RxTextView.textChanges(eteUser)

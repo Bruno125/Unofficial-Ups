@@ -18,10 +18,11 @@
         ofrecer una mejor experiencia a los alumnos. \n\n
         Descuida, tu informacion personal no sera almacenada ni compartida en nigun momento.
     </string>
-    <string name="text_understood">OK, Entendido!</string>
+    <string name="text_understood">OK, ENTIENDO</string>
     <string name="prompt_user">Usuario</string>
     <string name="prompt_password">Contraseña</string>
     <string name="text_login">Iniciar sesión</string>
+    <string name="text_remember">Recordar mis datos</string>
 
     <!-- Main -->
     <string name="logout_dialog_title">Cerrar sesión</string>

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <style name="PositiveButton" parent="Theme.AppCompat">
         <item name="android:layout_width">200dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textColor">#fff</item>
-        
+
     </style>
-    
+
+    <style name="PositiveButton.Contrast" parent="PositiveButton">
+        <item name="android:theme">@style/CustomAccentOverlay</item>
+    </style>
+
+    <style name="CustomAccentOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="colorButtonNormal">@color/primary_dark</item>
+    </style>
+
 </resources>

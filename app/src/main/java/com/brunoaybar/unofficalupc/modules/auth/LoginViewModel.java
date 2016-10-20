@@ -64,7 +64,7 @@ public class LoginViewModel {
                                 //Verification failed
                             }else {
                                 try {
-                                    Thread.sleep(600);
+                                    Thread.sleep(1000);
                                 } catch (InterruptedException e) {
                                 }
                                 subscriber.onError(new Throwable());

@@ -9,7 +9,7 @@
 
 
     <!-- Login Screen -->
-    <dimen name="activity_login_logo_size">80dp</dimen>
+    <dimen name="activity_login_logo_size">60dp</dimen>
 
     <!-- Courses screen -->
     <dimen name="left_indicator_size">16dp</dimen>

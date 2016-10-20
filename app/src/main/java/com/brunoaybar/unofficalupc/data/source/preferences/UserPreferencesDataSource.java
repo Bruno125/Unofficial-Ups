@@ -24,6 +24,7 @@ import rx.functions.Func1;
 
 public class UserPreferencesDataSource {
 
+    private static final String KEY_SAVE_SESSION = "key_save_session";
     private static final String KEY_LAST_UPDATE = "key_last_update";
     private static final String KEY_TOKEN = "key_token";
     private static final String KEY_USER_CODE = "key_user_code";
@@ -36,7 +37,11 @@ public class UserPreferencesDataSource {
     }
 
     public Observable<Boolean> userAgreeToSaveSession(){
-        return Observable.just(true);
+        return Observable.just(PreferenceUtils.getBool(mContext,KEY_SAVE_SESSION,false));
+    }
+
+    public void setUserAgreeToSaveSession(boolean value){
+        PreferenceUtils.saveBoolean(mContext,KEY_SAVE_SESSION,value);
     }
 
     public Observable<String> getToken(){

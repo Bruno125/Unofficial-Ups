@@ -114,7 +114,7 @@
             android:id="@+id/btnUnderstood"
             style="@style/PositiveButton.Contrast"
             android:text="@string/text_understood"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

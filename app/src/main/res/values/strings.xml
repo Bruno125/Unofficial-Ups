@@ -23,6 +23,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="text_login">Iniciar sesión</string>
     <string name="text_remember">Recordar mis datos</string>
+    <string name="text_loading_login">Iniciando sesión</string>
 
     <!-- Main -->
     <string name="logout_dialog_title">Cerrar sesión</string>

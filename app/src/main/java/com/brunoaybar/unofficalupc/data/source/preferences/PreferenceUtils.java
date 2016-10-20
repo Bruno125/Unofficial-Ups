@@ -19,4 +19,18 @@ public class PreferenceUtils {
         editor.apply();
     }
 
+    public static boolean getBool(Context context, String key){
+        return getBool(context,key,false);
+    }
+
+    public static boolean getBool(Context context, String key,boolean defaultValue){
+        return PreferencesFactory.getPreferences(context).getBoolean(key,defaultValue);
+    }
+
+    public static void saveBoolean(Context context, String key,boolean value){
+        SharedPreferences.Editor editor = PreferencesFactory.getPreferences(context).edit();
+        editor.putBoolean(key,value);
+        editor.apply();
+    }
+
 }

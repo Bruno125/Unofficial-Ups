@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficalupc.modules.auth;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tilUser) TextInputLayout tilUser;
     @BindView(R.id.etePassword) EditText etePassword;
     @BindView(R.id.tilPassword) TextInputLayout tilPassword;
+    @BindView(R.id.cboRemember) CheckBox cboRemember;
     @BindView(R.id.btnLogin) Button btnLogin;
 
     @NonNull private CompositeSubscription mSubscription = new CompositeSubscription();
@@ -101,10 +104,10 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.btnUnderstood) void actionUnderstood(){
         displayWarning(false)
                 .withEndAction(() -> new Handler().postDelayed(() -> {
+                    //States to animate the background transition
                     List<Integer> states = new ArrayList<>();
                     for(int i=0;i<=100;i+=2)
                         states.add(i);
-
                     Observable<Long> mTimerObservable = Observable.interval(10, TimeUnit.MILLISECONDS);
                     Observable<Integer> mProgressObservable = Observable.just(states).flatMapIterable(i -> i);
 
@@ -112,10 +115,10 @@ public class LoginActivity extends AppCompatActivity {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(p ->{
                                 //Update background and item color and alpha
-                                update(p);
+                                updateBackground(p);
                                 if(p<100)
                                     return;
-                                //Finish animating background!
+                                //Finished animating background!
 
                                 //Hide views
                                 setVisibility(View.GONE,tviWarning,btnUnderstood);
@@ -132,10 +135,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void update(int state){
-        float floatState = state / 100.0f;
-        iviBackground.setAlpha(1 - floatState );
-        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.primary),ContextCompat.getColor(this,R.color.white),floatState);
+    private void updateBackground(int progress){
+        float state = progress / 100.0f;
+        iviBackground.setAlpha(1 - state );
+        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.primary),ContextCompat.getColor(this,R.color.white),state);
         ColorizedDrawable.mutateDrawableWithColor(iviLogo.getDrawable(),color);
     }
 
@@ -151,13 +154,30 @@ public class LoginActivity extends AppCompatActivity {
 
         String user = eteUser.getText().toString();
         String password = etePassword.getText().toString();
-        mSubscription.add(mViewModel.login(user,password)
+
+        setupViewsForLogin(true);
+        mSubscription.add(mViewModel.login(user,password,cboRemember.isChecked())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success -> {
                     redirectToHome();
                 }, throwable -> {
+                    setupViewsForLogin(false);
                     Toast.makeText(LoginActivity.this,throwable.getMessage(),Toast.LENGTH_SHORT).show();
                 }));
+    }
+
+    private ProgressDialog mDialog;
+    private void setupViewsForLogin(boolean loading){
+        btnLogin.setEnabled(!loading);
+        if(loading) {
+            mDialog = new ProgressDialog(this);
+            mDialog.setIndeterminate(true);
+            mDialog.setMessage(getString(R.string.text_loading_login));
+            mDialog.show();
+        }else{
+            mDialog.dismiss();
+        }
+
     }
 
     private void redirectToHome(){
@@ -165,48 +185,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bind();
-
-    }
-
-    @Override
-    protected void onPause() {
-        unBind();
-        super.onPause();
-    }
-
-    private void bind() {
-
-        //Validate user format
-        /*Observable<Boolean> userValidation = RxTextView.textChanges(eteUser)
-                .map(user -> mViewModel.userIsValid(user.toString()))
-                .debounce(1, TimeUnit.SECONDS)
-                .distinctUntilChanged();
-        mSubscription.add(userValidation.observeOn(AndroidSchedulers.mainThread()).
-                subscribe( isValid -> tilUser.setErrorEnabled(!isValid)));
-
-        //Validate password format
-        Observable<Boolean> passValidation = RxTextView.textChanges(etePassword)
-                .map(password -> mViewModel.passwordIsValid(password.toString()))
-                .debounce(1, TimeUnit.SECONDS)
-                .distinctUntilChanged();
-        mSubscription.add(passValidation.observeOn(AndroidSchedulers.mainThread()).
-                subscribe( isValid -> tilUser.setErrorEnabled(!isValid)));
-
-        //Enable or disable button based on inputs
-        mSubscription.add(Observable.combineLatest(userValidation, passValidation,
-                (userValid, passValid) -> userValid && passValid)
-                .distinctUntilChanged()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(valid -> btnLogin.setEnabled(valid)));*/
-
-    }
-
-    private void unBind(){
-        mSubscription.unsubscribe();
-    }
 }

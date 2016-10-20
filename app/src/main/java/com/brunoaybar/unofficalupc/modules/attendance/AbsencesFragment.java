@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.brunoaybar.unofficalupc.Injection;
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.models.Absence;
 import com.brunoaybar.unofficalupc.data.source.UpcRepository;
@@ -45,7 +46,7 @@ public class AbsencesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Init view model
-        mViewModel = new AbsencesViewModel((new UpcRepository(new UserPreferencesDataSource(getContext()), UpcServiceDataSource.getInstance())));
+        mViewModel = new AbsencesViewModel(Injection.provideUpcRepository(getContext()));
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_attendance, container, false);
         ButterKnife.bind(this,v);

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.brunoaybar.unofficalupc.Injection;
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.data.models.Classmate;
 import com.brunoaybar.unofficalupc.data.source.UpcRepository;
@@ -56,7 +57,7 @@ public class ClassmatesActivity extends BaseActivity {
             return;
         }
 
-        mViewModel = new ClassmatesViewModel(new UpcRepository(new UserPreferencesDataSource(this), UpcServiceDataSource.getInstance()));
+        mViewModel = new ClassmatesViewModel(Injection.provideUpcRepository(this));
 
         rviClassmates.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ClassmatesAdapter(this);

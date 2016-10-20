@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         String user = eteUser.getText().toString();
         String password = etePassword.getText().toString();
         mSubscription.add(mViewModel.login(user,password)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success -> {
                     redirectToHome();
                 }, throwable -> {

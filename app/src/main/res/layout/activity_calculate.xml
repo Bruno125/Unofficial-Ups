@@ -50,41 +50,34 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
+        android:id="@+id/llaContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rowTotal"
-        android:fitsSystemWindows="true">
-        <android.support.design.widget.AppBarLayout
+        android:orientation="vertical"
+        android:layout_above="@id/rowTotal">
+        <android.support.v7.widget.Toolbar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.v7.widget.Toolbar
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-            <com.brunoaybar.unofficalupc.components.base.BaseTextView
-                android:id="@+id/hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="16dp"
-                android:background="@color/white"
-                android:text="@string/text_calculate_hint"
-                android:textColor="@color/secondary_text"/>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+            android:id="@+id/hint"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/hint"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/text_calculate_hint"
+            android:textColor="@color/secondary_text"/>
+
+        <com.brunoaybar.unofficalupc.modules.courses.calculate.CalculationsView
+            android:id="@+id/calculationsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 </RelativeLayout>

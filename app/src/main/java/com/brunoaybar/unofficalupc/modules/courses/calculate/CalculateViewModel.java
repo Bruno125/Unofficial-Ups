@@ -67,7 +67,7 @@ public class CalculateViewModel {
     public void updatedCalculation(DisplayableCalculation calculation,int position){
         try{
             double grade = Double.parseDouble(calculation.getGrade());
-            calculation.setHasError(isValidGrade(grade));
+            calculation.setHasError(!isValidGrade(grade));
             mCalculationUpdateSubject.onNext(new DisplayCalculationUpdate(calculation,position));
         }catch (NumberFormatException e){
             calculation.setHasError(true);
@@ -81,14 +81,24 @@ public class CalculateViewModel {
     }
 
     class CalculationResult{
+        private boolean failed;
         private String title;
         private String message;
         private boolean approved;
 
         public CalculationResult(String title, String message, boolean approved){
+            this(title,message,approved,false);
+        }
+
+        public CalculationResult(String message){
+            this(null,message,false,true);
+        }
+
+        private CalculationResult(String title, String message, boolean approved,boolean didFail){
             this.title = title;
             this.message = message;
             this.approved = approved;
+            this.failed = didFail;
         }
 
         public String getTitle() {
@@ -101,6 +111,14 @@ public class CalculateViewModel {
 
         public boolean isApproved() {
             return approved;
+        }
+
+        public boolean didFail() {
+            return failed;
+        }
+
+        public void setFailed(boolean failed) {
+            this.failed = failed;
         }
     }
 
@@ -122,14 +140,14 @@ public class CalculateViewModel {
                 //Check if field is not empty
                 boolean isEmpty = TextUtils.isEmpty(calculation.getGrade());
                 if(isEmpty){
-                    mCalculationResultSubject.onError(getError(R.string.error_fill_fields));
+                    mCalculationResultSubject.onNext(getError(R.string.error_fill_fields));
                     return;
                 }
                 //Check if grade can be parsed to number
                 double grade = Double.parseDouble(calculation.getGrade());
                 //Check if grade is between the bounds
                 if(!isValidGrade(grade)) {
-                    mCalculationResultSubject.onError(getError(R.string.error_grade_out_bounds));
+                    mCalculationResultSubject.onNext(getError(R.string.error_grade_out_bounds));
                     return;
                 }
 
@@ -137,7 +155,7 @@ public class CalculateViewModel {
                 total += grade * calculation.getWeightValue() / 100;
 
             }catch (NumberFormatException e){
-                mCalculationResultSubject.onError(getError(R.string.error_number_invalid));
+                mCalculationResultSubject.onNext(getError(R.string.error_number_invalid));
             }
         }
 
@@ -156,8 +174,8 @@ public class CalculateViewModel {
         return grade >=12.45;
     }
 
-    private Throwable getError(int stringId){
-        return new Throwable(mContext.getString(stringId));
+    private CalculationResult getError(int stringId){
+        return new CalculationResult(mContext.getString(stringId));
     }
 
 

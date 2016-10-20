@@ -10,7 +10,7 @@ public class DisplayableCalculation {
     private double weightValue;
     private String weight;
     private String grade;
-    private boolean editingEnabled;
+    private boolean editingEnabled = true;
     private boolean hasError;
 
     public String getName() {

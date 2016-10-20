@@ -31,11 +31,14 @@ public class CalculateViewModel {
                     calculation.setName(assessment.getName());
                     calculation.setWeight(assessment.getWeight());
 
-                    String grade = assessment.getGrade().equals("0") ? "" : assessment.getGrade();
+                    String grade = assessment.getGrade();
+                    if( assessment.getGrade().equals("0"))
+                        grade = "";
+                    else if(assessment.getGrade().equals("NR"))
+                        grade = "0";
                     calculation.setGrade(grade);
 
-                    boolean enableEditing = !assessment.getGrade().equals("NR");
-                    calculation.setEditingEnabled(enableEditing);
+                    calculation.setEditingEnabled(true);
                     return calculation;
                 });
     }

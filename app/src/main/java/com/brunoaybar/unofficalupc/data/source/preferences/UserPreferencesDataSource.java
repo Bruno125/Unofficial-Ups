@@ -80,11 +80,22 @@ public class UserPreferencesDataSource {
         PreferenceUtils.saveString(mContext,KEY_PASS,user.getSavedPassword());
 
         //Update last update timestamp
-        String currentDateandTime = updateFormat.format(new Date());
-        PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateandTime);
+        String currentDateAndTime = updateFormat.format(new Date());
+        PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateAndTime);
 
         //Return the user instance
         return user;
+    }
+
+    public void removeUser(){
+        //Save user info
+        PreferenceUtils.saveString(mContext,KEY_TOKEN,null);
+        PreferenceUtils.saveString(mContext,KEY_USER_CODE,null);
+        PreferenceUtils.saveString(mContext,KEY_PASS,null);
+
+        //Update last update timestamp
+        String currentDateAndTime = updateFormat.format(new Date());
+        PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateAndTime);
     }
 
 }

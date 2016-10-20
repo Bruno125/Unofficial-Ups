@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficalupc.modules.general;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
@@ -14,8 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.brunoaybar.unofficalupc.Injection;
 import com.brunoaybar.unofficalupc.R;
 import com.brunoaybar.unofficalupc.modules.attendance.AbsencesFragment;
+import com.brunoaybar.unofficalupc.modules.auth.LoginActivity;
+import com.brunoaybar.unofficalupc.modules.base.BaseActivity;
 import com.brunoaybar.unofficalupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficalupc.modules.courses.CoursesFragment;
 import com.brunoaybar.unofficalupc.modules.timetable.TimetableFragment;
@@ -27,10 +31,12 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
+public class MainActivity extends BaseActivity {
 
     private HashMap<String,BaseFragment> mFragments;
-
+    private MainViewModel mViewModel;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.bottomBar) BottomBar bottomBar;
@@ -43,12 +49,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setupFragments();
         bottomBar.setOnTabSelectListener(this::handleTabSelection);
-
+        mViewModel = new MainViewModel(Injection.provideUpcRepository(this));
     }
 
     private void setupFragments(){
         mFragments = new HashMap<>();
-        mSelectedTab = R.id.nav_timetable;
     }
 
     public void setFragment(BaseFragment fragment){
@@ -65,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(title);
     }
 
-    private @IdRes int mSelectedTab;
     private void handleTabSelection(int tabId){
-        mSelectedTab = tabId;
         if (tabId == R.id.nav_timetable) {
             setFragment(TimetableFragment.newInstance());
         } else if (tabId == R.id.nav_courses) {
@@ -75,6 +78,18 @@ public class MainActivity extends AppCompatActivity {
         } else if (tabId == R.id.nav_attendance) {
             setFragment(AbsencesFragment.newInstance());
         }
+
+    }
+
+    @Override
+    protected void bind() {
+        super.bind();
+        mSubscription.add(mViewModel.getLogoutStream().subscribe(didLogout ->{
+            if(didLogout)
+                openHome();
+            else
+                showToast(R.string.error_logout);
+        }));
 
     }
 
@@ -98,12 +113,15 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle(getString(R.string.logout_dialog_title))
                 .setMessage(getString(R.string.logout_dialog_message))
-                .setPositiveButton(R.string.text_yes, (dialog, which) -> logout())
+                .setPositiveButton(R.string.text_yes, (dialog, which) -> mViewModel.performLogout())
                 .setNegativeButton(R.string.text_no, null)
                 .create().show();
     }
 
-    private void logout(){
+    private void openHome(){
+        Intent i = new Intent(MainActivity.this,LoginActivity.class);
+        i.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 
 }

@@ -81,7 +81,7 @@ public class CoursesViewModel {
         if(course.getAssesments()==null || course.getAssesments().size()<1){
             return Observable.create(subscriber -> {
                 mRepository.getSession().subscribe(user -> {
-                    mRepository.getCourseDetail(user,course.getCode()).subscribe(subscriber::onNext);
+                    mRepository.getCourseDetail(user,course.getCode()).subscribe(subscriber::onNext,subscriber::onError);
                 });
             });
         //But if we already have that information, we just return the course

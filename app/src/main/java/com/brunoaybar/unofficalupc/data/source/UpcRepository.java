@@ -104,6 +104,11 @@ public class UpcRepository {
                 .map(User::hasValidSession);
     }
 
+    public Observable<Boolean> logout(){
+        mPreferencesSource.removeUser();
+        return Observable.just(true);
+    }
+
     public Observable<Timetable> getTimeTable(String userCode, String token){
         return mServiceSource.getTimeTable(userCode,token);
     }

@@ -38,38 +38,38 @@ public class LoginViewModel {
                         mDataSource.getToken(),
                         mDataSource.getUserCode(),
                         mDataSource.getSavedPassword(), User::new)
-                .subscribe(tempUser -> {
-                    Observable<Boolean> verifyResponse = null;
-                    // Login again using credentials
-                    if(tempUser.hasValidCredentials()){
-                        verifyResponse = loginWithEncryptedPass(tempUser.getUserCode(),tempUser.getSavedPassword());
-                    }
-                    // Check if we have a token available
-                    else if(tempUser.hasValidSession()){
-                        //Verify if token is still active
-                        verifyResponse = mRemoteDataSource.validateToken(tempUser.getUserCode(),tempUser.getToken());
-                    }
+                        .subscribe(tempUser -> {
+                            Observable<Boolean> verifyResponse = null;
+                            // Login again using credentials
+                            if(tempUser.hasValidCredentials()){
+                                verifyResponse = loginWithEncryptedPass(tempUser.getUserCode(),tempUser.getSavedPassword());
+                            }
+                            // Check if we have a token available
+                            else if(tempUser.hasValidSession()){
+                                //Verify if token is still active
+                                verifyResponse = mRemoteDataSource.validateToken(tempUser.getUserCode(),tempUser.getToken());
+                            }
 
-                    //We had a way of verifying the session
-                    if (verifyResponse!=null){
-                        verifyResponse.subscribe(valid -> {
-                            if(valid) {
-                                subscriber.onNext(true);
-                                subscriber.onCompleted();
-                            }else
+                            //We had a way of verifying the session
+                            if (verifyResponse!=null){
+                                verifyResponse.subscribe(valid -> {
+                                    if(valid) {
+                                        subscriber.onNext(true);
+                                        subscriber.onCompleted();
+                                    }else
+                                        subscriber.onError(new Throwable());
+                                }, throwable -> {
+                                    subscriber.onError(new Throwable());
+                                });
+                                //Verification failed
+                            }else {
+                                try {
+                                    Thread.sleep(600);
+                                } catch (InterruptedException e) {
+                                }
                                 subscriber.onError(new Throwable());
-                        }, throwable -> {
-                            subscriber.onError(new Throwable());
-                        });
-                    //Verification failed
-                    }else {
-                        try {
-                            Thread.sleep(600);
-                        } catch (InterruptedException e) {
-                        }
-                        subscriber.onError(new Throwable());
-                    }
-                }));
+                            }
+                        }));
     }
 
     public Observable<Boolean> login(String userCode, String password){

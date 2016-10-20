@@ -10,6 +10,8 @@
     <string name="option_attendance">Inasistencias</string>
     <string name="option_logout">Cerrar sesión</string>
 
+    <string name="error_logout">Ocurrió un error al cerrar sesión</string>
+
     <!-- Login -->
     <string name="text_warning_application">
         Esta es una version NO oficial del app UPC, la cual fue hecha con el único fin de

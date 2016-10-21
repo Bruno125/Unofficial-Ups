@@ -7,7 +7,7 @@
     android:paddingRight="8dp">
 
 
-    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+    <com.brunoaybar.unofficialupc.components.base.BaseTextView
         android:id="@+id/tviType"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"
@@ -17,7 +17,7 @@
         android:textColor="#212121"
         android:gravity="left"/>
 
-    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+    <com.brunoaybar.unofficialupc.components.base.BaseTextView
         android:id="@+id/tviWeight"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"

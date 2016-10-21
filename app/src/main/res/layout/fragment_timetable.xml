@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.brunoaybar.unofficalupc.modules.timetable.TimetableFragment">
+    tools:context="com.brunoaybar.unofficialupc.modules.timetable.TimetableFragment">
 
 
 
-    <com.brunoaybar.unofficalupc.modules.timetable.WeekDatePicker
+    <com.brunoaybar.unofficialupc.modules.timetable.WeekDatePicker
         android:id="@+id/weekDatePicker"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#fff"
         />
 
-    <com.brunoaybar.unofficalupc.modules.timetable.DayScheduleView
+    <com.brunoaybar.unofficialupc.modules.timetable.DayScheduleView
         android:id="@+id/dayScheduleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

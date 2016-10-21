@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-        <com.brunoaybar.unofficalupc.modules.courses.AssessmentRowView
+        <com.brunoaybar.unofficialupc.modules.courses.AssessmentRowView
             android:id="@+id/footerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 <include layout="@layout/view_curso_row"
                     android:id="@+id/headerCurso"/>
             </LinearLayout>
-            <com.brunoaybar.unofficalupc.modules.courses.AssessmentRowView
+            <com.brunoaybar.unofficialupc.modules.courses.AssessmentRowView
                 android:id="@+id/headerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

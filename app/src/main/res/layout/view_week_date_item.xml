@@ -8,13 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <com.brunoaybar.unofficalupc.modules.timetable.RoundCircleView
+        <com.brunoaybar.unofficialupc.modules.timetable.RoundCircleView
             android:id="@+id/roundCircleView"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_centerInParent="true"/>
 
-        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
             android:id="@+id/tviDateNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
     </RelativeLayout>
 
-    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+    <com.brunoaybar.unofficialupc.components.base.BaseTextView
         android:id="@+id/tviDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

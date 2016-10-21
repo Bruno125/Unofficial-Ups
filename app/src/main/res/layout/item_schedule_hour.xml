@@ -5,7 +5,7 @@
 
     android:layout_height="@dimen/schedule_hour_height">
 
-    <com.brunoaybar.unofficalupc.components.base.BaseTextView
+    <com.brunoaybar.unofficialupc.components.base.BaseTextView
         android:id="@+id/tviHour"
         android:layout_width="@dimen/schedule_time_width"
         android:layout_height="@dimen/schedule_hour_height"

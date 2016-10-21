@@ -15,7 +15,7 @@
         android:layout_margin="8dp"
         android:paddingLeft="8dp">
 
-        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
             android:id="@+id/tviCodeAndSection"
             android:layout_width="match_parent"
             android:layout_gravity="center_vertical"
@@ -25,7 +25,7 @@
             android:textColor="@color/secondary_text" />
 
 
-        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
             android:id="@+id/tviName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_location_on_white_24dp"/>
 
-            <com.brunoaybar.unofficalupc.components.base.BaseTextView
+            <com.brunoaybar.unofficialupc.components.base.BaseTextView
                 android:id="@+id/tviPlace"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"

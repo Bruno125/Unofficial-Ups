@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
             android:id="@+id/tviName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_weight="3"/>
 
 
-        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
             android:id="@+id/tviTotal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:layout_weight="1"/>
 
 
-        <com.brunoaybar.unofficalupc.components.base.BaseTextView
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
             android:id="@+id/tviMaximum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

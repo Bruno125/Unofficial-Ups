@@ -29,7 +29,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void displayError(Throwable error){
-        Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_SHORT).show();
+        if(isAdded()) {
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 

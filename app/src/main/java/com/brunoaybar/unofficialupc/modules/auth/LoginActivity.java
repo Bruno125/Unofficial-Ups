@@ -40,6 +40,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static com.brunoaybar.unofficialupc.utils.UiUtils.setVisibility;
 
 public class LoginActivity extends AppCompatActivity {
@@ -191,7 +192,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void redirectToHome(){
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+
     }
 
 }

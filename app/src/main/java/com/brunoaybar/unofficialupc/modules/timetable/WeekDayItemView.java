@@ -45,7 +45,7 @@ public class WeekDayItemView extends LinearLayout {
 
         tviDateNumber.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("E",Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("E",new Locale("es"));
         tviDay.setText(sdf.format(date));
 
         mDate = date;

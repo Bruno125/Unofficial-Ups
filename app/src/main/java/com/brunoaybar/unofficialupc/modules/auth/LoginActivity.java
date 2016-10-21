@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.modules.general.MainActivity;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
@@ -154,13 +155,22 @@ public class LoginActivity extends AppCompatActivity {
         String user = eteUser.getText().toString();
         String password = etePassword.getText().toString();
 
+        //Disable button and show progress
         setupViewsForLogin(true);
+        //Request login
         mSubscription.add(mViewModel.login(user,password,cboRemember.isChecked())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success -> {
+                    //Notify event to analytics
+                    AnalyticsManager.eventLogin(this,success);
+                    //Continue app flow
                     redirectToHome();
                 }, throwable -> {
+                    //Notify event to analytics
+                    AnalyticsManager.eventLogin(this,false);
+                    //Re-enable login
                     setupViewsForLogin(false);
+                    //Display error message
                     Toast.makeText(LoginActivity.this,throwable.getMessage(),Toast.LENGTH_SHORT).show();
                 }));
     }

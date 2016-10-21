@@ -86,20 +86,22 @@ public class CalculateViewModel {
         private String title;
         private String message;
         private boolean approved;
+        private double grade;
 
-        public CalculationResult(String title, String message, boolean approved){
-            this(title,message,approved,false);
+        public CalculationResult(String title, String message, double grade, boolean approved){
+            this(title,message,grade,approved,false);
         }
 
         public CalculationResult(String message){
-            this(null,message,false,true);
+            this(null,message,0,false,true);
         }
 
-        private CalculationResult(String title, String message, boolean approved,boolean didFail){
+        private CalculationResult(String title, String message,double grade, boolean approved,boolean didFail){
             this.title = title;
             this.message = message;
             this.approved = approved;
             this.failed = didFail;
+            this.grade = grade;
         }
 
         public String getTitle() {
@@ -118,9 +120,10 @@ public class CalculateViewModel {
             return failed;
         }
 
-        public void setFailed(boolean failed) {
-            this.failed = failed;
+        public double getGrade() {
+            return grade;
         }
+
     }
 
 
@@ -163,9 +166,9 @@ public class CalculateViewModel {
         CalculationResult result;
         String title = String.format(mContext.getString(R.string.text_calculate_result_title),total);
         if(isApproved(total)){
-            result = new CalculationResult(title, mContext.getString(R.string.text_approved_msg), true);
+            result = new CalculationResult(title, mContext.getString(R.string.text_approved_msg), total, true);
         }else{
-            result = new CalculationResult(title, mContext.getString(R.string.text_not_approved_msg), false);
+            result = new CalculationResult(title, mContext.getString(R.string.text_not_approved_msg), total, false);
         }
 
         mCalculationResultSubject.onNext(result);

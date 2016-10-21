@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
+import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.modules.attendance.AbsencesFragment;
 import com.brunoaybar.unofficialupc.modules.auth.LoginActivity;
 import com.brunoaybar.unofficialupc.modules.base.BaseActivity;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -76,11 +78,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void bind() {
         super.bind();
-        mSubscription.add(mViewModel.getLogoutStream().subscribe(didLogout ->{
-            if(didLogout)
-                openHome();
-            else
-                showToast(R.string.error_logout);
+        mSubscription.add(mViewModel.getLogoutStream()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(didLogout ->{
+                    if(didLogout) {
+                        //Notify event to analytics
+                        AnalyticsManager.eventLogout(this);
+                        //Redirect to home screen
+                        openHome();
+                    }else
+                        showToast(R.string.error_logout);
         }));
 
     }

@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.brunoaybar.unofficialupc.R;
+import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
+import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.source.UpcRepository;
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
@@ -27,6 +29,7 @@ public class CalculateActivity extends BaseActivity {
 
     private CalculateViewModel mViewModel;
     private CoursesViewModel mCourseViewModel;
+    private Course mCourse;
 
 
     @Override
@@ -59,6 +62,7 @@ public class CalculateActivity extends BaseActivity {
         //Get course information, and then use the assessments to populate the calculations view
         mSubscription.add(mCourseViewModel.getCourseFromBundle(getIntent().getExtras())
                 .subscribe(course -> {
+                    mCourse = course;
                     mViewModel.getCalculationsStream(course)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(calculationsView::addCalculation,this::displayError);
@@ -85,6 +89,10 @@ public class CalculateActivity extends BaseActivity {
                     .setContentText(result.getMessage())
                     .setConfirmText(getString(R.string.text_accept))
                     .show();
+
+            //Notify event to analytics
+            AnalyticsManager.eventCalculate(this,mCourse,result.getGrade());
+
         }
 
     }

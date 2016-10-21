@@ -11,6 +11,8 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.crashlytics.android.answers.SignUpEvent;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 
@@ -19,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.fabric.sdk.android.Fabric;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Class that will handle analytics libraries setup, events dispatching and other analytics related stuff
@@ -34,6 +38,9 @@ public class AnalyticsManager {
         //Setup amplitude
         Amplitude.getInstance().initialize(application, BuildConfig.AMPLITUDE_SDK).enableForegroundTracking(application);
 
+        //Setup Facebook
+        FacebookSdk.sdkInitialize(application);
+        AppEventsLogger.activateApp(application);
     }
 
 

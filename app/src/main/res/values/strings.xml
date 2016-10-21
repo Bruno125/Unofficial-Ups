@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Unoffical UPC</string>
+    <string name="app_name">Unofficial UPC</string>
+    <string name="facebook_app_id">***REMOVED***</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -16,7 +17,7 @@
     <string name="text_warning_application">
         Esta es una version NO oficial del app UPC, la cual fue hecha con el único fin de
         ofrecer una mejor experiencia a los alumnos. \n\n
-        Descuida, tu informacion personal no sera almacenada ni compartida en nigun momento.
+        Descuida, tu informacion personal no será almacenada ni compartida en nigun momento.
     </string>
     <string name="text_understood">OK, ENTIENDO</string>
     <string name="prompt_user">Usuario</string>

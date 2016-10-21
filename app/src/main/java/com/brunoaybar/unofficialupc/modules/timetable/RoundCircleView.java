@@ -47,7 +47,7 @@ public class RoundCircleView extends View {
 
     private void init(Context context, boolean isSelected ,@ColorInt int color){
         //Set circle size
-        currentSize = 25;
+        currentSize = context.getResources().getDimensionPixelSize(R.dimen.schedule_item_size);
         //Set circle color
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         if(!isInEditMode()) {

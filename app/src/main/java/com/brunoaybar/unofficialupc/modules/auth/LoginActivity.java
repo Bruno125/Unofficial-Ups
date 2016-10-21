@@ -2,6 +2,7 @@ package com.brunoaybar.unofficialupc.modules.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -140,8 +141,9 @@ public class LoginActivity extends AppCompatActivity {
     private void updateBackground(int progress){
         float state = progress / 100.0f;
         iviBackground.setAlpha(1 - state );
-        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.primary),ContextCompat.getColor(this,R.color.white),state);
-        ColorizedDrawable.mutateDrawableWithColor(iviLogo.getDrawable(),color);
+        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.white),ContextCompat.getColor(this,R.color.primary),state);
+        Drawable res = ColorizedDrawable.mutateDrawableWithColor(iviLogo.getDrawable(),color);
+        iviLogo.setImageDrawable(res);
     }
 
     private ViewPropertyAnimatorCompat displayWarning(boolean visible){

@@ -55,10 +55,6 @@ public class ClassmatesActivity extends BaseActivity {
 
         mViewModel = new ClassmatesViewModel(Injection.provideUpcRepository(this));
 
-        rviClassmates.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ClassmatesAdapter(this);
-        rviClassmates.setAdapter(mAdapter);
-
         //Setup toolbar
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null)
@@ -74,9 +70,17 @@ public class ClassmatesActivity extends BaseActivity {
         assert mViewModel != null;
 
         progressBar.setVisibility(View.VISIBLE);
+        setupAdapter();
         mSubscription.add(mViewModel.getClassmates(courseCode)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::setClassmates,this::displayError));
+    }
+
+    private void setupAdapter(){
+
+        rviClassmates.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new ClassmatesAdapter(this);
+        rviClassmates.setAdapter(mAdapter);
     }
 
     private void setClassmates(List<Classmate> classmates){

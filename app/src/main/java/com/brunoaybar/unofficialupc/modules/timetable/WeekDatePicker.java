@@ -161,7 +161,11 @@ public class WeekDatePicker extends RelativeLayout{
     }
 
     public Date getSelectedDate(){
-        return mWeekDayItems.get(mSelectedIndex).getDate();
+        try{
+            return mWeekDayItems.get(mSelectedIndex).getDate();
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     public void setSelectedDate(Date date){

@@ -31,10 +31,15 @@ public class CourseResponse extends BaseResponse
         course.setCode(getCodCurso());
         course.setName(getCursoNombre());
         course.setFormula(getFormula());
-        if(TextUtils.isEmpty(getNotaFinal()))
-            course.setCurrentGrade(0);
-        else
+
+        try{
             course.setCurrentGrade(Double.parseDouble(getNotaFinal()));
+        }catch (Exception e){ //If grade is empty or not double mark as error
+            course.setValid(false);
+            return course;
+        }
+
+
         if(TextUtils.isEmpty(getPorcentajeAvance()))
             course.setCurrentProgress(0);
         else

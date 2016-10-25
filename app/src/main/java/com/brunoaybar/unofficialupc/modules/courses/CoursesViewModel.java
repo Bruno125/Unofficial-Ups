@@ -38,7 +38,9 @@ public class CoursesViewModel {
             //Use current session to get courses
             mRepository.getCourses(user)
                     .flatMap(courses -> Observable.from(courses)
-                            .flatMap(course ->mRepository.getCourseDetail(user,course.getCode())).toList())
+                            .flatMap(course ->mRepository.getCourseDetail(user,course.getCode()))
+                            .filter(Course::isValid)
+                            .toList())
                     //.flatMapIterable(courses -> courses)
                     .subscribe(course ->{
                         mCoursesSubject.onNext(course);
@@ -76,7 +78,7 @@ public class CoursesViewModel {
             return Observable.create(subscriber -> {
                 mRepository.getSession().subscribe(user -> {
                     mRepository.getCourseDetail(user,course.getCode()).subscribe(subscriber::onNext,subscriber::onError);
-                });
+                },subscriber::onError);
             });
         //But if we already have that information, we just return the course
         }else{

@@ -13,6 +13,7 @@ public final class Course {
     private double mCurrentProgress;
     private double mCurrentGrade;
     private List<Assessment> mAssesments;
+    private boolean isValid = true;
 
     public String getCode() {
         return mCode;
@@ -62,4 +63,11 @@ public final class Course {
         this.mAssesments = assesments;
     }
 
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
 }

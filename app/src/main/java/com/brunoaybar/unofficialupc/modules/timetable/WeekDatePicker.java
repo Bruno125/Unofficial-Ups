@@ -169,7 +169,7 @@ public class WeekDatePicker extends RelativeLayout{
     }
 
     public void setSelectedDate(Date date){
-        if(mWeekDayItems==null)
+        if(date == null || mWeekDayItems==null)
             return;
         int index = mSelectedIndex,c = 0;
         for (WeekDayItemView item : mWeekDayItems){

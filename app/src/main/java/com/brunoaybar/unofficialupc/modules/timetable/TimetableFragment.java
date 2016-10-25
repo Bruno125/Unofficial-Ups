@@ -15,6 +15,7 @@ import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficialupc.modules.courses.CourseDetailActivity;
 import com.brunoaybar.unofficialupc.modules.courses.CoursesViewModel;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.Date;
 
@@ -65,6 +66,8 @@ public class TimetableFragment extends BaseFragment {
         }else{
             if(mSelectedDate != null)
                 weekDatePicker.setSelectedDate(mSelectedDate);
+            else
+                Crashlytics.log("Timetable set but no selected date");
             setTimetable(mTimetable);
         }
 
@@ -78,7 +81,7 @@ public class TimetableFragment extends BaseFragment {
 
     private void updateScheduleForDay(Date selectedDate){
         mSelectedDate = selectedDate;
-        if(mTimetable==null)
+        if(selectedDate == null || mTimetable==null)
             return;
         dayScheduleView.setDay(mTimetable.getDay(selectedDate));
     }

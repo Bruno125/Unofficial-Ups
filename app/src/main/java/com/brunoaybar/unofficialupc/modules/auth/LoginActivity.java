@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
             mDialog.setIndeterminate(true);
             mDialog.setMessage(getString(R.string.text_loading_login));
             mDialog.show();
-        }else{
+        }else if(mDialog.isShowing()){
             mDialog.dismiss();
         }
 

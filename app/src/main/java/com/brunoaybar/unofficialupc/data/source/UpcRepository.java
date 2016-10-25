@@ -53,16 +53,14 @@ public class UpcRepository {
     }
 
     public Observable<String> getToken(){
-        return Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
+        return Observable.create(subscriber -> {
                 //Evaluate if token is still valid
                 tokenIsStillValid().subscribe(valid ->{
                     if(valid){ //If valid, get token from preferences and return it
                         mPreferencesSource.getToken().subscribe(token ->{
                             subscriber.onNext(token);
                             subscriber.onCompleted();
-                        });
+                        },subscriber::onError);
                     }else{ //If not, check if user agreed to save it's session
                         mPreferencesSource.userAgreeToSaveSession().subscribe( agreed -> {
                             //User didn't want to save session, so there's nothing we can do
@@ -80,13 +78,11 @@ public class UpcRepository {
                                                 .subscribe(user -> {
                                                     subscriber.onNext(user.getToken()); //Return token
                                                 }, subscriber::onError); //In case there is any error
-                                    });
-
+                                    },subscriber::onError);
                         });
                     }
                 });
-            }
-        });
+            });
     }
 
     public Observable<User> getSession(){

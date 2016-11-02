@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateBackground(int progress){
         float state = progress / 100.0f;
         iviBackground.setAlpha(1 - state );
-        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.white),ContextCompat.getColor(this,R.color.primary),state);
+        int color = UiUtils.blendColors(ContextCompat.getColor(this,R.color.primary),ContextCompat.getColor(this,R.color.white),state);
         Drawable res = ColorizedDrawable.mutateDrawableWithColor(iviLogo.getDrawable(),color);
         iviLogo.setImageDrawable(res);
     }

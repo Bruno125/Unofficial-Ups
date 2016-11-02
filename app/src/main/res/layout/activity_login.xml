@@ -28,7 +28,7 @@
         <ImageView
             android:layout_width="@dimen/activity_login_logo_size"
             android:layout_height="@dimen/activity_login_logo_size"
-            app:srcCompat="@drawable/upc_white_logo"
+            app:srcCompat="@drawable/ic_white_logo"
             android:layout_gravity="center_horizontal"
             android:id="@+id/iviLogo" />
 

@@ -45,7 +45,7 @@ public class CoursesViewModel {
                     .subscribe(course ->{
                         mCoursesSubject.onNext(course);
                     },mCoursesSubject::onError);
-        });
+        },mCoursesSubject::onError);
 
     }
 

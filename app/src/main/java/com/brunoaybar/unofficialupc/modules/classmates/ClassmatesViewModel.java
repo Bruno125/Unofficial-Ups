@@ -26,7 +26,7 @@ public class ClassmatesViewModel {
                     //Use current session to get menu_course
                     mRepository.getClassmates(user,courseCode)
                             .subscribe(subscriber::onNext,subscriber::onError);
-                }));
+                },subscriber::onError));
     }
 
 

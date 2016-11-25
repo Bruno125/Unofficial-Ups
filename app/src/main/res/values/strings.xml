@@ -53,6 +53,8 @@
     <string name="error_fill_fields">Por favor rellena todos los campos</string>
     <string name="error_grade_out_bounds">Tu notas deben estar entre 0 y 20</string>
     <string name="error_number_invalid">Tus notas tiene que ser valores numéricos</string>
+    <string name="error_getting_courses">Ocurrió un error al obtener tus cursos</string>
+
 
     <!-- Classmates -->
     <string name="title_classmates">Compañeros de clase</string>

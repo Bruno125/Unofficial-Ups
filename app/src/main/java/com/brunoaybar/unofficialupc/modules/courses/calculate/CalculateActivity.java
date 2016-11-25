@@ -76,8 +76,7 @@ public class CalculateActivity extends BaseActivity {
         //Listen for calculation results
         mSubscription.add(mViewModel.getCalculationResultsStream()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::displayResult));
-
+                .subscribe(this::displayResult,this::displayError));
     }
 
     private void displayResult(CalculateViewModel.CalculationResult result){

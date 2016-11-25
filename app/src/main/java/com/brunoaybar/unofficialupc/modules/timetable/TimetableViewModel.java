@@ -31,7 +31,7 @@ public class TimetableViewModel {
                                 subscriber.onNext(response);
                                 subscriber.onCompleted();
                             },subscriber::onError);
-                }));
+                },subscriber::onError));
     }
 
     public Observable<Course> getCourseFromClass(Timetable.Class mClass){

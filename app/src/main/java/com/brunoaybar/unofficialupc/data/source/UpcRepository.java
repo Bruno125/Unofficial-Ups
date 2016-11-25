@@ -79,9 +79,9 @@ public class UpcRepository {
                                                     subscriber.onNext(user.getToken()); //Return token
                                                 }, subscriber::onError); //In case there is any error
                                     },subscriber::onError);
-                        });
+                        }, subscriber::onError);
                     }
-                });
+                },subscriber::onError);
             });
     }
 

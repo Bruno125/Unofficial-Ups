@@ -93,7 +93,7 @@ public class TimetableFragment extends BaseFragment {
             Intent i = new Intent(getActivity(),CourseDetailActivity.class);
             i.putExtras(bundle);
             startActivity(i);
-        }));
+        },e-> this.displayMessage(R.string.error_getting_courses)));
 
         mViewModel.getCourseFromClass(mClass).subscribe(mCourseViewModel::courseAvailable);
     }

@@ -74,7 +74,7 @@ public class LoginViewModel {
                             }
                             subscriber.onError(new Throwable());
                         }
-                    });
+                    },subscriber::onError);
         }));
     }
 

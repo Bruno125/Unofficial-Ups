@@ -69,7 +69,7 @@ public class CourseDetailActivity extends BaseActivity {
         assert mViewModel != null;
 
         mSubscription.add(mViewModel.getCourseDetails()
-                .subscribe(this::openCalculate));
+                .subscribe(this::openCalculate, e->{}));
 
     }
 

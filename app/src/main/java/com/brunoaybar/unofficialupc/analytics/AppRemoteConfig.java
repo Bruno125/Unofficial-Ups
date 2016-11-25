@@ -1,9 +1,13 @@
 package com.brunoaybar.unofficialupc.analytics;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.brunoaybar.unofficialupc.BuildConfig;
 import com.brunoaybar.unofficialupc.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
@@ -35,6 +39,13 @@ public class AppRemoteConfig {
                 .build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
         mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+    }
+
+    public void update(Activity activity){
+        mFirebaseRemoteConfig.fetch().addOnCompleteListener(activity, task -> {
+            if(task.isSuccessful())
+                mFirebaseRemoteConfig.activateFetched();
+        });
     }
 
     public double getMinimumGrade(){

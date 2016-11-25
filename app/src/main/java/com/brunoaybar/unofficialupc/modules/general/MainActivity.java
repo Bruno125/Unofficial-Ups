@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
+import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.modules.attendance.AbsencesFragment;
 import com.brunoaybar.unofficialupc.modules.auth.LoginActivity;
 import com.brunoaybar.unofficialupc.modules.base.BaseActivity;
@@ -44,6 +45,8 @@ public class MainActivity extends BaseActivity {
         setupFragments();
         bottomBar.setOnTabSelectListener(this::handleTabSelection);
         mViewModel = new MainViewModel(Injection.provideUpcRepository(this));
+
+        AppRemoteConfig.getInstance().update(this);
     }
 
     private void setupFragments(){

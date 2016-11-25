@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.brunoaybar.unofficialupc.R;
+import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.data.models.Course;
 
 import java.util.List;
@@ -175,7 +176,7 @@ public class CalculateViewModel {
     }
 
     private boolean isApproved(double grade){
-        return grade >=12.45;
+        return grade >= AppRemoteConfig.getInstance().getMinimumGrade();
     }
 
     private CalculationResult getError(int stringId){

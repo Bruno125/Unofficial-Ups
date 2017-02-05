@@ -1,11 +1,9 @@
 package com.brunoaybar.unofficialupc.data.source.remote
 
 import com.brunoaybar.unofficialupc.data.source.remote.responses.AbsencesResponse
-import com.brunoaybar.unofficialupc.data.source.remote.responses.ClassmatesResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.amshove.kluent.shouldEqual
-import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
 

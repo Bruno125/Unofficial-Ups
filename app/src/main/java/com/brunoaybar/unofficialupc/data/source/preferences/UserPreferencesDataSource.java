@@ -2,9 +2,11 @@ package com.brunoaybar.unofficialupc.data.source.preferences;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.brunoaybar.unofficialupc.data.models.User;
+import com.brunoaybar.unofficialupc.utils.DateProviderImpl;
+import com.brunoaybar.unofficialupc.utils.Utils;
+import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,10 +15,6 @@ import java.util.Locale;
 
 import rx.Observable;
 import rx.exceptions.Exceptions;
-
-/**
- * Created by brunoaybar on 14/10/2016.
- */
 
 public class UserPreferencesDataSource {
 
@@ -27,9 +25,15 @@ public class UserPreferencesDataSource {
     private static final String KEY_PASS = "key_pass";
 
     @NonNull private Context mContext;
+    @NonNull private DateProvider mDateProvider;
 
     public UserPreferencesDataSource(@NonNull Context context){
+        this(context,new DateProviderImpl());
+    }
+
+    public UserPreferencesDataSource(@NonNull Context context, DateProvider dateProvider){
         mContext = context;
+        mDateProvider = dateProvider;
     }
 
     public Observable<Boolean> userAgreeToSaveSession(){
@@ -55,16 +59,12 @@ public class UserPreferencesDataSource {
         return Observable.just(userCode);
     }
 
-    public Observable<User> getSession(){
-        return Observable.zip(getToken(),getUserCode(),getSavedPassword(),(User::new));
-    }
-
     private static final SimpleDateFormat updateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
     public Observable<Date> getLastUpdateTime(){
         String timestamp = PreferenceUtils.getString(mContext,KEY_LAST_UPDATE);
         try {
-            if(TextUtils.isEmpty(timestamp))
-                return Observable.just(new Date(0));
+            if(Utils.isEmpty(timestamp))
+                return Observable.just(mDateProvider.getNever());
             else {
                 Date lastUpdateTime = updateFormat.parse(timestamp);
                 return Observable.just(lastUpdateTime);
@@ -81,7 +81,7 @@ public class UserPreferencesDataSource {
         PreferenceUtils.saveString(mContext,KEY_PASS,user.getSavedPassword());
 
         //Update last update timestamp
-        String currentDateAndTime = updateFormat.format(new Date());
+        String currentDateAndTime = updateFormat.format(mDateProvider.getNow());
         PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateAndTime);
 
         //Return the user instance
@@ -95,7 +95,7 @@ public class UserPreferencesDataSource {
         PreferenceUtils.saveString(mContext,KEY_PASS,null);
 
         //Update last update timestamp
-        String currentDateAndTime = updateFormat.format(new Date());
+        String currentDateAndTime = updateFormat.format(mDateProvider.getNow());
         PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateAndTime);
     }
 

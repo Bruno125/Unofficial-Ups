@@ -48,7 +48,7 @@ class UserTest{
         assertFalse { user.hasValidCredentials() }
     }
     @Test
-    fun validCredentialsWhen_HasCode_HassPass(){
+    fun validCredentialsWhen_HasCode_HasPass(){
         val user = User(null,TEST_CODE,TEST_PASS)
         assert(user.hasValidCredentials())
     }

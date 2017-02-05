@@ -19,16 +19,8 @@ public class CourseListResponse extends BaseResponse {
         List<Course> courses = new ArrayList<>();
         if(Cursos!=null){
             for (CourseResponse response : Cursos)
-                courses.add(response.transform());
+                courses.add(response.transform(false));
         }
         return courses;
-    }
-
-    public List<CourseResponse> getCursos() {
-        return Cursos;
-    }
-
-    public void setCursos(List<CourseResponse> cursos) {
-        Cursos = cursos;
     }
 }

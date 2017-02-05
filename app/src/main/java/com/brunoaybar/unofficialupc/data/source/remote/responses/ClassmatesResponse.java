@@ -9,19 +9,15 @@ import java.util.List;
  * Created by brunoaybar on 17/10/2016.
  */
 
-public class ClassmatesResponse
+public class ClassmatesResponse extends BaseResponse
 {
     private String curso;
 
     private Alumnos[] alumnos;
 
-    private String MsgError;
-
     private String cursoId;
 
     private String seccion;
-
-    private String CodError;
 
     public List<Classmate> transform(){
         List<Classmate> result = new ArrayList<>();
@@ -54,16 +50,6 @@ public class ClassmatesResponse
         this.alumnos = alumnos;
     }
 
-    public String getMsgError ()
-    {
-        return MsgError;
-    }
-
-    public void setMsgError (String MsgError)
-    {
-        this.MsgError = MsgError;
-    }
-
     public String getCursoId ()
     {
         return cursoId;
@@ -82,16 +68,6 @@ public class ClassmatesResponse
     public void setSeccion (String seccion)
     {
         this.seccion = seccion;
-    }
-
-    public String getCodError ()
-    {
-        return CodError;
-    }
-
-    public void setCodError (String CodError)
-    {
-        this.CodError = CodError;
     }
 
     class Alumnos

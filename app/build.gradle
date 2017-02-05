@@ -1,16 +1,21 @@
 buildscript {
+    ext.kotlin_version = '1.0.6'
+
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'kotlin-android'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -47,6 +52,20 @@ android {
         }
     }
 
+    sourceSets {
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    // We want to make sure, we do not allow accidentally (for now ;))
+    // any Kotlin code in production by also adding this defensive lines:
+    afterEvaluate {
+        android.sourceSets.all { sourceSet ->
+            if (!sourceSet.name.startsWith('test') || !sourceSet.name.startsWith('androidTest')) {
+                sourceSet.kotlin.setSrcDirs([])
+            }
+        }
+    }
 }
 
 dependencies {
@@ -90,5 +109,12 @@ dependencies {
         transitive = true;
     }
 
+    //Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.6"
 
+    //Tests w/ Kotlin
+    testCompile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.6'
+    testCompile 'org.jetbrains.kotlin:kotlin-test-junit:1.0.6'
+    testCompile "com.nhaarman:mockito-kotlin:1.1.0"
+    testCompile 'org.amshove.kluent:kluent:1.14'
 }

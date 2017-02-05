@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficialupc.data.source.remote;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
@@ -14,6 +15,7 @@ import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseListRespo
 import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.TimetableResponse;
+import com.brunoaybar.unofficialupc.utils.Utils;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class UpcServiceDataSource{
     }
 
     public Observable<Boolean> validateToken(String userCode, String token){
-        if(TextUtils.isEmpty(userCode) || TextUtils.isEmpty(token))
+        if(Utils.isEmpty(userCode) || Utils.isEmpty(token))
             return Observable.just(false);
         return mService.getCourses(userCode,token)
                 .subscribeOn(Schedulers.newThread())
@@ -52,6 +54,7 @@ public class UpcServiceDataSource{
                 .map(response -> {
                     if(!response.isError()) {
                         User userResponse = response.transform();
+                        Log.i("UNOFFICIAL UPC","Token is : " + userResponse.getToken());
                         userResponse.setSavedPassword(password);
                         return userResponse;
                     } else

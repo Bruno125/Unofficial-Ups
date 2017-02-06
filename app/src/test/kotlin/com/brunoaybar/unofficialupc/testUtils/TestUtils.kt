@@ -8,3 +8,9 @@ fun <T> assertObservable(observable: Observable<T>, expected: T?){
     observable.subscribe(subscriber)
     subscriber.assertValue(expected)
 }
+
+fun <T> assertOservableError(observable: Observable<T>, expected: Throwable){
+    val subscriber = TestSubscriber<T>()
+    observable.subscribe(subscriber)
+    subscriber.assertError(expected)
+}

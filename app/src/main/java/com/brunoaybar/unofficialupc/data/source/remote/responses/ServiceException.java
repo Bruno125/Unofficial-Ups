@@ -6,6 +6,10 @@ package com.brunoaybar.unofficialupc.data.source.remote.responses;
 
 public class ServiceException extends RuntimeException{
 
+    public ServiceException(){
+        this(new BaseResponse());
+    }
+
     public ServiceException(BaseResponse failedRequest){
         super(failedRequest.getErrorMessage());
     }

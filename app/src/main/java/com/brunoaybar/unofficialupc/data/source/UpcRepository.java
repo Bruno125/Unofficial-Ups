@@ -47,8 +47,8 @@ public class UpcRepository {
     private Observable<Boolean> tokenIsStillValid(){
         return mPreferencesSource.getLastUpdateTime()
                 .map(lastUpdate -> {
-                    long millisecondsEllapsed = new Date().getTime() - lastUpdate.getTime();
-                    return millisecondsEllapsed < TOKEN_LIFETIME;
+                    long millisecondsElapsed = new Date().getTime() - lastUpdate.getTime();
+                    return millisecondsElapsed < TOKEN_LIFETIME;
                 });
     }
 

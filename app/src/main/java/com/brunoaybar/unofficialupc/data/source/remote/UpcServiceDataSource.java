@@ -40,12 +40,18 @@ public class UpcServiceDataSource{
         return INSTANCE;
     }
 
+    /**
+     * Check if token is available, and is still working
+     * @param userCode
+     * @param token
+     * @return
+     */
     public Observable<Boolean> validateToken(String userCode, String token){
         if(Utils.isEmpty(userCode) || Utils.isEmpty(token))
             return Observable.just(false);
         return mService.getCourses(userCode,token)
                 .subscribeOn(Schedulers.newThread())
-                .map( r -> true);
+                .map( r -> !r.isError());
     }
 
     public Observable<User> login(String user, String password) {

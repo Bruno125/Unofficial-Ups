@@ -31,7 +31,7 @@ public class UserPreferencesDataSource {
         this(context,new DateProviderImpl());
     }
 
-    public UserPreferencesDataSource(@NonNull Context context, DateProvider dateProvider){
+    public UserPreferencesDataSource(@NonNull Context context,@NonNull DateProvider dateProvider){
         mContext = context;
         mDateProvider = dateProvider;
     }

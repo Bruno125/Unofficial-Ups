@@ -1,6 +1,5 @@
 package com.brunoaybar.unofficialupc.modules.auth;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.brunoaybar.unofficialupc.UpcApplication;
@@ -20,7 +19,7 @@ public class LoginViewModel {
     LoginRepository mDataModel;
 
     public LoginViewModel(){
-        UpcApplication.getRepositoryComponent().inject(this);
+        UpcApplication.getViewModelsComponent().inject(this);
     }
 
     public Observable<Boolean> verifyState(){

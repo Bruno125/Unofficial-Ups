@@ -4,10 +4,8 @@ import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcDao;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcService;
-import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
-import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
+import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteDao;
 import com.brunoaybar.unofficialupc.utils.CryptoUtils;
 
 import javax.inject.Inject;
@@ -20,9 +18,9 @@ import rx.Observable;
 
 public class UpcLoginRepository implements LoginRepository {
     @Inject
-    UpcDao mDataSource;
+    ApplicationDao applicationDao;
     @Inject
-    UpcService mRemoteDataSource;
+    RemoteDao remoteDao;
     @Inject
     SessionRepository mSessionRepository;
 
@@ -39,9 +37,9 @@ public class UpcLoginRepository implements LoginRepository {
     }
 
     private Observable<Boolean> loginWithEncryptedPass(String userCode, String encryptedPassword,boolean rememberCredentials){
-        mDataSource.setUserAgreeToSaveSession(rememberCredentials);
-        return mRemoteDataSource.login(userCode,encryptedPassword)
-                .map(mDataSource::saveUser)
+        applicationDao.setUserAgreeToSaveSession(rememberCredentials);
+        return remoteDao.login(userCode,encryptedPassword)
+                .map(applicationDao::saveUser)
                 .map(User::hasValidSession);
     }
 }

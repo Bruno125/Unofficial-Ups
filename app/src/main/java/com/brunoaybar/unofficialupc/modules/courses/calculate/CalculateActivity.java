@@ -8,9 +8,6 @@ import android.widget.LinearLayout;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.data.models.Course;
-import com.brunoaybar.unofficialupc.data.source.UpcRepository;
-import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
-import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficialupc.modules.base.BaseActivity;
 import com.brunoaybar.unofficialupc.modules.courses.CoursesViewModel;
 

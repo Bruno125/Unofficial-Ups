@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.modules.general.MainActivity;
 import com.brunoaybar.unofficialupc.R;

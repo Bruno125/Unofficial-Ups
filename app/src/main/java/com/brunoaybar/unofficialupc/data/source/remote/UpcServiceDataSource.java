@@ -1,6 +1,5 @@
 package com.brunoaybar.unofficialupc.data.source.remote;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.brunoaybar.unofficialupc.data.models.Absence;
@@ -8,7 +7,7 @@ import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcService;
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteDao;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.AbsencesResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.requests.LoginRequest;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ClassmatesResponse;
@@ -27,7 +26,7 @@ import rx.schedulers.Schedulers;
  * Created by brunoaybar on 13/10/2016.
  */
 
-public class UpcServiceDataSource implements UpcService {
+public class UpcServiceDataSource implements RemoteDao {
 
     private static UpcServiceDataSource INSTANCE;
     private UpcServiceInterface mService;
@@ -94,8 +93,8 @@ public class UpcServiceDataSource implements UpcService {
                 .map(AbsencesResponse::transform);
     }
 
-    public Observable<List<Classmate>> getClassmates(String courseCode, User user) {
-        return mService.getClassmates(courseCode,user.getUserCode(),user.getToken())
+    public Observable<List<Classmate>> getClassmates(String courseCode, String userCode, String token) {
+        return mService.getClassmates(courseCode,userCode,token)
                 .subscribeOn(Schedulers.newThread())
                 .map(ClassmatesResponse::transform);
     }

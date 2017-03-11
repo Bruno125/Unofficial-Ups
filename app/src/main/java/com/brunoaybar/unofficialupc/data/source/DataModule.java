@@ -3,10 +3,8 @@ package com.brunoaybar.unofficialupc.data.source;
 import android.content.Context;
 
 import com.brunoaybar.unofficialupc.UpcApplication;
-import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcDao;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcService;
+import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteDao;
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
@@ -34,12 +32,12 @@ public class DataModule {
     }
 
     @Provides @Singleton
-    public UpcDao provideDao(){
+    public ApplicationDao provideDao(){
         return new UserPreferencesDataSource(context,dateProvider);
     }
 
     @Provides @Singleton
-    public UpcService provideService(){
+    public RemoteDao provideService(){
         return new UpcServiceDataSource();
     }
 

@@ -3,8 +3,8 @@ package com.brunoaybar.unofficialupc.data.repository.impl;
 import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcDao;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcService;
+import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteDao;
 
 import java.util.Date;
 
@@ -20,9 +20,9 @@ import rx.schedulers.Schedulers;
 public class UpcSessionRepository implements SessionRepository {
 
     @Inject
-    UpcDao applicationDao;
+    ApplicationDao applicationDao;
     @Inject
-    UpcService mServiceSource;
+    RemoteDao remoteDao;
 
     public UpcSessionRepository() {
         UpcApplication.getDataComponent().inject(this);
@@ -75,7 +75,7 @@ public class UpcSessionRepository implements SessionRepository {
                                         return;
                                     }
 
-                                    mServiceSource.login(info.getUserCode(),info.getSavedPassword()) //Do login
+                                    remoteDao.login(info.getUserCode(),info.getSavedPassword()) //Do login
                                             .map(applicationDao::saveUser) //Save user
                                             .subscribe(user -> {
                                                 subscriber.onNext(user.getToken()); //Return token

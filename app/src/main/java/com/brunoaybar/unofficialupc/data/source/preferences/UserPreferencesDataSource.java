@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.brunoaybar.unofficialupc.data.models.User;
-import com.brunoaybar.unofficialupc.data.source.interfaces.UpcDao;
+import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
 import com.brunoaybar.unofficialupc.utils.DateProviderImpl;
 import com.brunoaybar.unofficialupc.utils.Utils;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
@@ -17,7 +17,7 @@ import java.util.Locale;
 import rx.Observable;
 import rx.exceptions.Exceptions;
 
-public class UserPreferencesDataSource implements UpcDao{
+public class UserPreferencesDataSource implements ApplicationDao {
 
     private static final String KEY_SAVE_SESSION = "key_save_session";
     private static final String KEY_LAST_UPDATE = "key_last_update";

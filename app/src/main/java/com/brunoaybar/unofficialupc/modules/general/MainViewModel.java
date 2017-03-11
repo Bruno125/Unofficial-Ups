@@ -1,8 +1,9 @@
 package com.brunoaybar.unofficialupc.modules.general;
 
-import android.support.annotation.NonNull;
+import com.brunoaybar.unofficialupc.UpcApplication;
+import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
 
-import com.brunoaybar.unofficialupc.data.source.UpcRepository;
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -13,11 +14,11 @@ import rx.subjects.BehaviorSubject;
 
 public class MainViewModel {
 
-    @NonNull
-    private UpcRepository mRepository;
+    @Inject
+    SessionRepository mRepository;
 
-    public MainViewModel(UpcRepository repository){
-        mRepository = repository;
+    public MainViewModel(){
+        UpcApplication.getViewModelsComponent().inject(this);
     }
 
     private BehaviorSubject<Boolean> mLogoutStream = BehaviorSubject.create();
@@ -28,7 +29,7 @@ public class MainViewModel {
     public void performLogout(){
         mRepository.logout().subscribe(result ->{
             mLogoutStream.onNext(result);
-        },error -> {});
+        },mLogoutStream::onError);
     }
 
 }

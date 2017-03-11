@@ -10,7 +10,7 @@ import rx.Observable;
  * Created by brunoaybar on 11/03/2017.
  */
 
-public interface UpcDao {
+public interface ApplicationDao {
     //Read
     Observable<String> getToken();
     Observable<String> getUserCode();

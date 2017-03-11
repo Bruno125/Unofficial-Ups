@@ -1,10 +1,8 @@
 package com.brunoaybar.unofficialupc.modules.attendance;
 
-import android.support.annotation.NonNull;
-
 import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Absence;
-import com.brunoaybar.unofficialupc.data.source.UpcRepository;
+import com.brunoaybar.unofficialupc.data.repository.UserRepository;
 
 import javax.inject.Inject;
 
@@ -17,23 +15,14 @@ import rx.Observable;
 public class AbsencesViewModel {
 
     @Inject
-    UpcRepository mRepository;
+    UserRepository mRepository;
 
     public AbsencesViewModel(){
-        UpcApplication.getComponent().inject(this);
+        UpcApplication.getViewModelsComponent().inject(this);
     }
 
     public Observable<Absence> getAttendanceStream(){
-
-        return Observable.create(subscriber ->
-                //Get user session
-                mRepository.getSession().subscribe(session -> {
-                    //Use session to get absences
-                    mRepository.getAbsences(session)
-                    .flatMap(Observable::from)
-                    .subscribe(subscriber::onNext,subscriber::onError);
-        }));
-
+        return mRepository.getAbsences().flatMap(Observable::from);
     }
 
 }

@@ -14,12 +14,12 @@ import rx.Observable;
  * Created by brunoaybar on 11/03/2017.
  */
 
-public interface UpcService {
+public interface RemoteDao {
     Observable<Boolean> validateToken(String userCode, String token);
     Observable<User> login(String user, String password);
     Observable<Timetable> getTimeTable(String userCode, String token);
     Observable<List<Course>> getCourses(String userCode, String token);
     Observable<Course> getCourseDetail(String courseCode, String userCode, String token);
     Observable<List<Absence>> getAbsences(String userCode, String token);
-    Observable<List<Classmate>> getClassmates(String courseCode, User user);
+    Observable<List<Classmate>> getClassmates(String courseCode, String userCode, String token);
 }

@@ -7,8 +7,8 @@ import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.data.source.DaggerDataComponent;
 import com.brunoaybar.unofficialupc.data.source.DataComponent;
 import com.brunoaybar.unofficialupc.data.source.DataModule;
-import com.brunoaybar.unofficialupc.modules.DaggerRepositoryComponent;
-import com.brunoaybar.unofficialupc.modules.RepositoryComponent;
+import com.brunoaybar.unofficialupc.modules.DaggerViewModelsComponent;
+import com.brunoaybar.unofficialupc.modules.ViewModelsComponent;
 import com.brunoaybar.unofficialupc.data.source.RepositoryModule;
 
 /**
@@ -24,7 +24,7 @@ public class UpcApplication extends Application {
 
     private AppComponent component;
     private DataComponent dataComponent;
-    private RepositoryComponent repositoryComponent;
+    private ViewModelsComponent viewModelsComponent;
 
     @Override
     public void onCreate() {
@@ -39,7 +39,7 @@ public class UpcApplication extends Application {
     private void setupDaggerComponents(){
         component = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         dataComponent = DaggerDataComponent.builder().dataModule(new DataModule()).build();
-        repositoryComponent = DaggerRepositoryComponent.builder().repositoryModule(new RepositoryModule()).build();
+        viewModelsComponent = DaggerViewModelsComponent.builder().repositoryModule(new RepositoryModule()).build();
     }
 
     public static AppComponent getComponent(){
@@ -50,8 +50,8 @@ public class UpcApplication extends Application {
         return get().dataComponent;
     }
 
-    public static RepositoryComponent getRepositoryComponent() {
-        return get().repositoryComponent;
+    public static ViewModelsComponent getViewModelsComponent() {
+        return get().viewModelsComponent;
     }
 
 

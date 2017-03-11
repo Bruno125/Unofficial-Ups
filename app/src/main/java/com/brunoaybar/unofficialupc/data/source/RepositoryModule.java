@@ -2,9 +2,10 @@ package com.brunoaybar.unofficialupc.data.source;
 
 import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
+import com.brunoaybar.unofficialupc.data.repository.UserRepository;
 import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
-import com.brunoaybar.unofficialupc.data.source.UpcRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.UpcUserRepository;
 
 import javax.inject.Singleton;
 
@@ -19,11 +20,6 @@ import dagger.Provides;
 public class RepositoryModule {
 
     @Provides @Singleton
-    public UpcRepository provideUpcRepository(){
-        return new UpcRepository();
-    }
-
-    @Provides @Singleton
     public SessionRepository provideSessionRepo(){
         return new UpcSessionRepository();
     }
@@ -31,6 +27,11 @@ public class RepositoryModule {
     @Provides @Singleton
     public LoginRepository provideLoginRepo(){
         return new UpcLoginRepository();
+    }
+
+    @Provides @Singleton
+    public UserRepository provideUserRepo(){
+        return new UpcUserRepository();
     }
 
 }

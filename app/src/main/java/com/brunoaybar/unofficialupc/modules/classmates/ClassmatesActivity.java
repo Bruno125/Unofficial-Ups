@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.modules.base.BaseActivity;
@@ -53,7 +52,7 @@ public class ClassmatesActivity extends BaseActivity {
             return;
         }
 
-        mViewModel = new ClassmatesViewModel(Injection.provideUpcRepository(this));
+        mViewModel = new ClassmatesViewModel();
 
         //Setup toolbar
         setSupportActionBar(toolbar);

@@ -8,6 +8,7 @@ import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
+import com.brunoaybar.unofficialupc.data.source.interfaces.UpcService;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.AbsencesResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.requests.LoginRequest;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ClassmatesResponse;
@@ -26,16 +27,17 @@ import rx.schedulers.Schedulers;
  * Created by brunoaybar on 13/10/2016.
  */
 
-public class UpcServiceDataSource{
+public class UpcServiceDataSource implements UpcService {
 
     private static UpcServiceDataSource INSTANCE;
     private UpcServiceInterface mService;
 
-    private UpcServiceDataSource(){}
+    public UpcServiceDataSource(){
+        mService = UpcServiceFactory.createDefaultRetrofitService();
+    }
     public static UpcServiceDataSource getInstance(){
         if(INSTANCE == null){
             INSTANCE = new UpcServiceDataSource();
-            INSTANCE.mService = UpcServiceFactory.createDefaultRetrofitService();
         }
         return INSTANCE;
     }

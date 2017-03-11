@@ -51,7 +51,7 @@ public class TimetableFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         //Initialize ViewModels
         mViewModel = new TimetableViewModel(Injection.provideUpcRepository(getContext()));
-        mCourseViewModel = new CoursesViewModel(Injection.provideUpcRepository(getContext()));
+        mCourseViewModel = new CoursesViewModel();
         //Inflate view
         View v  = inflater.inflate(R.layout.fragment_timetable, container, false);
         ButterKnife.bind(this,v);

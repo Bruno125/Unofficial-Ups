@@ -48,7 +48,7 @@ public class CoursesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Init view model
-        mViewModel = new CoursesViewModel(Injection.provideUpcRepository(getContext()));
+        mViewModel = new CoursesViewModel();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_courses, container, false);

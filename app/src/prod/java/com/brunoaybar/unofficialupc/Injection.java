@@ -13,7 +13,7 @@ import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 public class Injection {
 
     public static UpcRepository provideUpcRepository(Context context){
-        return new UpcRepository(providePreferencesSource(context), provideServiceSource() );
+        return new UpcRepository();
     }
 
     public static UpcServiceDataSource provideServiceSource(){

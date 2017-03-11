@@ -51,7 +51,7 @@ public class CourseDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_course_detail);
         ButterKnife.bind(this);
 
-        mViewModel = new CoursesViewModel(Injection.provideUpcRepository(this));
+        mViewModel = new CoursesViewModel();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

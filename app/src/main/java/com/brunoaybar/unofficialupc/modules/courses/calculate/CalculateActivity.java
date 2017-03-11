@@ -42,7 +42,7 @@ public class CalculateActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mViewModel = new CalculateViewModel(this);
-        mCourseViewModel = new CoursesViewModel(new UpcRepository(new UserPreferencesDataSource(this), UpcServiceDataSource.getInstance()));
+        mCourseViewModel = new CoursesViewModel();
 
         btnCalculate.setOnClickListener(v -> mViewModel.requestedCalculate(calculationsView.getItems()));
     }

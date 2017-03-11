@@ -1,13 +1,18 @@
 package com.brunoaybar.unofficialupc.modules.courses;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficialupc.AppComponent;
+import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.source.UpcRepository;
 import com.google.gson.Gson;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -18,10 +23,11 @@ import rx.subjects.BehaviorSubject;
 
 public class CoursesViewModel {
 
-    private UpcRepository mRepository;
+    @Inject
+    UpcRepository mRepository;
 
-    public CoursesViewModel(UpcRepository repository) {
-        mRepository = repository;
+    public CoursesViewModel() {
+        UpcApplication.getComponent().inject(this);
     }
 
     private BehaviorSubject<List<Course>> mCoursesSubject;

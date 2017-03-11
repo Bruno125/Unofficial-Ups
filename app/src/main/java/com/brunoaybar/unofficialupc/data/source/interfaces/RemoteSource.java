@@ -14,7 +14,7 @@ import rx.Observable;
  * Created by brunoaybar on 11/03/2017.
  */
 
-public interface RemoteDao {
+public interface RemoteSource {
     Observable<Boolean> validateToken(String userCode, String token);
     Observable<User> login(String user, String password);
     Observable<Timetable> getTimeTable(String userCode, String token);

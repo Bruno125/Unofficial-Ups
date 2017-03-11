@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficialupc;
 
+import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
 import com.brunoaybar.unofficialupc.data.source.DataModule;
 import com.brunoaybar.unofficialupc.data.source.RepositoryModule;
 import com.brunoaybar.unofficialupc.modules.attendance.AbsencesViewModel;
@@ -22,5 +23,5 @@ import dagger.Component;
 @Component( modules = { AppModule.class})
 public interface AppComponent {
     void inject(DataModule target);
-
+    void inject(NoInternetException target);
 }

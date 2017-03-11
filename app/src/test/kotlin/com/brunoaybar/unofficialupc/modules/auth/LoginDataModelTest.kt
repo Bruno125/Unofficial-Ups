@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficialupc.modules.auth
 
 import com.brunoaybar.unofficialupc.data.models.User
+import com.brunoaybar.unofficialupc.data.repository.LoginRepository
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException
@@ -18,11 +19,11 @@ class LoginDataModelTest{
     private val USER_PASS = "Testpass1234"
     private val USER_TOKEN = "a34sadfa32fads"
 
-    private lateinit var dataModel : LoginRepository2
+    private lateinit var dataModel : LoginRepository
 
     @Test
     fun shouldFail_When_SaveSessionNotEnabled(){
-        dataModel = LoginRepository2(
+        dataModel = LoginRepository(
                 createMockPreferences(false, null, null, null),
                 createMockService())
         assertObservable(dataModel.verifyUserSession(),false)

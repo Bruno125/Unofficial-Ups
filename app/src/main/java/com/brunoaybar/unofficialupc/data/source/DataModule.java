@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
-import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteDao;
+import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
@@ -22,10 +23,9 @@ import dagger.Provides;
 @Module
 public class DataModule {
 
-    @Inject
-    Context context;
-    @Inject
-    DateProvider dateProvider;
+    @Inject Context context;
+    @Inject DateProvider dateProvider;
+    @Inject InternetVerifier internetVerifier;
 
     public DataModule(){
         UpcApplication.getComponent().inject(this);
@@ -37,8 +37,12 @@ public class DataModule {
     }
 
     @Provides @Singleton
-    public RemoteDao provideService(){
+    public RemoteSource provideService(){
         return new UpcServiceDataSource();
     }
 
+    @Provides @Singleton
+    public InternetVerifier providerInternetVerifier(){
+        return internetVerifier;
+    }
 }

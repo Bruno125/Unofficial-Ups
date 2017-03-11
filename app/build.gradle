@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.0.6'
+    ext.kotlin_version = '1.1.0'
 
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -110,11 +110,11 @@ dependencies {
     }
 
     //Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.6"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.0"
 
     //Tests w/ Kotlin
-    testCompile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.6'
-    testCompile 'org.jetbrains.kotlin:kotlin-test-junit:1.0.6'
+    testCompile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.0'
+    testCompile 'org.jetbrains.kotlin:kotlin-test-junit:1.1.0'
     testCompile "com.nhaarman:mockito-kotlin:1.1.0"
     testCompile 'org.amshove.kluent:kluent:1.14'
     testCompile "org.robolectric:robolectric:3.2.1"

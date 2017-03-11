@@ -3,10 +3,10 @@ package com.brunoaybar.unofficialupc.modules.auth;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.brunoaybar.unofficialupc.data.models.User;
-import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
-import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
-import com.brunoaybar.unofficialupc.utils.CryptoUtils;
+import com.brunoaybar.unofficialupc.UpcApplication;
+import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 
@@ -16,10 +16,11 @@ import rx.Observable;
 
 public class LoginViewModel {
 
-    @NonNull private final LoginDataModel mDataModel;
+    @Inject
+    LoginRepository mDataModel;
 
-    public LoginViewModel(@NonNull final LoginDataModel loginDataModel){
-        mDataModel = loginDataModel;
+    public LoginViewModel(){
+        UpcApplication.getRepositoryComponent().inject(this);
     }
 
     public Observable<Boolean> verifyState(){

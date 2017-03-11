@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -25,8 +24,6 @@ import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.modules.general.MainActivity;
 import com.brunoaybar.unofficialupc.R;
-import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
-import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficialupc.utils.ColorizedDrawable;
 import com.brunoaybar.unofficialupc.utils.UiUtils;
 
@@ -42,7 +39,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static com.brunoaybar.unofficialupc.utils.UiUtils.setVisibility;
 
 public class LoginActivity extends AppCompatActivity {
@@ -71,10 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        LoginDataModel dataModel = new LoginDataModel(
-                Injection.providePreferencesSource(this),
-                Injection.provideServiceSource());
-        mViewModel = new LoginViewModel(dataModel);
+        mViewModel = new LoginViewModel();
 
         runInitialLogoAnimation();
         bind();

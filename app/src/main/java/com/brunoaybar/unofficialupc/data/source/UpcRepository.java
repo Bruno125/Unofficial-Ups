@@ -3,6 +3,7 @@ package com.brunoaybar.unofficialupc.data.source;
 import android.support.annotation.NonNull;
 
 import com.brunoaybar.unofficialupc.AppComponent;
+import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
@@ -31,8 +32,7 @@ public class UpcRepository {
     UpcService mServiceSource;
 
     public UpcRepository(){
-         DataComponent component = DaggerDataComponent.builder().dataModule(new DataModule()).build();
-        component.inject(this);
+        UpcApplication.getDataComponent().inject(this);
     }
 
     public Observable<String> getUserCode(){
@@ -73,6 +73,11 @@ public class UpcRepository {
                                     applicationDao.getSavedPassword(),
                                     (userCode,password) -> new User(null,userCode,password))
                                     .subscribe(info -> {
+                                        if (!info.hasValidCredentials()){
+                                            subscriber.onError(new Throwable());
+                                            return;
+                                        }
+
                                         mServiceSource.login(info.getUserCode(),info.getSavedPassword()) //Do login
                                                 .map(applicationDao::saveUser) //Save user
                                                 .subscribe(user -> {
@@ -86,10 +91,7 @@ public class UpcRepository {
     }
 
     public Observable<User> getSession(){
-        return Observable.zip(
-                getToken().subscribeOn(Schedulers.immediate()),
-                getUserCode().subscribeOn(Schedulers.immediate()),
-                (token,userCode) -> new User(token,userCode,null))
+        return Observable.zip(getToken(), getUserCode(), getSavedPassword(), User::new)
                 .subscribeOn(Schedulers.io());
     }
 

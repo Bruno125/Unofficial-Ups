@@ -3,6 +3,8 @@ package com.brunoaybar.unofficialupc.data.source;
 import android.content.Context;
 
 import com.brunoaybar.unofficialupc.UpcApplication;
+import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
 import com.brunoaybar.unofficialupc.data.source.interfaces.UpcDao;
 import com.brunoaybar.unofficialupc.data.source.interfaces.UpcService;
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
@@ -40,4 +42,5 @@ public class DataModule {
     public UpcService provideService(){
         return new UpcServiceDataSource();
     }
+
 }

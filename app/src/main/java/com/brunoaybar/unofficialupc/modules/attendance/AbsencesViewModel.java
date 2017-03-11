@@ -2,8 +2,11 @@ package com.brunoaybar.unofficialupc.modules.attendance;
 
 import android.support.annotation.NonNull;
 
+import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.source.UpcRepository;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 
@@ -13,11 +16,11 @@ import rx.Observable;
 
 public class AbsencesViewModel {
 
-    @NonNull
-    private UpcRepository mRepository;
+    @Inject
+    UpcRepository mRepository;
 
-    public AbsencesViewModel(@NonNull UpcRepository repository){
-        mRepository = repository;
+    public AbsencesViewModel(){
+        UpcApplication.getComponent().inject(this);
     }
 
     public Observable<Absence> getAttendanceStream(){

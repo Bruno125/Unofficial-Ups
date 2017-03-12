@@ -4,6 +4,8 @@ import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
+import com.brunoaybar.unofficialupc.data.source.injection.BaseDataComponent;
+import com.brunoaybar.unofficialupc.data.source.injection.DataComponent;
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.utils.CryptoUtils;
@@ -17,12 +19,12 @@ import rx.Observable;
  */
 
 public class UpcLoginRepository implements LoginRepository {
-    @Inject ApplicationDao applicationDao;
-    @Inject RemoteSource remoteSource;
-    @Inject SessionRepository mSessionRepository;
+    @Inject public ApplicationDao applicationDao;
+    @Inject public RemoteSource remoteSource;
+    @Inject public SessionRepository mSessionRepository;
 
-    public UpcLoginRepository(){
-        UpcApplication.getDataComponent().inject(this);
+    public UpcLoginRepository(BaseDataComponent component){
+        component.inject(this);
     }
 
     public Observable<Boolean> verifyUserSession(){

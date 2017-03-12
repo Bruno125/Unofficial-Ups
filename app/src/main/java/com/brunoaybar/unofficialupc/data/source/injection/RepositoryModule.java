@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficialupc.data.source.injection;
 
+import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
 import com.brunoaybar.unofficialupc.data.repository.UserRepository;
@@ -7,6 +8,7 @@ import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
 import com.brunoaybar.unofficialupc.data.repository.impl.UpcUserRepository;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -26,7 +28,7 @@ public class RepositoryModule {
 
     @Provides @Singleton
     public LoginRepository provideLoginRepo(){
-        return new UpcLoginRepository();
+        return new UpcLoginRepository(UpcApplication.getDataComponent());
     }
 
     @Provides @Singleton

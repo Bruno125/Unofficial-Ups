@@ -1,41 +1,63 @@
-package com.brunoaybar.unofficialupc.modules.auth
+package com.brunoaybar.unofficialupc.data.repository
 
+import com.brunoaybar.unofficialupc.AndroidTest
 import com.brunoaybar.unofficialupc.data.models.User
-import com.brunoaybar.unofficialupc.data.repository.LoginRepository
+import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository
+import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource
-import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException
 import com.brunoaybar.unofficialupc.testUtils.assertObservable
+import com.brunoaybar.unofficialupc.testUtils.getDataComponent
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+import org.junit.Before
 import org.junit.Test
 import rx.Observable
-import rx.Observable.just
+import javax.inject.Inject
 
-class LoginDataModelTest{
+class UpcLoginRepositoryTest{
 
     private val USER_CODE = "u201313295"
     private val USER_PASS = "Testpass1234"
     private val USER_TOKEN = "a34sadfa32fads"
 
-    private lateinit var dataModel : LoginRepository
+    @Inject
+    lateinit var mockAppDao: ApplicationDao
+    @Inject
+    lateinit var mockRemoteSource: RemoteSource
+    @Inject
+    lateinit var mockSessionRepo: SessionRepository
+
+    private lateinit var repository: UpcLoginRepository
+
+    @Before
+    fun setUp(){
+        val dataComponent = getDataComponent()
+        repository = UpcLoginRepository(dataComponent)
+        dataComponent.inject(this)
+    }
 
     @Test
-    fun shouldFail_When_SaveSessionNotEnabled(){
+    fun shouldFail_When_Couldnt_Verify_Session(){
+        val userMock = mock<User>{ on { hasValidSession() } doReturn false }
+        whenever(mockSessionRepo.session).then { Observable.just(userMock) }
+
         /*dataModel = LoginRepository(
                 createMockPreferences(false, null, null, null),
                 createMockService())*/
-        assertObservable(dataModel.verifyUserSession(),false)
+        assertObservable(repository.verifyUserSession(),false)
     }
-
+    /*
     @Test
     fun shouldFail_When_NoCredentials_And_NoValidSession(){
         /*dataModel = LoginRepository2(
                 createMockPreferences(true, null, null, null),
                 createMockService()
         )*/
-        assertObservable(dataModel.verifyUserSession(),false)
+        assertObservable(repository.verifyUserSession(),false)
     }
 
     @Test
@@ -45,7 +67,7 @@ class LoginDataModelTest{
                     on { login(any(), any()) } doReturn Observable.error(ServiceException())
                 }
         )*/
-        assertObservable(dataModel.verifyUserSession(),false)
+        assertObservable(repository.verifyUserSession(),false)
     }
 
     @Test
@@ -56,7 +78,7 @@ class LoginDataModelTest{
                     on { validateToken(USER_CODE, USER_TOKEN) } doReturn just(false)
                 }
         )*/
-        assertObservable(dataModel.verifyUserSession(),false)
+        assertObservable(repository.verifyUserSession(),false)
     }
 
     @Test
@@ -68,7 +90,7 @@ class LoginDataModelTest{
                     on { login(USER_CODE, USER_PASS) } doReturn just(user)
                 }
         )*/
-        assertObservable(dataModel.verifyUserSession(),true)
+        assertObservable(repository.verifyUserSession(),true)
     }
 
     @Test
@@ -79,24 +101,25 @@ class LoginDataModelTest{
                     on { validateToken(USER_CODE, USER_TOKEN) } doReturn just(true)
                 }
         )*/
-        assertObservable(dataModel.verifyUserSession(),true)
-    }
+        assertObservable(repository.verifyUserSession(),true)
+    }*/
 
-    fun createMockService() : UpcServiceDataSource{
+    fun createMockService() : UpcServiceDataSource {
         return mock<UpcServiceDataSource>{
-            on { login(any(),any()) } doReturn Observable.just(User())
-            on { validateToken(any(),any()) } doReturn Observable.just(false)
+            on { login(any(), any()) } doReturn Observable.just(User())
+            on { validateToken(any(), any()) } doReturn Observable.just(false)
         }
     }
 
-    fun createMockPreferences(agreesToSaveSession: Boolean, token: String?, userCode: String?, pass: String?) : UserPreferencesDataSource{
+    fun createMockPreferences(agreesToSaveSession: Boolean, token: String?, userCode: String?, pass: String?) : UserPreferencesDataSource {
         return mock<UserPreferencesDataSource>{
-            on { userAgreeToSaveSession() } doReturn just(agreesToSaveSession)
-            on { getToken() } doReturn just(token)
-            on { getUserCode() } doReturn just(userCode)
-            on { getSavedPassword() } doReturn just(pass)
+            on { userAgreeToSaveSession() } doReturn Observable.just(agreesToSaveSession)
+            on { getToken() } doReturn Observable.just(token)
+            on { getUserCode() } doReturn Observable.just(userCode)
+            on { getSavedPassword() } doReturn Observable.just(pass)
             on { saveUser(any())} doReturn User(token,userCode,pass)
         }
     }
+
 
 }

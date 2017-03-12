@@ -1,10 +1,11 @@
 package com.brunoaybar.unofficialupc.modules.timetable;
 
-import android.support.annotation.NonNull;
-
+import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
-import com.brunoaybar.unofficialupc.data.source.UpcRepository;
+import com.brunoaybar.unofficialupc.data.repository.UserRepository;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 
@@ -14,24 +15,15 @@ import rx.Observable;
 
 public class TimetableViewModel {
 
-    @NonNull
-    private UpcRepository mRepository;
+    @Inject
+    UserRepository mRepository;
 
-    public TimetableViewModel(@NonNull UpcRepository repository){
-        mRepository = repository;
+    public TimetableViewModel(){
+        UpcApplication.getViewModelsComponent().inject(this);
     }
 
     public Observable<Timetable> getTimetable(){
-        return Observable.create(subscriber ->
-                //Get current session
-                mRepository.getSession().subscribe(user -> {
-                    //Use current session to get timetable
-                    mRepository.getTimeTable(user.getUserCode(),user.getToken())
-                            .subscribe( response ->{
-                                subscriber.onNext(response);
-                                subscriber.onCompleted();
-                            },subscriber::onError);
-                },subscriber::onError));
+        return mRepository.getTimeTable();
     }
 
     public Observable<Course> getCourseFromClass(Timetable.Class mClass){

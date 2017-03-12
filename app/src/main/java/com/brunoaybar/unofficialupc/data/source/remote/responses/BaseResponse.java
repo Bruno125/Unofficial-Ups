@@ -2,6 +2,7 @@ package com.brunoaybar.unofficialupc.data.source.remote.responses;
 
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficialupc.utils.Utils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -20,8 +21,8 @@ public class BaseResponse {
     private String errorMessage;
 
     public boolean isError(){
-        return  !TextUtils.isEmpty(getErrorMessage()) &&
-                !TextUtils.isEmpty(getErrorCode()) &&
+        return  !Utils.isEmpty(getErrorMessage()) &&
+                !Utils.isEmpty(getErrorCode()) &&
                 !getErrorCode().equals("00000");
     }
 

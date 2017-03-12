@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.brunoaybar.unofficialupc.data.models.Assessment;
 import com.brunoaybar.unofficialupc.data.models.Course;
+import com.brunoaybar.unofficialupc.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,19 @@ public class CourseResponse extends BaseResponse
     private List<Nota> Notas;
 
     public Course transform(){
+        return transform(true);
+    }
+
+    public Course transform(boolean withDetails){
         Course course = new Course();
         course.setCode(getCodCurso());
         course.setName(getCursoNombre());
         course.setFormula(getFormula());
+
+        if(!withDetails){
+            course.setValid(true);
+            return course;
+        }
 
         try{
             course.setCurrentGrade(Double.parseDouble(getNotaFinal()));
@@ -40,7 +50,7 @@ public class CourseResponse extends BaseResponse
         }
 
 
-        if(TextUtils.isEmpty(getPorcentajeAvance()))
+        if(Utils.isEmpty(getPorcentajeAvance()))
             course.setCurrentProgress(0);
         else
             course.setCurrentProgress(Double.parseDouble(getPorcentajeAvance().replace("%","")));

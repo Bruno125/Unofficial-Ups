@@ -2,6 +2,8 @@ package com.brunoaybar.unofficialupc.data.models;
 
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficialupc.utils.Utils;
+
 /**
  * Model class for a User
  */
@@ -24,13 +26,12 @@ public class User {
     }
 
     public boolean hasValidSession(){
-        return !TextUtils.isEmpty(token) && !TextUtils.isEmpty(userCode);
+        return !Utils.isEmpty(token) && !Utils.isEmpty(userCode);
     }
 
     public boolean hasValidCredentials(){
-        return !TextUtils.isEmpty(userCode) && !TextUtils.isEmpty(savedPassword);
+        return !Utils.isEmpty(userCode) && !Utils.isEmpty(savedPassword);
     }
-
 
     public String getNames() {
         return names;

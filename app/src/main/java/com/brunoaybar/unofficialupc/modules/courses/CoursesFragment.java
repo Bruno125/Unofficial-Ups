@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.modules.base.BaseFragment;
@@ -48,7 +47,7 @@ public class CoursesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Init view model
-        mViewModel = new CoursesViewModel(Injection.provideUpcRepository(getContext()));
+        mViewModel = new CoursesViewModel();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_courses, container, false);

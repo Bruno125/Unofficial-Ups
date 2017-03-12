@@ -9,6 +9,10 @@ import java.util.Date;
 
 public class Utils {
 
+    public static boolean isEmpty(String text){
+        return text==null || text.length()<1;
+    }
+
     public static boolean sameDay(Date date1, Date date2){
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();

@@ -3,11 +3,14 @@ package com.brunoaybar.unofficialupc.modules.courses;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Course;
-import com.brunoaybar.unofficialupc.data.source.UpcRepository;
+import com.brunoaybar.unofficialupc.data.repository.UserRepository;
 import com.google.gson.Gson;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -18,10 +21,11 @@ import rx.subjects.BehaviorSubject;
 
 public class CoursesViewModel {
 
-    private UpcRepository mRepository;
+    @Inject
+    UserRepository mRepository;
 
-    public CoursesViewModel(UpcRepository repository) {
-        mRepository = repository;
+    public CoursesViewModel() {
+        UpcApplication.getViewModelsComponent().inject(this);
     }
 
     private BehaviorSubject<List<Course>> mCoursesSubject;
@@ -34,19 +38,7 @@ public class CoursesViewModel {
     }
 
     private void obtainCoursesStream(){
-        mRepository.getSession().subscribe(user -> {
-            //Use current session to get courses
-            mRepository.getCourses(user)
-                    .flatMap(courses -> Observable.from(courses)
-                            .flatMap(course ->mRepository.getCourseDetail(user,course.getCode()))
-                            .filter(Course::isValid)
-                            .toList())
-                    //.flatMapIterable(courses -> courses)
-                    .subscribe(course ->{
-                        mCoursesSubject.onNext(course);
-                    },mCoursesSubject::onError);
-        },mCoursesSubject::onError);
-
+        mRepository.getCourses().subscribe(mCoursesSubject::onNext,mCoursesSubject::onError);
     }
 
     private static final String PARAM_COURSE = "courseJson";
@@ -75,11 +67,7 @@ public class CoursesViewModel {
         // If we have the course code but no assessments, we get the course details
         // from the remote repo and return that value
         if(course.getAssesments()==null || course.getAssesments().size()<1){
-            return Observable.create(subscriber -> {
-                mRepository.getSession().subscribe(user -> {
-                    mRepository.getCourseDetail(user,course.getCode()).subscribe(subscriber::onNext,subscriber::onError);
-                },subscriber::onError);
-            });
+            return mRepository.getCourseDetail(course.getCode());
         //But if we already have that information, we just return the course
         }else{
             return Observable.just(course);

@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.data.models.Assessment;
 import com.brunoaybar.unofficialupc.data.models.Course;
@@ -51,7 +50,7 @@ public class CourseDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_course_detail);
         ButterKnife.bind(this);
 
-        mViewModel = new CoursesViewModel(Injection.provideUpcRepository(this));
+        mViewModel = new CoursesViewModel();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

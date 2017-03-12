@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.modules.base.BaseFragment;
@@ -50,8 +49,8 @@ public class TimetableFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Initialize ViewModels
-        mViewModel = new TimetableViewModel(Injection.provideUpcRepository(getContext()));
-        mCourseViewModel = new CoursesViewModel(Injection.provideUpcRepository(getContext()));
+        mViewModel = new TimetableViewModel();
+        mCourseViewModel = new CoursesViewModel();
         //Inflate view
         View v  = inflater.inflate(R.layout.fragment_timetable, container, false);
         ButterKnife.bind(this,v);

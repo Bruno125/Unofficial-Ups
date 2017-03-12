@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.brunoaybar.unofficialupc.Injection;
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
@@ -26,8 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-
 public class MainActivity extends BaseActivity {
 
     private HashMap<String,BaseFragment> mFragments;
@@ -44,7 +41,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         setupFragments();
         bottomBar.setOnTabSelectListener(this::handleTabSelection);
-        mViewModel = new MainViewModel(Injection.provideUpcRepository(this));
+        mViewModel = new MainViewModel();
 
         AppRemoteConfig.getInstance().update(this);
     }
@@ -91,7 +88,7 @@ public class MainActivity extends BaseActivity {
                         openHome();
                     }else
                         showToast(R.string.error_logout);
-        }));
+        },error -> showToast(R.string.error_logout)));
 
     }
 

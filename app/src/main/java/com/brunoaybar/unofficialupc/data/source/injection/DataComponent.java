@@ -1,4 +1,4 @@
-package com.brunoaybar.unofficialupc.data.source;
+package com.brunoaybar.unofficialupc.data.source.injection;
 
 import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
@@ -15,10 +15,5 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = { DataModule.class, RepositoryModule.class })
-public interface DataComponent {
-    //User repos
-    void inject(UpcSessionRepository target);
-    void inject(UpcLoginRepository target);
-    void inject(UpcUserRepository target);
-    void inject (UpcServiceDataSource target);
+public interface DataComponent extends BaseDataComponent{
 }

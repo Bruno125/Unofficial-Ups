@@ -1,4 +1,4 @@
-package com.brunoaybar.unofficialupc;
+package com.brunoaybar.unofficialupc.injection;
 
 import android.app.Application;
 import android.content.Context;

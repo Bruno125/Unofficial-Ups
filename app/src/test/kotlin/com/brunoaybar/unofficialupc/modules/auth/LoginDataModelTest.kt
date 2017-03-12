@@ -23,62 +23,62 @@ class LoginDataModelTest{
 
     @Test
     fun shouldFail_When_SaveSessionNotEnabled(){
-        dataModel = LoginRepository(
+        /*dataModel = LoginRepository(
                 createMockPreferences(false, null, null, null),
-                createMockService())
+                createMockService())*/
         assertObservable(dataModel.verifyUserSession(),false)
     }
 
     @Test
     fun shouldFail_When_NoCredentials_And_NoValidSession(){
-        dataModel = LoginRepository2(
+        /*dataModel = LoginRepository2(
                 createMockPreferences(true, null, null, null),
                 createMockService()
-        )
+        )*/
         assertObservable(dataModel.verifyUserSession(),false)
     }
 
     @Test
     fun shouldFailWhen_CredentialsAreNoLongerValid(){
-        dataModel = LoginRepository2(createMockPreferences(true, null, USER_CODE, USER_PASS),
+        /*dataModel = LoginRepository2(createMockPreferences(true, null, USER_CODE, USER_PASS),
                 mock<UpcServiceDataSource> {
                     on { login(any(), any()) } doReturn Observable.error(ServiceException())
                 }
-        )
+        )*/
         assertObservable(dataModel.verifyUserSession(),false)
     }
 
     @Test
     fun shouldFailWhen_TokenNoLongerValid(){
-        dataModel = LoginRepository2(
+        /*dataModel = LoginRepository2(
                 createMockPreferences(true, USER_TOKEN, USER_CODE, null),
                 mock<UpcServiceDataSource> {
                     on { validateToken(USER_CODE, USER_TOKEN) } doReturn just(false)
                 }
-        )
+        )*/
         assertObservable(dataModel.verifyUserSession(),false)
     }
 
     @Test
     fun shouldVerifyWhen_CredentialsAreValid(){
-        val user = User(USER_TOKEN,USER_CODE,USER_PASS)
+        /*val user = User(USER_TOKEN,USER_CODE,USER_PASS)
         dataModel = LoginRepository2(
                 createMockPreferences(true, USER_TOKEN, USER_CODE, USER_PASS),
                 mock<UpcServiceDataSource> {
                     on { login(USER_CODE, USER_PASS) } doReturn just(user)
                 }
-        )
+        )*/
         assertObservable(dataModel.verifyUserSession(),true)
     }
 
     @Test
     fun shouldVerifyWhen_TokenStillValid(){
-        dataModel = LoginRepository2(
+        /*dataModel = LoginRepository2(
                 createMockPreferences(true, USER_TOKEN, USER_CODE, null),
                 mock<UpcServiceDataSource> {
                     on { validateToken(USER_CODE, USER_TOKEN) } doReturn just(true)
                 }
-        )
+        )*/
         assertObservable(dataModel.verifyUserSession(),true)
     }
 

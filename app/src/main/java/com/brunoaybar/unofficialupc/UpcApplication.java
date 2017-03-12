@@ -4,12 +4,15 @@ import android.app.Application;
 
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
-import com.brunoaybar.unofficialupc.data.source.DaggerDataComponent;
-import com.brunoaybar.unofficialupc.data.source.DataComponent;
-import com.brunoaybar.unofficialupc.data.source.DataModule;
+import com.brunoaybar.unofficialupc.data.source.injection.DaggerDataComponent;
+import com.brunoaybar.unofficialupc.data.source.injection.DataComponent;
+import com.brunoaybar.unofficialupc.data.source.injection.DataModule;
+import com.brunoaybar.unofficialupc.injection.AppComponent;
+import com.brunoaybar.unofficialupc.injection.AppModule;
+import com.brunoaybar.unofficialupc.injection.DaggerAppComponent;
 import com.brunoaybar.unofficialupc.modules.DaggerViewModelsComponent;
 import com.brunoaybar.unofficialupc.modules.ViewModelsComponent;
-import com.brunoaybar.unofficialupc.data.source.RepositoryModule;
+import com.brunoaybar.unofficialupc.data.source.injection.RepositoryModule;
 
 /**
  * Created by brunoaybar on 21/10/2016.

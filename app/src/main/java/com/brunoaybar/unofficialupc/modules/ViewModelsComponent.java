@@ -1,6 +1,6 @@
 package com.brunoaybar.unofficialupc.modules;
 
-import com.brunoaybar.unofficialupc.data.source.RepositoryModule;
+import com.brunoaybar.unofficialupc.data.source.injection.RepositoryModule;
 import com.brunoaybar.unofficialupc.modules.attendance.AbsencesViewModel;
 import com.brunoaybar.unofficialupc.modules.auth.LoginViewModel;
 import com.brunoaybar.unofficialupc.modules.classmates.ClassmatesViewModel;

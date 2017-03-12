@@ -1,4 +1,4 @@
-package com.brunoaybar.unofficialupc.data.source;
+package com.brunoaybar.unofficialupc.data.source.injection;
 
 import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;

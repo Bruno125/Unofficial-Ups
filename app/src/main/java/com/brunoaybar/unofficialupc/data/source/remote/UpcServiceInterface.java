@@ -6,6 +6,7 @@ import com.brunoaybar.unofficialupc.data.source.remote.responses.ClassmatesRespo
 import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseListResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseResponse;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.PaymentsResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.TimetableResponse;
 
 import retrofit2.http.Body;
@@ -47,4 +48,8 @@ interface UpcServiceInterface {
     Observable<ClassmatesResponse> getClassmates(@Query("CodCurso") String courseCode,
                                                  @Query("CodAlumno") String userCode,
                                                  @Query("Token") String token);
+
+    @GET("PagoPendiente/")
+    Observable<PaymentsResponse> getPayments(@Query("CodAlumno") String userCode,
+                                             @Query("Token") String token);
 }

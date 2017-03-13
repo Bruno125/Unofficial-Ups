@@ -3,6 +3,7 @@ package com.brunoaybar.unofficialupc.data.source.interfaces;
 import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
+import com.brunoaybar.unofficialupc.data.models.Payment;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
 
@@ -22,4 +23,5 @@ public interface RemoteSource {
     Observable<Course> getCourseDetail(String courseCode, String userCode, String token);
     Observable<List<Absence>> getAbsences(String userCode, String token);
     Observable<List<Classmate>> getClassmates(String courseCode, String userCode, String token);
+    Observable<List<Payment>> getPayments(String userCode, String token);
 }

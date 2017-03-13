@@ -6,9 +6,11 @@ import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
+import com.brunoaybar.unofficialupc.data.models.Payment;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.PaymentsResponse;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.AbsencesResponse;
@@ -119,6 +121,16 @@ public class UpcServiceDataSource implements RemoteSource {
         return mService.getClassmates(courseCode,userCode,token)
                 .subscribeOn(Schedulers.newThread())
                 .map(ClassmatesResponse::transform);
+    }
+
+    @Override
+    public Observable<List<Payment>> getPayments(String userCode, String token) {
+        if(!internetVerifier.isConnected()){
+            return Observable.error(new NoInternetException());
+        }
+        return mService.getPayments(userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(PaymentsResponse::transform);
     }
 
 }

@@ -7,6 +7,7 @@ import com.brunoaybar.unofficialupc.modules.classmates.ClassmatesViewModel;
 import com.brunoaybar.unofficialupc.modules.courses.CoursesViewModel;
 import com.brunoaybar.unofficialupc.modules.courses.calculate.CalculateViewModel;
 import com.brunoaybar.unofficialupc.modules.general.MainViewModel;
+import com.brunoaybar.unofficialupc.modules.reserve.ReserveViewModel;
 import com.brunoaybar.unofficialupc.modules.timetable.TimetableViewModel;
 
 import javax.inject.Singleton;
@@ -27,4 +28,5 @@ public interface ViewModelsComponent {
     void inject(CoursesViewModel target);
     void inject(CalculateViewModel target);
     void inject(TimetableViewModel target);
+    void inject(ReserveViewModel target);
 }

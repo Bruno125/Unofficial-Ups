@@ -33,10 +33,11 @@ public class UpcApplication extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
-        setupDaggerComponents();
 
-        AnalyticsManager.setup(this);
         AppRemoteConfig.setup();
+        AnalyticsManager.setup(this);
+
+        setupDaggerComponents();
     }
 
     private void setupDaggerComponents(){

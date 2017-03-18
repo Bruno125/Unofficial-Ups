@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- START xml_defaults -->
 <defaultsMap>
-    <entry>
+    <filter>
         <key>minimum_grade</key>
-        <value>12.495</value>
-    </entry>
-    <entry>
-        <key>welcome_message_caps</key>
-        <value>false</value>
-    </entry>
+        <value>12.5</value>
+    </filter>
+    <filter>
+        <key>reserve_info</key>
+        <value>[]</value>
+    </filter>
 </defaultsMap>
     <!-- END xml_defaults -->

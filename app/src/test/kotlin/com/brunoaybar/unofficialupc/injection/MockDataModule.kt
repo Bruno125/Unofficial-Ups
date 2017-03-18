@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficialupc.injection
 
+import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig
 import com.brunoaybar.unofficialupc.data.source.injection.DataModule
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource
@@ -21,5 +22,8 @@ class MockDataModule {
 
     @Provides @Singleton
     fun providesInternetVerifier(): InternetVerifier = mock<InternetVerifier>()
+
+    @Provides @Singleton
+    fun providesRemoteConfig(): AppRemoteConfig = mock<AppRemoteConfig>()
 
 }

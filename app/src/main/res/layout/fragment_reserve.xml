@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.brunoaybar.unofficialupc.components.base.BaseButton
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_button_reserve_search"
+        android:textColor="#fff"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:enabled="false"
+        android:background="@drawable/shape_rounded_corners_primary"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnSearch"
+        android:id="@+id/rviReserve" />
+
+</RelativeLayout>

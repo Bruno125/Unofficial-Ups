@@ -12,6 +12,11 @@
         id="@+id/nav_attendance"
         icon="@drawable/ic_attendance_24dp"
         title="@string/option_attendance" />
+
+    <tab
+        id="@+id/nav_reserve"
+        icon="@drawable/ic_desktop_windows_black_24dp"
+        title="@string/option_reserve" />
     <!--<tab
         id="@+id/nav_logout"
         icon="@drawable/ic_logout_24dp"

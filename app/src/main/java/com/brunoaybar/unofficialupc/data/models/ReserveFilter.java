@@ -39,6 +39,10 @@ public class ReserveFilter {
         this.values = values;
     }
 
+    public int getValuesCount(){
+        return values != null ? values.size() : 0;
+    }
+
     public String getKey() {
         return key;
     }

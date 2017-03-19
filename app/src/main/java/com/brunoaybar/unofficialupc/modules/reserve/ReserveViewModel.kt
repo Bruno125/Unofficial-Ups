@@ -1,17 +1,21 @@
 package com.brunoaybar.unofficialupc.modules.reserve
 
+import com.brunoaybar.unofficialupc.R
 import com.brunoaybar.unofficialupc.UpcApplication
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository
+import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider
 import rx.Observable
 import rx.subjects.BehaviorSubject
-import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 class ReserveViewModel {
 
     @Inject
     lateinit var repository: UniversityInfoRepository
+
+    @Inject
+    lateinit var stringProvider: StringProvider
 
     init {
         UpcApplication.getViewModelsComponent().inject(this)
@@ -22,7 +26,11 @@ class ReserveViewModel {
                 .filter { !it.values.isEmpty() }.toList()
                 .subscribe ({ info ->
                     when (info.isEmpty()){
-                        false -> reserveFiltersSubject.onNext(info.map(::DisplayableReserveFilter))
+                        false -> {
+                            val defaultHint = stringProvider.getString(R.string.text_reserve_filter_hint);
+                            val result = info.map { DisplayableReserveFilter(it,defaultHint) }
+                            reserveFiltersSubject.onNext(result)
+                        }
                         true -> reserveFiltersSubject.onError(Throwable())
                     }
                 }, { reserveEnabledSubject.onError(it)})
@@ -38,9 +46,19 @@ class ReserveViewModel {
         return reserveEnabledSubject.asObservable()
     }
 
-    fun updated(entries: List<DisplayableReserveFilter>, position: Int, selectedValue: Int){
+    fun updatedEntry(entries: List<DisplayableReserveFilter>, position: Int){
+        try{
+            entries[position].expanded = !entries[position].expanded
+            reserveFiltersSubject.onNext(entries)
+        }catch (e: IndexOutOfBoundsException){
+
+        }
+    }
+
+    fun selectedFilterValue(entries: List<DisplayableReserveFilter>, position: Int, selectedValue: Int){
         try {
             entries[position].setSelected(selectedValue)
+            entries[position].expanded = false
             reserveFiltersSubject.onNext(entries)
             for (entry in entries) {
                 if(!entry.isSelected()){
@@ -57,9 +75,10 @@ class ReserveViewModel {
 
 }
 
-class DisplayableReserveFilter(filter: ReserveFilter) : ReserveFilter() {
+class DisplayableReserveFilter(filter: ReserveFilter, val defaultHint: String) : ReserveFilter() {
     private val DEFAULT_VALUE = -1
     private var selectedValue : Int = DEFAULT_VALUE
+    public var expanded = false
 
     init {
         this.name = filter.name
@@ -70,8 +89,13 @@ class DisplayableReserveFilter(filter: ReserveFilter) : ReserveFilter() {
         return selectedValue != DEFAULT_VALUE
     }
 
+    fun getSelectedValue(): Int{
+        return selectedValue
+    }
+
     fun setSelected(value: Int){
-        if (value>0 && value<values.count()){
+        val isInRange = value>=0 && value<values.count()
+        if (isInRange){
             when (value){
                 selectedValue -> selectedValue = DEFAULT_VALUE // deselect if was already selected
                 else -> selectedValue = value // update value otherwise
@@ -81,4 +105,10 @@ class DisplayableReserveFilter(filter: ReserveFilter) : ReserveFilter() {
         }
     }
 
+    fun getHint(): String {
+        when(isSelected()){
+            true -> return values[selectedValue].value
+            false -> return defaultHint
+        }
+    }
 }

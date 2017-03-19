@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficialupc.modules;
 
 import com.brunoaybar.unofficialupc.data.source.injection.RepositoryModule;
+import com.brunoaybar.unofficialupc.injection.AppModule;
 import com.brunoaybar.unofficialupc.modules.attendance.AbsencesViewModel;
 import com.brunoaybar.unofficialupc.modules.auth.LoginViewModel;
 import com.brunoaybar.unofficialupc.modules.classmates.ClassmatesViewModel;
@@ -19,7 +20,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = { RepositoryModule.class })
+@Component(modules = {AppModule.class, RepositoryModule.class })
 public interface ViewModelsComponent {
     void inject(MainViewModel target);
     void inject(LoginViewModel target);

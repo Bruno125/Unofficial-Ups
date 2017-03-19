@@ -46,13 +46,13 @@ public class ReserveFragment extends BaseFragment {
         rviReserve.setAdapter(adapter);
         viewModel = new ReserveViewModel();
 
-        bind();
-
         return view;
     }
 
+    @Override
+    protected void bind() {
+        super.bind();
 
-    public void bind(){
         mSubscription.add(viewModel.getReserveEntries()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showEntries,this::displayError));
@@ -61,7 +61,16 @@ public class ReserveFragment extends BaseFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateReserveEnabled,this::displayError));
 
-        adapter.setListener(viewModel::updated);
+        adapter.setListener(new ReserveFiltersAdapter.Callback() {
+            @Override
+            public void selectedFilterValue(List<DisplayableReserveFilter> entries, int position, int selectedValue) {
+                viewModel.selectedFilterValue(entries,position,selectedValue);
+            }
+            @Override
+            public void touchedFilterHeader(List<DisplayableReserveFilter> entries, int position) {
+                viewModel.updatedEntry(entries,position);
+            }
+        });
 
         viewModel.load();
     }

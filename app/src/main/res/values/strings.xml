@@ -72,6 +72,7 @@
 
     <!-- Reserve -->
     <string name="text_button_reserve_search">Buscar reserva</string>
+    <string name="text_reserve_filter_hint">escoger</string>
 
     <!-- Common -->
     <string name="text_yes">Yes</string>

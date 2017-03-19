@@ -41,9 +41,12 @@ public class UpcApplication extends Application {
     }
 
     private void setupDaggerComponents(){
-        component = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        AppModule appModule = new AppModule(this);
+        component = DaggerAppComponent.builder().appModule(appModule).build();
         dataComponent = DaggerDataComponent.builder().dataModule(new DataModule()).build();
-        viewModelsComponent = DaggerViewModelsComponent.builder().repositoryModule(new RepositoryModule()).build();
+        viewModelsComponent = DaggerViewModelsComponent.builder()
+                .appModule(appModule)
+                .repositoryModule(new RepositoryModule()).build();
     }
 
     public static AppComponent getComponent(){

@@ -51,9 +51,14 @@ public class ReserveFilter {
         this.key = key;
     }
 
-    public class ReserveOption{
+    static public class ReserveOption{
         private String code;
         private String value;
+
+        public ReserveOption(String code, String value) {
+            this.code = code;
+            this.value = value;
+        }
 
         public String getCode() {
             return code;

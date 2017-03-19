@@ -53,4 +53,9 @@ public class DataModule {
         return remoteConfig;
     }
 
+    @Provides @Singleton
+    public DateProvider provideDateProvider(){
+        return dateProvider;
+    }
+
 }

@@ -28,6 +28,7 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         @BindView(R.id.tviFilterName) TextView tviFilterName;
         @BindView(R.id.tviFilterHint) TextView tviFilterHint;
         @BindView(R.id.iviStatus) ImageView iviStatus;
+        @BindView(R.id.iviIndicator) ImageView iviIndicator;
         View containerView;
 
         public HeaderViewHolder(View itemView) {
@@ -50,15 +51,11 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private List<DisplayableReserveFilter> items;
     private List<InfoCell> itemsInfo;
+    private List<Integer> headerPositions;
     private Context context;
 
     public ReserveFiltersAdapter(Context context){
         this.context = context;
-    }
-
-    public void update(List<DisplayableReserveFilter> items){
-        this.items = items;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -85,6 +82,9 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }else{
                     headerViewHolder.iviStatus.setImageResource(R.drawable.ic_check_circle_gray_24dp);
                 }
+
+                float rotation = filter.getExpanded() ? 90 : 0;
+                headerViewHolder.iviIndicator.setRotation(rotation);
                 break;
             case VALUE:
                 ValueViewHolder valueViewHolder = (ValueViewHolder) holder;
@@ -104,8 +104,10 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         itemsInfo = new ArrayList<>();
+        headerPositions = new ArrayList<>();
         for (int i=0;i<items.size();i++){
             DisplayableReserveFilter filter=items.get(i);
+            headerPositions.add(itemsInfo.size());
             itemsInfo.add(new InfoCell(i));
 
             if(filter.getExpanded()){
@@ -120,6 +122,30 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemViewType(int position) {
         return itemsInfo.get(position).getType();
+    }
+
+
+    public void update(List<DisplayableReserveFilter> items){
+        if (this.items == null || (this.items.size() != items.size())){
+            this.items = items;
+            notifyDataSetChanged();
+            return;
+        }
+
+        for(int i=0; i<items.size();i++){
+            DisplayableReserveFilter filterOld = this.items.get(i);
+            DisplayableReserveFilter filterNew = items.get(i);
+            if(filterOld.getExpanded() != filterNew.getExpanded()){
+                int startPosition = headerPositions.get(i);
+                notifyItemChanged(startPosition);
+                this.items = items;
+                if(filterOld.getExpanded()){
+                    notifyItemRangeRemoved(startPosition + 1, filterOld.getValuesCount());
+                }else{
+                    notifyItemRangeInserted(startPosition + 1, filterNew.getValuesCount());
+                }
+            }
+        }
     }
 
     interface Callback {

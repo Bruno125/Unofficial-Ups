@@ -48,8 +48,9 @@ class ReserveViewModel {
 
     fun updatedEntry(entries: List<DisplayableReserveFilter>, position: Int){
         try{
-            entries[position].expanded = !entries[position].expanded
-            reserveFiltersSubject.onNext(entries)
+            val newEntries = entries.map{ it.copy() }
+            newEntries[position].expanded = !newEntries[position].expanded
+            reserveFiltersSubject.onNext(newEntries)
         }catch (e: IndexOutOfBoundsException){
 
         }
@@ -57,10 +58,11 @@ class ReserveViewModel {
 
     fun selectedFilterValue(entries: List<DisplayableReserveFilter>, position: Int, selectedValue: Int){
         try {
-            entries[position].setSelected(selectedValue)
-            entries[position].expanded = false
-            reserveFiltersSubject.onNext(entries)
-            for (entry in entries) {
+            val newEntries = entries.map{ it.copy() }
+            newEntries[position].setSelected(selectedValue)
+            newEntries[position].expanded = false
+            reserveFiltersSubject.onNext(newEntries)
+            for (entry in newEntries) {
                 if(!entry.isSelected()){
                     reserveEnabledSubject.onNext(false)
                     return
@@ -75,7 +77,7 @@ class ReserveViewModel {
 
 }
 
-class DisplayableReserveFilter(filter: ReserveFilter, val defaultHint: String) : ReserveFilter() {
+class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: String) : ReserveFilter() {
     private val DEFAULT_VALUE = -1
     private var selectedValue : Int = DEFAULT_VALUE
     public var expanded = false
@@ -111,4 +113,12 @@ class DisplayableReserveFilter(filter: ReserveFilter, val defaultHint: String) :
             false -> return defaultHint
         }
     }
+
+    fun copy(): DisplayableReserveFilter{
+        val copy = DisplayableReserveFilter(filter,defaultHint)
+        copy.expanded = expanded
+        copy.selectedValue = selectedValue
+        return copy
+    }
+
 }

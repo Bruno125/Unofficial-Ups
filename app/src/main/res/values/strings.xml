@@ -71,8 +71,10 @@
     <string name="text_title_maximum">MÁXIMO</string>
 
     <!-- Reserve -->
+    <string name="title_reserve">Realizar reserva</string>
     <string name="text_button_reserve_search">Buscar reserva</string>
     <string name="text_reserve_filter_hint">escoger</string>
+    <string name="text_reserve_missing_filters">Completa los filtros para poder continuar</string>
 
     <!-- Common -->
     <string name="text_yes">Yes</string>

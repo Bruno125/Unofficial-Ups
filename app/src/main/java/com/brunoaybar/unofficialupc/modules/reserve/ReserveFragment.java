@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class ReserveFragment extends BaseFragment {
@@ -25,7 +26,7 @@ public class ReserveFragment extends BaseFragment {
     }
 
     public ReserveFragment() {
-        setFragmentTitle(R.string.option_reserve);
+        setFragmentTitle(R.string.title_reserve);
     }
 
 
@@ -80,7 +81,17 @@ public class ReserveFragment extends BaseFragment {
     }
 
     private void updateReserveEnabled(boolean enabled){
-        btnSearch.setEnabled(enabled);
+        btnSearch.setSelected(enabled);
+    }
+
+    @OnClick(R.id.btnSearch)
+    public void searchClicked(View v){
+        if(v.isSelected()){
+            displayMessage("SUCCEED");
+        }else{
+            displayMessage(R.string.text_reserve_missing_filters);
+        }
+
     }
 
 }

@@ -56,14 +56,14 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
             Calendar c = Calendar.getInstance();
             SimpleDateFormat codeFormat = new SimpleDateFormat("ddMMyyyy");
             SimpleDateFormat valueFormat= new SimpleDateFormat("dd/MM/yy");
-            List<ReserveFilter.ReserveOption> values = new ArrayList<>();
+            List<ReserveFilter.ReserveFilterValue> values = new ArrayList<>();
             Date lastDate = dateProvider.getNow();
-            values.add(new ReserveFilter.ReserveOption(codeFormat.format(lastDate),valueFormat.format(lastDate)));
+            values.add(new ReserveFilter.ReserveFilterValue(codeFormat.format(lastDate),valueFormat.format(lastDate)));
             for(int i=0;i<AMOUNT_OF_DAYS;i++) {
                 c.setTime(lastDate);
                 c.add(Calendar.DATE,1);
                 lastDate = c.getTime();
-                values.add(new ReserveFilter.ReserveOption(codeFormat.format(lastDate),valueFormat.format(lastDate)));
+                values.add(new ReserveFilter.ReserveFilterValue(codeFormat.format(lastDate),valueFormat.format(lastDate)));
             }
             filter.setValues(values);
             return filter;
@@ -71,5 +71,8 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
             return filter;
         }
     }
+
+
+
 
 }

@@ -6,6 +6,7 @@ import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier
+import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider
 import com.nhaarman.mockito_kotlin.mock
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,8 @@ class MockDataModule {
 
     @Provides @Singleton
     fun providesRemoteConfig(): AppRemoteConfig = mock<AppRemoteConfig>()
+
+    @Provides @Singleton
+    fun providesDateProvider(): DateProvider = mock<DateProvider>()
 
 }

@@ -1,7 +1,6 @@
 package com.brunoaybar.unofficialupc.modules.reserve;
 
 import android.content.Context;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +87,7 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 break;
             case VALUE:
                 ValueViewHolder valueViewHolder = (ValueViewHolder) holder;
-                ReserveFilter.ReserveOption option = filter.getValues().get(info.valuePosition);
+                ReserveFilter.ReserveFilterValue option = filter.getValues().get(info.valuePosition);
                 valueViewHolder.tviFilterName.setText(option.getValue());
                 boolean isSelected = filter.getSelectedValue() == info.valuePosition;
                 valueViewHolder.iviSelected.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);

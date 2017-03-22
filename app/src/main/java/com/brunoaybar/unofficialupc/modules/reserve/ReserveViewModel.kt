@@ -72,8 +72,13 @@ class ReserveViewModel {
         }catch (e: IndexOutOfBoundsException){
 
         }
+    }
+
+
+    fun applyFilters(filters: List<DisplayableReserveFilter>) {
 
     }
+
 
 }
 

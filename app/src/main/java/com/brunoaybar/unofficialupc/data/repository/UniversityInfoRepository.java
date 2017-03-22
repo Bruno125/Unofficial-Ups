@@ -12,4 +12,5 @@ import rx.Observable;
 
 public interface UniversityInfoRepository {
     Observable<List<ReserveFilter>> getReserveFilters();
+
 }

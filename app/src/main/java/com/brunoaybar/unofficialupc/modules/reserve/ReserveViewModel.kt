@@ -99,6 +99,8 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
         this.name = filter.name
         this.values = filter.values
         this.key = filter.key
+        this.serviceKey = filter.serviceKey
+        this.isCustom = filter.isCustom
     }
 
     fun isSelected(): Boolean {

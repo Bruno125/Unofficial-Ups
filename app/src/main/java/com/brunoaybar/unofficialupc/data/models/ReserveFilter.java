@@ -1,5 +1,7 @@
 package com.brunoaybar.unofficialupc.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
 
 public class ReserveFilter {
     private String key;
+    @SerializedName("service_key")
     private String serviceKey;
     private boolean custom;
     private int selected;
@@ -33,6 +36,10 @@ public class ReserveFilter {
 
     public List<ReserveFilterValue> getValues() {
         return values;
+    }
+
+    public ReserveFilterValue getSelectedFilterValue(){
+        return values.get(selected);
     }
 
     public void setValues(List<ReserveFilterValue> values) {

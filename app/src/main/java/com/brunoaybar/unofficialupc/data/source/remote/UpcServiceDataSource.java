@@ -146,8 +146,9 @@ public class UpcServiceDataSource implements RemoteSource {
 
         Map<String,String> filtersMap = new HashMap<>();
         for(ReserveFilter filter : filters){
-            String value = filter.getValues().get(filter.getSelected()).getCode();
-            filtersMap.put(filter.getKey(),value);
+            if(!Utils.isEmpty(filter.getServiceKey())){
+                filtersMap.put(filter.getServiceKey(),filter.getSelectedFilterValue().getCode());
+            }
         }
 
         return mService.getReservesAvailability(filtersMap,userCode,token)

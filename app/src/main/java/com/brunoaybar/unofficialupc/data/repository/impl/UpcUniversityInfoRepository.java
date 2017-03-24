@@ -7,6 +7,7 @@ import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository;
 import com.brunoaybar.unofficialupc.data.source.injection.BaseDataComponent;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
+import com.brunoaybar.unofficialupc.utils.Utils;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 import com.google.gson.Gson;
 
@@ -57,12 +58,6 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
                 }).toList();
     }
 
-    @Override
-    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters) {
-        return sessionRepo.getSession()
-                .flatMap(s -> remoteSource.getReserveOptions(filters,s.getUserCode(),s.getToken()));
-    }
-
     private static final String KEY_DATE_FILTER = "dates";
     private static final int AMOUNT_OF_DAYS = 7;
     private ReserveFilter setupCustomFilter(ReserveFilter filter){
@@ -88,6 +83,42 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
     }
 
 
+    @Override
+    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters) {
+        List<ReserveFilter> parsedFilters = parseFilters(filters);
 
+        return sessionRepo.getSession()
+                .flatMap(s -> remoteSource.getReserveOptions(parsedFilters,s.getUserCode(),s.getToken()));
+    }
+
+    private static final String KEY_TIME_FILTER = "times";
+    private static final String KEY_START_DATE_PARAM = "FecIni";
+    private static final String KEY_END_DATE_PARAM = "FecFin";
+    private List<ReserveFilter> parseFilters(List<ReserveFilter> filters){
+        List<ReserveFilter> parsedFilters = new ArrayList<>();
+        for(ReserveFilter filter : filters){
+            ReserveFilter.ReserveFilterValue value = filter.getValues().get(filter.getSelected());
+            if(filter.isCustom()){
+                if(filter.getKey().equals(KEY_DATE_FILTER)){
+                    String selectedDate = filter.getValues().get(filter.getSelected()).getCode();
+                    for(ReserveFilter tempFilter : filters){
+                        if(tempFilter.getKey().equals(KEY_TIME_FILTER)){
+                            ReserveFilter newFilter = new ReserveFilter();
+                            newFilter.setKey(KEY_START_DATE_PARAM);
+                            newFilter.setServiceKey(KEY_START_DATE_PARAM);
+                            String paramValue = selectedDate + "%20" + tempFilter.getSelectedFilterValue().getCode();
+                            List<ReserveFilter.ReserveFilterValue> values = new ArrayList<>();
+                            values.add(new ReserveFilter.ReserveFilterValue(paramValue,paramValue));
+                            newFilter.setValues(values);
+                            parsedFilters.add(newFilter);
+                        }
+                    }
+                }
+            }else if(!Utils.isEmpty(filter.getServiceKey())){
+                parsedFilters.add(filter);
+            }
+        }
+        return parsedFilters;
+    }
 
 }

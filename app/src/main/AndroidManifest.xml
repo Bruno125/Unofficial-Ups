@@ -32,6 +32,9 @@
         <activity
             android:name=".modules.courses.calculate.CalculateActivity"
             android:label="@string/action_calculate" />
+        <activity
+            android:name=".modules.reserve.ReserveFiltersActivity"
+            android:label="@string/title_reserve_filters" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

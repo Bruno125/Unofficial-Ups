@@ -57,6 +57,10 @@ public class ReserveFiltersAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.context = context;
     }
 
+    public List<DisplayableReserveFilter> getData(){
+        return items;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == ViewHolderType.HEADER.value){

@@ -7,10 +7,13 @@ import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.models.Payment;
+import com.brunoaybar.unofficialupc.data.models.ReserveFilter;
+import com.brunoaybar.unofficialupc.data.models.ReserveOption;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.PaymentsResponse;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.AbsencesResponse;
@@ -22,7 +25,9 @@ import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceExceptio
 import com.brunoaybar.unofficialupc.data.source.remote.responses.TimetableResponse;
 import com.brunoaybar.unofficialupc.utils.Utils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -131,6 +136,24 @@ public class UpcServiceDataSource implements RemoteSource {
         return mService.getPayments(userCode,token)
                 .subscribeOn(Schedulers.newThread())
                 .map(PaymentsResponse::transform);
+    }
+
+    @Override
+    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters, String userCode, String token) {
+        if(!internetVerifier.isConnected()){
+            return Observable.error(new NoInternetException());
+        }
+
+        Map<String,String> filtersMap = new HashMap<>();
+        for(ReserveFilter filter : filters){
+            String value = filter.getValues().get(filter.getSelected()).getCode();
+            filtersMap.put(filter.getKey(),value);
+        }
+
+        return mService.getReservesAvailability(filtersMap,userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(ReserveAvailabilityResponse::transform);
+
     }
 
 }

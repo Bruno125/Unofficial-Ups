@@ -9,7 +9,9 @@ import java.util.List;
 
 public class ReserveFilter {
     private String key;
+    private String serviceKey;
     private boolean custom;
+    private int selected;
     protected String name;
     protected List<ReserveFilterValue> values = new ArrayList<>();
 
@@ -47,6 +49,22 @@ public class ReserveFilter {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public int getSelected() {
+        return selected;
+    }
+
+    protected void setSelected(int selected) {
+        this.selected = selected;
+    }
+
+    public String getServiceKey() {
+        return serviceKey;
+    }
+
+    public void setServiceKey(String serviceKey) {
+        this.serviceKey = serviceKey;
     }
 
     static public class ReserveFilterValue {

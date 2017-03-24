@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficialupc.modules.reserve;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,13 +20,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ReserveFragment extends BaseFragment {
+public class ReserveFiltersFragment extends BaseFragment {
 
-    public static ReserveFragment newInstance(){
-        return new ReserveFragment();
+    public static ReserveFiltersFragment newInstance(){
+        return new ReserveFiltersFragment();
     }
 
-    public ReserveFragment() {
+    public ReserveFiltersFragment() {
         setFragmentTitle(R.string.title_reserve);
     }
 
@@ -40,7 +41,7 @@ public class ReserveFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_reserve,container,false);
+        View view = inflater.inflate(R.layout.fragment_reserve_filters,container,false);
         ButterKnife.bind(this,view);
         rviReserve.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ReserveFiltersAdapter(getContext());
@@ -87,7 +88,13 @@ public class ReserveFragment extends BaseFragment {
     @OnClick(R.id.btnSearch)
     public void searchClicked(View v){
         if(v.isSelected()){
-            displayMessage("SUCCEED");
+            viewModel.applyFilters(adapter.getData())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe( data -> {
+                        Intent i = new Intent(getActivity(),ReserveOptionsActivity.class);
+                        i.putExtra(ReserveOptionsActivity.getDataParam(), data);
+                        startActivity(i);
+                    },this::displayError);
         }else{
             displayMessage(R.string.text_reserve_missing_filters);
         }

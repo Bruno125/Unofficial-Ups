@@ -2,8 +2,11 @@ package com.brunoaybar.unofficialupc.data.repository.impl;
 
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter;
+import com.brunoaybar.unofficialupc.data.models.ReserveOption;
+import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository;
 import com.brunoaybar.unofficialupc.data.source.injection.BaseDataComponent;
+import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 import com.google.gson.Gson;
 
@@ -23,6 +26,12 @@ import rx.Observable;
  */
 
 public class UpcUniversityInfoRepository implements UniversityInfoRepository{
+
+    @Inject
+    SessionRepository sessionRepo;
+
+    @Inject
+    RemoteSource remoteSource;
 
     @Inject
     AppRemoteConfig remoteConfig;
@@ -46,6 +55,12 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
                     }
                     return filter;
                 }).toList();
+    }
+
+    @Override
+    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters) {
+        return sessionRepo.getSession()
+                .flatMap(s -> remoteSource.getReserveOptions(filters,s.getUserCode(),s.getToken()));
     }
 
     private static final String KEY_DATE_FILTER = "dates";

@@ -3,8 +3,12 @@ package com.brunoaybar.unofficialupc.modules.reserve
 import com.brunoaybar.unofficialupc.R
 import com.brunoaybar.unofficialupc.UpcApplication
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter
+import com.brunoaybar.unofficialupc.data.models.ReserveOption
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse
 import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import rx.Observable
 import rx.subjects.BehaviorSubject
 import javax.inject.Inject
@@ -59,7 +63,7 @@ class ReserveViewModel {
     fun selectedFilterValue(entries: List<DisplayableReserveFilter>, position: Int, selectedValue: Int){
         try {
             val newEntries = entries.map{ it.copy() }
-            newEntries[position].setSelected(selectedValue)
+            newEntries[position].setSelectedValue(selectedValue)
             newEntries[position].expanded = false
             reserveFiltersSubject.onNext(newEntries)
             for (entry in newEntries) {
@@ -75,8 +79,12 @@ class ReserveViewModel {
     }
 
 
-    fun applyFilters(filters: List<DisplayableReserveFilter>) {
+    fun applyFilters(filters: List<DisplayableReserveFilter>): Observable<String>{
+        return repository.getReserveOptions(filters).map { Gson().toJson(it) }
+    }
 
+    fun parseReserveOptionsData(data: String): List<ReserveOption>{
+        return Gson().fromJson<Array<ReserveOption>>(data,Array<ReserveOption>::class.java).toList()
     }
 
 
@@ -90,6 +98,7 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
     init {
         this.name = filter.name
         this.values = filter.values
+        this.key = filter.key
     }
 
     fun isSelected(): Boolean {
@@ -100,13 +109,15 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
         return selectedValue
     }
 
-    fun setSelected(value: Int){
+
+    fun setSelectedValue(value: Int){
         val isInRange = value>=0 && value<values.count()
         if (isInRange){
             when (value){
                 selectedValue -> selectedValue = DEFAULT_VALUE // deselect if was already selected
                 else -> selectedValue = value // update value otherwise
             }
+            selected = value
         }else{
             throw IndexOutOfBoundsException()
         }

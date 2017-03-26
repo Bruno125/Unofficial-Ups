@@ -3,10 +3,13 @@ package com.brunoaybar.unofficialupc.data.source.remote
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ClassmatesResponse
 import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseListResponse
 import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseResponse
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.amshove.kluent.shouldEqual
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 import kotlin.test.assertFalse
 
 class CourseResponseTest{
@@ -35,6 +38,16 @@ class CourseResponseTest{
             "\"Cursos\":[ " +
             "{\"CodCurso\":\"MA263\",\"CodAlumno\":\"U201412074\",\"CursoNombre\":\"CÁLCULO II\"}, " +
             "{\"CodCurso\":\"CI167\",\"CodAlumno\":\"U201412074\",\"CursoNombre\":\"MODELACIÓN DE EDIFICACIONES\"}]} "
+
+    private val JSON_COURSE_ERROR = "{\"CodError\":\"00003\"," +
+            "\"MsgError\":\"La sesión ha expirado o no se reconoce el usuario que solicita la operación.\"," +
+            "\"CursoNombre\":null,\"CodCurso\":null,\"Formula\":null," +
+            "\"PorcentajeAvance\":null,\"NotaFinal\":null,\"Notas\":null}"
+
+    private val JSON_COURSE_LIST_ERROR = "{\"CodError\":\"00002\"," +
+            "\"MsgError\":\"Ud. no se encuentra matriculado en el presente ciclo.\"," +
+            "\"Cursos\":null}"
+
     //endregion
 
     @Test
@@ -85,6 +98,39 @@ class CourseResponseTest{
         result[1].code shouldEqual "CI167"
         result[1].name shouldEqual "MODELACIÓN DE EDIFICACIONES"
         assert(result[1].isValid)
+    }
+
+
+    @Test
+    fun responseSingleIsError(){
+        val response = getCourseResponse(JSON_COURSE_ERROR)
+        assert(response.isError)
+    }
+
+    @Test
+    fun responseListIsError(){
+        val response = getCourseResponse(JSON_COURSE_LIST_ERROR)
+        assert(response.isError)
+    }
+
+    @Rule @JvmField
+    public val exception = ExpectedException.none()
+    @Test
+    fun transformThrowsException_WhenSingleIsError(){
+        val response = getCourseResponse(JSON_COURSE_ERROR)
+        exception.expect(ServiceException::class.java)
+        exception.expectMessage("La sesión ha expirado o no se reconoce el usuario que solicita la operación.")
+
+        response.transform()
+    }
+
+    @Test
+    fun transformThrowsException_WhenListIsError(){
+        val response = getCourseListResponse(JSON_COURSE_LIST_ERROR)
+        exception.expect(ServiceException::class.java)
+        exception.expectMessage("Ud. no se encuentra matriculado en el presente ciclo.")
+
+        response.transform()
     }
 
     private fun getCourseResponse(jsonString: String) : CourseResponse {

@@ -1,10 +1,13 @@
 package com.brunoaybar.unofficialupc.data.source.remote
 
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.amshove.kluent.shouldEqual
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 import java.util.*
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -47,11 +50,29 @@ class ReserveAvailabilityResponseTest{
             ",\"MsgError\": \"No hay recursos disponibles para reservar.\"," +
             "\"TipoRecurso\": null,\"FecReserva\": null,\"CanHoras\": null,\"Recursos\": null}"
 
+
     @Test
-    fun transformError(){
+    fun testResponseIsError(){
         response = getResponse(JSON_ERROR)
         assertTrue { response.isError }
     }
+
+    @Test(expected = ServiceException::class)
+    fun transformThrowsException_WhenIsError(){
+        response = getResponse(JSON_ERROR)
+        response.transform()
+    }
+    @Rule @JvmField
+    public val exception = ExpectedException.none()
+    @Test
+    fun transformThrowsException_WhenCredentialsInvalid(){
+        val response = getResponse(JSON_ERROR)
+        exception.expect(ServiceException::class.java)
+        exception.expectMessage("No hay recursos disponibles para reservar.")
+
+        response.transform()
+    }
+
 
     private fun getResponse(json: String): ReserveAvailabilityResponse{
         val type = object : TypeToken<ReserveAvailabilityResponse>() {}.type

@@ -22,4 +22,9 @@ public class AndroidStringProvider implements StringProvider {
     public String getString(int resId) {
         return context.getString(resId);
     }
+
+    @Override
+    public Throwable getError(int resId) {
+        return new Throwable(getString(resId));
+    }
 }

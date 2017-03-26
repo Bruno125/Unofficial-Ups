@@ -13,8 +13,7 @@ import rx.subscriptions.CompositeSubscription;
  * Base fragment class for fragments implemented on this application
  */
 
-public abstract class
-BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     @NonNull
     protected CompositeSubscription mSubscription = mSubscription = new CompositeSubscription();

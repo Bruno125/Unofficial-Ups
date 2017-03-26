@@ -6,6 +6,7 @@ import com.brunoaybar.unofficialupc.data.models.ReserveFilter
 import com.brunoaybar.unofficialupc.data.models.ReserveOption
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse
+import com.brunoaybar.unofficialupc.utils.Utils
 import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -26,6 +27,7 @@ class ReserveViewModel {
     }
 
     fun load(){
+        var defaultError = stringProvider.getString(R.string.error_fill_fields)
         repository.reserveFilters.flatMap { Observable.from(it) }
                 .filter { !it.values.isEmpty() }.toList()
                 .subscribe ({ info ->
@@ -35,9 +37,9 @@ class ReserveViewModel {
                             val result = info.map { DisplayableReserveFilter(it,defaultHint) }
                             reserveFiltersSubject.onNext(result)
                         }
-                        true -> reserveFiltersSubject.onError(Throwable())
+                        true -> reserveFiltersSubject.onError(Utils.getError(defaultError))
                     }
-                }, { reserveEnabledSubject.onError(it)})
+                }, { reserveFiltersSubject.onError(Utils.getError(it,defaultError)) })
     }
 
     private val reserveFiltersSubject : BehaviorSubject<List<DisplayableReserveFilter>> = BehaviorSubject.create()

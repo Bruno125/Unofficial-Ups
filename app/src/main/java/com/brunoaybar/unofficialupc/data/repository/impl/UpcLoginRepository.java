@@ -9,6 +9,7 @@ import com.brunoaybar.unofficialupc.data.source.injection.DataComponent;
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.utils.CryptoUtils;
+import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 
 import javax.inject.Inject;
 

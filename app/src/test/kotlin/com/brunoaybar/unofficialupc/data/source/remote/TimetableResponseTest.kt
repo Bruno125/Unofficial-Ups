@@ -1,10 +1,13 @@
 package com.brunoaybar.unofficialupc.data.source.remote
 
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException
 import com.brunoaybar.unofficialupc.data.source.remote.responses.TimetableResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.amshove.kluent.shouldEqual
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.test.assertFalse
@@ -100,6 +103,18 @@ class TimetableResponseTest{
         val response = getResponse(JSON_NO_TIMETABLE)
         assert(response.isError)
     }
+
+    @Rule @JvmField
+    public val exception = ExpectedException.none()
+    @Test
+    fun transformThrowsException_WhenNotAvailable(){
+        val response = getResponse(JSON_NO_TIMETABLE)
+        exception.expect(ServiceException::class.java)
+        exception.expectMessage("Ud. no tiene clases programadas para esta semana.")
+
+        response.transform()
+    }
+
 
     private fun getDate(date:String) : Date = SimpleDateFormat("yyyyMMdd",Locale.US).parse(date)
 

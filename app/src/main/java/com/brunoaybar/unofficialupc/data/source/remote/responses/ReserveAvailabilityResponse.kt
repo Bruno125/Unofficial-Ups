@@ -3,10 +3,10 @@ package com.brunoaybar.unofficialupc.data.source.remote.responses
 import com.brunoaybar.unofficialupc.data.models.ReserveOption
 import java.text.SimpleDateFormat
 
-class ReserveAvailabilityResponse(val TipoRecurso: String,
-                                  val FecReserva: String,
-                                  val CanHoras: String,
-                                  val Recursos: Array<SingleResourceResponse>) : BaseResponse(){
+class ReserveAvailabilityResponse(val TipoRecurso: String?,
+                                  val FecReserva: String?,
+                                  val CanHoras: String?,
+                                  val Recursos: Array<SingleResourceResponse>?) : BaseResponse(){
 
     class SingleResourceResponse(val CodRecurso: Int,
                           val NomRecurso: String,
@@ -30,8 +30,12 @@ class ReserveAvailabilityResponse(val TipoRecurso: String,
     }
 
     fun transform(): List<ReserveOption>{
-        val duration = CanHoras.toInt()
-        return Recursos.map { it.transform(duration) }
+        if(isError){
+            throw ServiceException(this)
+        }
+
+        val duration = CanHoras?.toInt() ?: 0
+        return Recursos?.map { it.transform(duration) } ?: arrayListOf()
     }
 
 

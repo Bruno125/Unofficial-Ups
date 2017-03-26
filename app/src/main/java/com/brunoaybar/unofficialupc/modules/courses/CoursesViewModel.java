@@ -3,9 +3,13 @@ package com.brunoaybar.unofficialupc.modules.courses;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.Course;
+import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
 import com.brunoaybar.unofficialupc.data.repository.UserRepository;
+import com.brunoaybar.unofficialupc.utils.Utils;
+import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -24,6 +28,9 @@ public class CoursesViewModel {
     @Inject
     UserRepository mRepository;
 
+    @Inject
+    StringProvider stringProvider;
+
     public CoursesViewModel() {
         UpcApplication.getViewModelsComponent().inject(this);
     }
@@ -38,7 +45,9 @@ public class CoursesViewModel {
     }
 
     private void obtainCoursesStream(){
-        mRepository.getCourses().subscribe(mCoursesSubject::onNext,mCoursesSubject::onError);
+        mRepository.getCourses().subscribe(mCoursesSubject::onNext,e -> {
+            mCoursesSubject.onError(Utils.getError(e,stringProvider.getString(R.string.error_getting_courses)));
+        });
     }
 
     private static final String PARAM_COURSE = "courseJson";

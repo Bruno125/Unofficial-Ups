@@ -43,6 +43,10 @@ public class LoginResponse extends BaseResponse {
 
 
     public User transform(){
+        if (isError()){
+            throw new ServiceException(this);
+        }
+
         User user = new User();
         checkNotNull(token);
         user.setToken(token);

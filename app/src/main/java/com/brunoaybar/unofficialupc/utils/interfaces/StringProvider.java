@@ -6,4 +6,5 @@ package com.brunoaybar.unofficialupc.utils.interfaces;
 
 public interface StringProvider {
     String getString(int resId);
+    Throwable getError(int resId);
 }

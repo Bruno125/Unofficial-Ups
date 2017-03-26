@@ -26,7 +26,7 @@ public class LoginViewModel {
         return Observable.create(subscriber -> {
             mDataModel.verifyUserSession().subscribe(
                     subscriber::onNext,
-                    error -> {  subscriber.onNext(false); }
+                    error -> subscriber.onNext(false)
             );
         });
     }

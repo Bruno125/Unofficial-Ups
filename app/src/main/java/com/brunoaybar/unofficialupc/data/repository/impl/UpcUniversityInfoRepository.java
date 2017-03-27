@@ -11,6 +11,7 @@ import com.brunoaybar.unofficialupc.utils.Utils;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,15 +48,34 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
     @Override
     public Observable<List<ReserveFilter>> getReserveFilters(){
         return remoteConfig.getReserveInfo()
-                .map(json -> new Gson().fromJson(json,ReserveFilter[].class))
-                .map(Arrays::asList)
+                .map(json -> new Gson().fromJson(json,ReserveFilter[].class)).map(Arrays::asList)
                 .flatMap(Observable::from)
                 .map( filter -> {
-                    if(filter.isCustom()){
+                    if(filter.isCustom())
                         filter = setupCustomFilter(filter);
-                    }
                     return filter;
                 }).toList();
+    }
+
+    @Override
+    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters) {
+        List<ReserveFilter> parsedFilters = parseFilters(filters);
+        return sessionRepo.getSession()
+                .flatMap(s -> remoteSource.getReserveOptions(parsedFilters,s.getUserCode(),s.getToken()));
+    }
+
+    @Override
+    public Observable<String> reserve(ReserveOption option) {
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy HHmm");
+        String startDate = dateFormat.format(option.getDatetime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(option.getDatetime());
+        calendar.add(Calendar.HOUR,option.getDuration());
+        String endDate = dateFormat.format(calendar.getTime());
+        String duration = String.valueOf(option.getDuration());
+
+        return sessionRepo.getSession().flatMap( s ->
+                remoteSource.reserve(option.getCode(),option.getName(),startDate,endDate,duration,s.getUserCode(),s.getToken()));
     }
 
     private static final String KEY_DATE_FILTER = "dates";
@@ -82,15 +102,6 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
         }
     }
 
-
-    @Override
-    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters) {
-        List<ReserveFilter> parsedFilters = parseFilters(filters);
-
-        return sessionRepo.getSession()
-                .flatMap(s -> remoteSource.getReserveOptions(parsedFilters,s.getUserCode(),s.getToken()));
-    }
-
     private static final String KEY_TIME_FILTER = "times";
     private static final String KEY_START_DATE_PARAM = "FecIni";
     private static final String KEY_END_DATE_PARAM = "FecFin";
@@ -106,7 +117,7 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
                             ReserveFilter newFilter = new ReserveFilter();
                             newFilter.setKey(KEY_START_DATE_PARAM);
                             newFilter.setServiceKey(KEY_START_DATE_PARAM);
-                            String paramValue = selectedDate + "%20" + tempFilter.getSelectedFilterValue().getCode();
+                            String paramValue = selectedDate + " " + tempFilter.getSelectedFilterValue().getCode();
                             List<ReserveFilter.ReserveFilterValue> values = new ArrayList<>();
                             values.add(new ReserveFilter.ReserveFilterValue(paramValue,paramValue));
                             newFilter.setValues(values);

@@ -12,6 +12,7 @@ import com.brunoaybar.unofficialupc.data.models.ReserveOption;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.BaseResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.PaymentsResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
@@ -155,6 +156,16 @@ public class UpcServiceDataSource implements RemoteSource {
                 .subscribeOn(Schedulers.newThread())
                 .map(ReserveAvailabilityResponse::transform);
 
+    }
+
+    @Override
+    public Observable<String> reserve(String resourceCode, String resourceName, String startDate, String endDate, String amountHours, String userCode, String token) {
+        if(!internetVerifier.isConnected()){
+            return Observable.error(new NoInternetException());
+        }
+
+        return mService.reserveResource(resourceCode,resourceName,startDate,endDate,amountHours,userCode,token)
+                .map(BaseResponse::getErrorMessage); // even when succeeded, the success message comes through the error message variable
     }
 
 }

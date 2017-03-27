@@ -33,8 +33,11 @@
             android:name=".modules.courses.calculate.CalculateActivity"
             android:label="@string/action_calculate" />
         <activity
-            android:name=".modules.reserve.ReserveFiltersActivity"
+            android:name=".modules.reserve.filters.ReserveFiltersActivity"
             android:label="@string/title_reserve_filters" />
+        <activity
+            android:name=".modules.reserve.options.ReserveOptionsActivity"
+            android:label="@string/title_reserve_options" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

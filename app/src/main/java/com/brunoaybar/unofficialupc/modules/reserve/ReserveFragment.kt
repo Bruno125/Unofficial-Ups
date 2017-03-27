@@ -11,6 +11,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.brunoaybar.unofficialupc.R
 import com.brunoaybar.unofficialupc.modules.base.BaseFragment
+import com.brunoaybar.unofficialupc.modules.reserve.filters.ReserveFiltersActivity
 
 
 class ReserveFragment : BaseFragment(){
@@ -32,7 +33,7 @@ class ReserveFragment : BaseFragment(){
 
     @OnClick(R.id.btnSearch)
     fun openReserveFilters(){
-        val i = Intent(activity.applicationContext,ReserveFiltersActivity::class.java)
+        val i = Intent(activity.applicationContext, ReserveFiltersActivity::class.java)
         startActivity(i)
 
     }

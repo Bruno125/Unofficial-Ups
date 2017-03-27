@@ -8,6 +8,7 @@ import com.brunoaybar.unofficialupc.data.source.remote.responses.LoginResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.CourseResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.PaymentsResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.TimetableResponse;
 
 import java.util.Map;
@@ -61,4 +62,13 @@ interface UpcServiceInterface {
     Observable<ReserveAvailabilityResponse> getReservesAvailability(@QueryMap Map<String,String> filters,
                                                                     @Query("CodAlumno") String userCode,
                                                                     @Query("Token") String token);
+
+    @GET("Reservar/")
+    Observable<ReserveResponse> reserveResource(@Query("CodRecurso") String resourceCode,
+                                                @Query("NomRecurso") String resourceName,
+                                                @Query("FecIni") String startDate,
+                                                @Query("FecFin") String endDate,
+                                                @Query("CanHoras") String amountHours,
+                                                @Query("CodAlumno") String userCode,
+                                                @Query("Token") String token);
 }

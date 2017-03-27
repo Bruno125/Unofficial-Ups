@@ -5,11 +5,9 @@ import com.brunoaybar.unofficialupc.UpcApplication
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter
 import com.brunoaybar.unofficialupc.data.models.ReserveOption
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository
-import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse
 import com.brunoaybar.unofficialupc.utils.Utils
 import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import rx.Observable
 import rx.subjects.BehaviorSubject
 import javax.inject.Inject
@@ -85,10 +83,39 @@ class ReserveViewModel {
         return repository.getReserveOptions(filters).map { Gson().toJson(it) }
     }
 
-    fun parseReserveOptionsData(data: String): List<ReserveOption>{
-        return Gson().fromJson<Array<ReserveOption>>(data,Array<ReserveOption>::class.java).toList()
+    private val reserveOptionsSubject : BehaviorSubject<List<DisplayableReserveOption>> = BehaviorSubject.create()
+    fun getReserveOptions(): Observable<List<DisplayableReserveOption>>{
+        return reserveOptionsSubject.asObservable()
     }
 
+
+    fun loadOptions(data: String){
+        val options = Gson().fromJson<Array<ReserveOption>>(data,Array<ReserveOption>::class.java).toList()
+        reserveOptionsSubject.onNext(options.map{ DisplayableReserveOption(false,it) })
+    }
+
+    fun selectedReserveOption(options: List<DisplayableReserveOption>, selected: Int){
+
+        if(options[selected].isSelected){
+            options[selected].isSelected = false
+        }else{
+            options.filter { it.isSelected }.map { it.isSelected = false }
+            options[selected].isSelected = true
+        }
+
+        reserveOptionsSubject.onNext(options)
+        reserveEnabledSubject.onNext(!options.filter { it.isSelected }.isEmpty())
+    }
+
+    fun requestedReserve(options: List<DisplayableReserveOption>): Observable<String>{
+        val selectedOption = options.filter { it.isSelected }.firstOrNull()
+        if (selectedOption != null) {
+            return repository.reserve(selectedOption)
+        } else{
+            val msg = stringProvider.getString(R.string.text_reserve_pick_option)
+            return Observable.just(msg)
+        }
+    }
 
 }
 
@@ -103,6 +130,7 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
         this.key = filter.key
         this.serviceKey = filter.serviceKey
         this.isCustom = filter.isCustom
+        this.selected = filter.selected
     }
 
     fun isSelected(): Boolean {
@@ -118,10 +146,16 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
         val isInRange = value>=0 && value<values.count()
         if (isInRange){
             when (value){
-                selectedValue -> selectedValue = DEFAULT_VALUE // deselect if was already selected
-                else -> selectedValue = value // update value otherwise
+                selectedValue -> { // deselect if was already selected
+                    selectedValue = DEFAULT_VALUE
+                    selected = DEFAULT_VALUE
+                }
+                else -> { // update value otherwise
+                    selectedValue = value
+                    selected = value
+                }
             }
-            selected = value
+
         }else{
             throw IndexOutOfBoundsException()
         }
@@ -138,7 +172,11 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
         val copy = DisplayableReserveFilter(filter,defaultHint)
         copy.expanded = expanded
         copy.selectedValue = selectedValue
+        copy.selected = selected
         return copy
     }
 
 }
+
+class DisplayableReserveOption(var isSelected: Boolean, option: ReserveOption) :
+        ReserveOption(option.code, option.name, option.venue, option.datetime, option.duration)

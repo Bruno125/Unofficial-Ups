@@ -1,4 +1,4 @@
-package com.brunoaybar.unofficialupc.modules.reserve;
+package com.brunoaybar.unofficialupc.modules.reserve.filters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter;
+import com.brunoaybar.unofficialupc.modules.reserve.DisplayableReserveFilter;
 
 import java.util.ArrayList;
 import java.util.List;

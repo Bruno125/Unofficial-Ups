@@ -3,10 +3,13 @@ package com.brunoaybar.unofficialupc.injection;
 import android.app.Application;
 import android.content.Context;
 
+import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.utils.AndroidConnectionManager;
+import com.brunoaybar.unofficialupc.utils.AndroidStringProvider;
 import com.brunoaybar.unofficialupc.utils.DateProviderImpl;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
+import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider;
 
 import javax.inject.Singleton;
 
@@ -39,6 +42,16 @@ public class AppModule {
     @Provides @Singleton
     public InternetVerifier provideInternetVerifier(){
         return new AndroidConnectionManager(application);
+    }
+
+    @Provides @Singleton
+    public AppRemoteConfig provideRemoteConfig(){
+        return AppRemoteConfig.getInstance();
+    }
+
+    @Provides
+    public StringProvider provideStringProvider(){
+        return new AndroidStringProvider(application);
     }
 
 }

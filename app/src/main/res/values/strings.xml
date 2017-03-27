@@ -9,6 +9,7 @@
     <string name="option_timetable">Horario</string>
     <string name="option_courses">Cursos</string>
     <string name="option_attendance">Inasistencias</string>
+    <string name="option_reserve">Reservas</string>
     <string name="option_logout">Cerrar sesión</string>
 
     <string name="error_logout">Ocurrió un error al cerrar sesión</string>
@@ -68,6 +69,17 @@
     <string name="text_title_course">CURSO</string>
     <string name="text_title_total">TOTAL</string>
     <string name="text_title_maximum">MÁXIMO</string>
+
+    <!-- Reserve -->
+    <string name="hint_no_reserves">Desde esta app no puedes ver las reservas que has realizado. \n\nSin embargo, <b>sí</b> puedes buscar recursos disponibles y reservarlos</string>
+    <string name="title_reserve">Reservas</string>
+    <string name="title_reserve_filters">Buscar reservas</string>
+    <string name="text_button_reserve_search">Buscar reserva</string>
+    <string name="title_reserve_options">Recursos disponibles</string>
+    <string name="text_reserve_filter_hint">escoger</string>
+    <string name="text_reserve_missing_filters">Completa los filtros para poder continuar</string>
+    <string name="text_reserve_action">Reservar</string>
+    <string name="text_reserve_pick_option">Escoje una opción para realizar tu reserva</string>
 
     <!-- Common -->
     <string name="text_yes">Yes</string>

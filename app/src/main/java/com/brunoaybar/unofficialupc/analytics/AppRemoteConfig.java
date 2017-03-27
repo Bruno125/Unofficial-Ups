@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
+import rx.Observable;
+
 /**
  * Created by brunoaybar on 25/11/2016.
  */
@@ -38,7 +40,7 @@ public class AppRemoteConfig {
                 .setDeveloperModeEnabled(BuildConfig.DEBUG)
                 .build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+        //mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
     }
 
     public void update(Activity activity){
@@ -52,6 +54,12 @@ public class AppRemoteConfig {
         return mFirebaseRemoteConfig.getDouble("minimum_grade");
     }
 
+    public String getBaseUrl(){
+        return mFirebaseRemoteConfig.getString("base_url");
+    }
 
+    public Observable<String> getReserveInfo(){
+        return Observable.just(mFirebaseRemoteConfig.getString("reserve_info"));
+    }
 
 }

@@ -1,10 +1,13 @@
 package com.brunoaybar.unofficialupc.data.source.remote
 
 import com.brunoaybar.unofficialupc.data.source.remote.responses.LoginResponse
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.amshove.kluent.shouldEqual
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 
 class LoginResponseTest{
 
@@ -32,6 +35,14 @@ class LoginResponseTest{
             "\"CodError\": \"00000\", " +
             "\"MsgError\": \"\" " +
             "} "
+
+    private val JSON_ERROR = "{\"Codigo\": null," +
+            "\"CodigoAlumno\": null," +
+            "\"Nombres\": null,\"Apellidos\": null,\"Genero\": null," +
+            "\"EsAlumno\": null,\"Estado\": null,\"TipoUser\": null,\"Token\": null," +
+            "\"Datos\": null,\"CodError\": \"00001\"," +
+            "\"MsgError\": \"Usuario y/o contraseña incorrectos\"}"
+
     //endregion
 
     @Test
@@ -45,6 +56,24 @@ class LoginResponseTest{
         result.lastnames shouldEqual "AYBAR GUERRERO"
         result.token shouldEqual "849363cb9c9a4cb1822e59b6cd95f9ab20161013044630"
         result.genre shouldEqual "MASCULINO"
+    }
+
+
+    @Test
+    fun responseIsError(){
+        val response = getResponse(JSON_ERROR)
+        assert(response.isError)
+    }
+
+    @Rule @JvmField
+    public val exception = ExpectedException.none()
+    @Test
+    fun transformThrowsException_WhenCredentialsInvalid(){
+        val response = getResponse(JSON_ERROR)
+        exception.expect(ServiceException::class.java)
+        exception.expectMessage("Usuario y/o contraseña incorrectos")
+
+        response.transform()
     }
 
     private fun getResponse(jsonString: String) : LoginResponse {

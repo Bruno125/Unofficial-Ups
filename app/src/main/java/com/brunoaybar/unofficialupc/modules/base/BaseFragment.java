@@ -37,8 +37,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void displayMessage(String message){
+        displayMessage(message, Toast.LENGTH_SHORT);
+    }
+
+    public void displayMessage(String message, int duration){
         if(isAdded()) {
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), message, duration).show();
         }
     }
 

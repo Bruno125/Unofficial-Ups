@@ -20,6 +20,10 @@ public class ClassmatesResponse extends BaseResponse
     private String seccion;
 
     public List<Classmate> transform(){
+        if(isError()){
+            throw new ServiceException(this);
+        }
+
         List<Classmate> result = new ArrayList<>();
         if(alumnos!=null){
             for(Alumnos alumno : alumnos)

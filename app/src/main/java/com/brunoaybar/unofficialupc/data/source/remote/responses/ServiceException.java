@@ -8,10 +8,6 @@ import com.brunoaybar.unofficialupc.data.models.errors.AppException;
 
 public class ServiceException extends AppException{
 
-    public ServiceException(){
-        this(new BaseResponse());
-    }
-
     public ServiceException(BaseResponse failedRequest){
         super(false,true,failedRequest.getErrorMessage());
     }

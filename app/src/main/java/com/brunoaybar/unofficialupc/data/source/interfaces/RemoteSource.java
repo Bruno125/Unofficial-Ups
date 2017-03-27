@@ -4,6 +4,8 @@ import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.models.Payment;
+import com.brunoaybar.unofficialupc.data.models.ReserveFilter;
+import com.brunoaybar.unofficialupc.data.models.ReserveOption;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
 
@@ -24,4 +26,7 @@ public interface RemoteSource {
     Observable<List<Absence>> getAbsences(String userCode, String token);
     Observable<List<Classmate>> getClassmates(String courseCode, String userCode, String token);
     Observable<List<Payment>> getPayments(String userCode, String token);
+    Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters, String userCode, String token);
+    Observable<String> reserve(String resourceCode, String resourceName, String startDate, String endDate,
+                               String amountHours,String userCode, String token);
 }

@@ -32,6 +32,10 @@ public class CourseResponse extends BaseResponse
     }
 
     public Course transform(boolean withDetails){
+        if(isError()){
+            throw new ServiceException(this);
+        }
+
         Course course = new Course();
         course.setCode(getCodCurso());
         course.setName(getCursoNombre());

@@ -3,6 +3,7 @@ package com.brunoaybar.unofficialupc.data.source.injection;
 import android.content.Context;
 
 import com.brunoaybar.unofficialupc.UpcApplication;
+import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
@@ -26,6 +27,7 @@ public class DataModule {
     @Inject Context context;
     @Inject DateProvider dateProvider;
     @Inject InternetVerifier internetVerifier;
+    @Inject AppRemoteConfig remoteConfig;
 
     public DataModule(){
         UpcApplication.getComponent().inject(this);
@@ -45,4 +47,15 @@ public class DataModule {
     public InternetVerifier providerInternetVerifier(){
         return internetVerifier;
     }
+
+    @Provides @Singleton
+    public AppRemoteConfig provideRemoteConfig(){
+        return remoteConfig;
+    }
+
+    @Provides @Singleton
+    public DateProvider provideDateProvider(){
+        return dateProvider;
+    }
+
 }

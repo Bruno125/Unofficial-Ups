@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+
+        <com.brunoaybar.unofficialupc.components.base.BaseTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="@string/hint_no_reserves" />
+
+        <com.brunoaybar.unofficialupc.components.base.BaseButton
+            android:id="@+id/btnSearch"
+            android:layout_width="200dp"
+            android:layout_margin="16dp"
+            android:layout_gravity="center"
+            android:text="@string/text_button_reserve_search"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</RelativeLayout>

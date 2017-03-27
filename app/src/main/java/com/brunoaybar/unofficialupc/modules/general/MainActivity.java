@@ -16,6 +16,7 @@ import com.brunoaybar.unofficialupc.modules.auth.LoginActivity;
 import com.brunoaybar.unofficialupc.modules.base.BaseActivity;
 import com.brunoaybar.unofficialupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficialupc.modules.courses.CoursesFragment;
+import com.brunoaybar.unofficialupc.modules.reserve.ReserveFragment;
 import com.brunoaybar.unofficialupc.modules.timetable.TimetableFragment;
 import com.roughike.bottombar.BottomBar;
 
@@ -71,6 +72,8 @@ public class MainActivity extends BaseActivity {
             setFragment(CoursesFragment.newInstance());
         } else if (tabId == R.id.nav_attendance) {
             setFragment(AbsencesFragment.newInstance());
+        } else if (tabId == R.id.nav_reserve) {
+            setFragment(ReserveFragment.newInstance());
         }
 
     }

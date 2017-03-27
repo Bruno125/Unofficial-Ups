@@ -7,10 +7,14 @@ import com.brunoaybar.unofficialupc.data.models.Absence;
 import com.brunoaybar.unofficialupc.data.models.Classmate;
 import com.brunoaybar.unofficialupc.data.models.Course;
 import com.brunoaybar.unofficialupc.data.models.Payment;
+import com.brunoaybar.unofficialupc.data.models.ReserveFilter;
+import com.brunoaybar.unofficialupc.data.models.ReserveOption;
 import com.brunoaybar.unofficialupc.data.models.Timetable;
 import com.brunoaybar.unofficialupc.data.models.User;
 import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.BaseResponse;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.PaymentsResponse;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ReserveAvailabilityResponse;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.data.source.remote.responses.AbsencesResponse;
@@ -22,7 +26,9 @@ import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceExceptio
 import com.brunoaybar.unofficialupc.data.source.remote.responses.TimetableResponse;
 import com.brunoaybar.unofficialupc.utils.Utils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -131,6 +137,35 @@ public class UpcServiceDataSource implements RemoteSource {
         return mService.getPayments(userCode,token)
                 .subscribeOn(Schedulers.newThread())
                 .map(PaymentsResponse::transform);
+    }
+
+    @Override
+    public Observable<List<ReserveOption>> getReserveOptions(List<ReserveFilter> filters, String userCode, String token) {
+        if(!internetVerifier.isConnected()){
+            return Observable.error(new NoInternetException());
+        }
+
+        Map<String,String> filtersMap = new HashMap<>();
+        for(ReserveFilter filter : filters){
+            if(!Utils.isEmpty(filter.getServiceKey())){
+                filtersMap.put(filter.getServiceKey(),filter.getSelectedFilterValue().getCode());
+            }
+        }
+
+        return mService.getReservesAvailability(filtersMap,userCode,token)
+                .subscribeOn(Schedulers.newThread())
+                .map(ReserveAvailabilityResponse::transform);
+
+    }
+
+    @Override
+    public Observable<String> reserve(String resourceCode, String resourceName, String startDate, String endDate, String amountHours, String userCode, String token) {
+        if(!internetVerifier.isConnected()){
+            return Observable.error(new NoInternetException());
+        }
+
+        return mService.reserveResource(resourceCode,resourceName,startDate,endDate,amountHours,userCode,token)
+                .map(BaseResponse::getErrorMessage); // even when succeeded, the success message comes through the error message variable
     }
 
 }

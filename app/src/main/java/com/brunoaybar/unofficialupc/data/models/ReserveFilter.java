@@ -18,6 +18,17 @@ public class ReserveFilter {
     protected String name;
     protected List<ReserveFilterValue> values = new ArrayList<>();
 
+    public ReserveFilter() {
+    }
+
+    public ReserveFilter(String key, String serviceKey, boolean custom, String name, List<ReserveFilterValue> values) {
+        this.key = key;
+        this.serviceKey = serviceKey;
+        this.custom = custom;
+        this.name = name;
+        this.values = values;
+    }
+
     public boolean isCustom() {
         return custom;
     }
@@ -74,6 +85,23 @@ public class ReserveFilter {
         this.serviceKey = serviceKey;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+
+        if (obj instanceof ReserveFilter){
+            ReserveFilter that = (ReserveFilter) obj;
+            return this.key.equals(that.key) &&
+                    this.serviceKey.equals(that.serviceKey) &&
+                    this.name.equals(that.name) &&
+                    this.values.equals(that.values) &&
+                    this.custom == that.custom;
+        }else{
+            return false;
+        }
+    }
+
     static public class ReserveFilterValue {
         private String code;
         private String value;
@@ -97,6 +125,20 @@ public class ReserveFilter {
 
         public void setValue(String value) {
             this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this)
+                return true;
+
+            if (obj instanceof ReserveFilterValue){
+                ReserveFilterValue that = (ReserveFilterValue) obj;
+                return this.code.equals(that.code) &&
+                        this.value.equals(that.value);
+            }else{
+                return false;
+            }
         }
     }
 

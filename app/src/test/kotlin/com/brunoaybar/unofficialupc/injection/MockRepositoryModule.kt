@@ -2,6 +2,7 @@ package com.brunoaybar.unofficialupc.injection
 
 import com.brunoaybar.unofficialupc.data.repository.LoginRepository
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository
+import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository
 import com.brunoaybar.unofficialupc.data.repository.UserRepository
 import com.nhaarman.mockito_kotlin.mock
 import dagger.Module
@@ -17,4 +18,6 @@ class MockRepositoryModule{
     fun provideLoginRepo(): LoginRepository = mock<LoginRepository>()
     @Provides @Singleton
     fun provideUserRepo(): UserRepository = mock<UserRepository>()
+    @Provides @Singleton
+    fun providesUniversityRepo(): UniversityInfoRepository = mock<UniversityInfoRepository>()
 }

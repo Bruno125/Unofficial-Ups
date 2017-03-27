@@ -2,6 +2,7 @@ package com.brunoaybar.unofficialupc.modules.reserve
 
 import com.brunoaybar.unofficialupc.R
 import com.brunoaybar.unofficialupc.UpcApplication
+import com.brunoaybar.unofficialupc.analytics.AnalyticsManager
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter
 import com.brunoaybar.unofficialupc.data.models.ReserveOption
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository
@@ -10,6 +11,7 @@ import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider
 import com.google.gson.Gson
 import rx.Observable
 import rx.subjects.BehaviorSubject
+import java.util.*
 import javax.inject.Inject
 
 class ReserveViewModel {
@@ -110,11 +112,19 @@ class ReserveViewModel {
     fun requestedReserve(options: List<DisplayableReserveOption>): Observable<String>{
         val selectedOption = options.filter { it.isSelected }.firstOrNull()
         if (selectedOption != null) {
+            sendReserveEvent(selectedOption)
             return repository.reserve(selectedOption)
         } else{
             val msg = stringProvider.getString(R.string.text_reserve_pick_option)
             return Observable.just(msg)
         }
+    }
+
+    private fun sendReserveEvent(option: ReserveOption){
+        val calendar = Calendar.getInstance()
+        calendar.time = option.datetime
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        AnalyticsManager.eventReserve(option.type,option.venue,hour)
     }
 
 }
@@ -179,4 +189,4 @@ class DisplayableReserveFilter(val filter: ReserveFilter, val defaultHint: Strin
 }
 
 class DisplayableReserveOption(var isSelected: Boolean, option: ReserveOption) :
-        ReserveOption(option.code, option.name, option.venue, option.datetime, option.duration)
+        ReserveOption(option.code,option.type ,option.name, option.venue, option.datetime, option.duration)

@@ -101,4 +101,24 @@ public class AnalyticsManager {
         Amplitude.getInstance().logEvent(AnalyticsConstants.EVENT_LOGOUT);
     }
 
+    //TODO: add Firebase
+    public static void eventReserve(String resourceType, String venue, int hourOfDay){
+        //Fabric
+        Answers.getInstance().logCustom(new CustomEvent(AnalyticsConstants.EVENT_RESERVE)
+                .putCustomAttribute("Resource Type", resourceType)
+                .putCustomAttribute("Venue", venue)
+                .putCustomAttribute("Hour", hourOfDay));
+        //Amplitude
+        try {
+            Amplitude.getInstance().logEvent(AnalyticsConstants.EVENT_RESERVE, new JSONObject()
+                    .put("Resource Type",resourceType)
+                    .put("Venue",venue)
+                    .put("Hour",hourOfDay));
+        } catch (JSONException e) {
+            Crashlytics.logException(e);
+        }
+
+
+    }
+
 }

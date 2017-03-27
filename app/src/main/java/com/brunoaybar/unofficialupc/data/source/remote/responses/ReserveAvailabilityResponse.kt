@@ -18,13 +18,13 @@ class ReserveAvailabilityResponse(val TipoRecurso: String?,
         //Example: "24032017 0800" = March 24, 2017 @ 08:00am
         private val DATE_FORMAT = "ddMMyyyy hhmm"
 
-        fun transform(duration: Int): ReserveOption{
+        fun transform(type: String, duration: Int): ReserveOption{
             val code = CodRecurso
             val name = NomRecurso
             val venue = Local
             val dateString = "${FecReserva} ${HoraIni}"
             val date = SimpleDateFormat("ddMMyyyy hhmm").parse(dateString)
-            val option = ReserveOption("$code", name, venue,date,duration)
+            val option = ReserveOption("$code", type, name, venue,date,duration)
             return option
         }
     }
@@ -35,7 +35,8 @@ class ReserveAvailabilityResponse(val TipoRecurso: String?,
         }
 
         val duration = CanHoras?.toInt() ?: 0
-        return Recursos?.map { it.transform(duration) } ?: arrayListOf()
+        val type = TipoRecurso ?: "None"
+        return Recursos?.map { it.transform(type,duration) } ?: arrayListOf()
     }
 
 

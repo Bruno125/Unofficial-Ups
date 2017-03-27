@@ -11,5 +11,6 @@ class AnalyticsConstants {
     static final String EVENT_LOGIN = "login";
     static final String EVENT_CALCULATION = "calculated_grade";
     static final String EVENT_LOGOUT = "logout";
+    static final String EVENT_RESERVE = "resource_reserve";
 
 }

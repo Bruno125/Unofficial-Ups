@@ -118,6 +118,7 @@ dependencies {
     compile 'com.amplitude:android-sdk:2.7.1'
     compile 'com.google.firebase:firebase-core:9.4.0'
     compile 'com.google.firebase:firebase-config:9.4.0'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;

@@ -18,6 +18,7 @@ import com.brunoaybar.unofficialupc.modules.base.BaseFragment;
 import com.brunoaybar.unofficialupc.modules.courses.CoursesFragment;
 import com.brunoaybar.unofficialupc.modules.reserve.ReserveFragment;
 import com.brunoaybar.unofficialupc.modules.timetable.TimetableFragment;
+import com.brunoaybar.unofficialupc.utils.Utils;
 import com.roughike.bottombar.BottomBar;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity {
 
+    public static final String PARAM_DONWLOAD_URL = "download_url";
     private HashMap<String,BaseFragment> mFragments;
     private MainViewModel mViewModel;
 
@@ -125,5 +127,15 @@ public class MainActivity extends BaseActivity {
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
+
+    private void handleBundle(){
+        Bundle bundle = getIntent().getExtras();
+        String url = bundle.getString(PARAM_DONWLOAD_URL);
+        if(!Utils.isEmpty(url)){
+
+        }
+
+    }
+
 
 }

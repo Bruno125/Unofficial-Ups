@@ -6,7 +6,9 @@ import android.content.Context;
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.utils.AndroidConnectionManager;
 import com.brunoaybar.unofficialupc.utils.AndroidStringProvider;
+import com.brunoaybar.unofficialupc.utils.AndroidUtilsImpl;
 import com.brunoaybar.unofficialupc.utils.DateProviderImpl;
+import com.brunoaybar.unofficialupc.utils.interfaces.AndroidUtils;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
 import com.brunoaybar.unofficialupc.utils.interfaces.InternetVerifier;
 import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider;
@@ -52,6 +54,11 @@ public class AppModule {
     @Provides
     public StringProvider provideStringProvider(){
         return new AndroidStringProvider(application);
+    }
+
+    @Provides
+    public AndroidUtils providesAndroidUtils(){
+        return new AndroidUtilsImpl(application);
     }
 
 }

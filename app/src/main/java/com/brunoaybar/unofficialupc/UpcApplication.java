@@ -1,6 +1,8 @@
 package com.brunoaybar.unofficialupc;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.brunoaybar.unofficialupc.analytics.AnalyticsManager;
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
@@ -61,5 +63,9 @@ public class UpcApplication extends Application {
         return get().viewModelsComponent;
     }
 
-
+    @Override
+    public void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
+    }
 }

@@ -62,4 +62,17 @@ public class AppRemoteConfig {
         return Observable.just(mFirebaseRemoteConfig.getString("reserve_info"));
     }
 
+    public Observable<String> getDownloadUrl(){
+        return Observable.just(mFirebaseRemoteConfig.getString("download_url"));
+    }
+
+    public Observable<Integer> getLatestVersion(){
+        try{
+            int version = Integer.parseInt(mFirebaseRemoteConfig.getString("latest_version"));
+            return Observable.just(version);
+        }catch (NumberFormatException e){
+            return Observable.just(1);
+        }
+    }
+
 }

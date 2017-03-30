@@ -17,35 +17,25 @@ public class AppFirebaseMessagingService extends FirebaseMessagingService {
         handleData(remoteMessage.getData());
     }
 
+    private static final String KEY_RESTART_APP = "restart_app";
     private void handleData(Map<String, String> data){
         if(data == null && data.isEmpty())
             return;
 
-        String downloadUrl = data.get(KEY_DOWNLOAD_URL);
-        if(downloadUrl != null){
-            openMainWithDownloadUrl(downloadUrl);
+        boolean shouldRestart = data.get(KEY_RESTART_APP) != null;
+        if(shouldRestart){
+            openMain();
             return;
         }
-
     }
 
-    private static final String KEY_DOWNLOAD_URL = "download_url";
-
-    void openMainWithDownloadUrl(String url){
+    void openMain(){
         Intent i = new Intent();
         i.setClass(getApplicationContext(),MainActivity.class);
         i.setAction(MainActivity.class.getName());
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        i.putExtras(getDownloadBundle(url));
         getApplicationContext().startActivity(i);
     }
-
-    Bundle getDownloadBundle(String downloadUrl){
-        Bundle bundle = new Bundle();
-        bundle.putString( MainActivity.PARAM_DONWLOAD_URL,downloadUrl);
-        return bundle;
-    }
-
 }

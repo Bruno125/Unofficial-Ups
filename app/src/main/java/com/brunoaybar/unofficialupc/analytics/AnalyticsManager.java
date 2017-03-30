@@ -117,7 +117,28 @@ public class AnalyticsManager {
         } catch (JSONException e) {
             Crashlytics.logException(e);
         }
+    }
 
+    public static void eventUpdated(Context context, int fromVersion, int toVersion){
+        //Fabric
+        Answers.getInstance().logCustom(new CustomEvent(AnalyticsConstants.EVENT_UPDATE)
+                .putCustomAttribute("From Version", fromVersion)
+                .putCustomAttribute("To Version", toVersion));
+
+        //Firebase
+        Bundle params = new Bundle();
+        params.putInt("from_version",fromVersion);
+        params.putInt("to_version",toVersion);
+        FirebaseAnalytics.getInstance(context).logEvent(AnalyticsConstants.EVENT_UPDATE,params);
+
+        //Amplitude
+        try {
+            Amplitude.getInstance().logEvent(AnalyticsConstants.EVENT_UPDATE, new JSONObject()
+                    .put("From Version",fromVersion)
+                    .put("To Version",toVersion));
+        } catch (JSONException e) {
+            Crashlytics.logException(e);
+        }
 
     }
 

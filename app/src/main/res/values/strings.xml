@@ -81,9 +81,16 @@
     <string name="text_reserve_action">Reservar</string>
     <string name="text_reserve_pick_option">Escoje una opción para realizar tu reserva</string>
 
+    <!-- Update app -->
+    <string name="title_update_app">Actualización disponible</string>
+    <string name="hint_update_app">Hay una nueva versión del app disponible. Y no pienso dejar de fastidiarte hasta que la instales.</string>
+    <string name="text_update">Descargar</string>
+
+
     <!-- Common -->
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_accept">Aceptar</string>
+    <string name="text_remind_later">Recordar más tarde</string>
 
 </resources>

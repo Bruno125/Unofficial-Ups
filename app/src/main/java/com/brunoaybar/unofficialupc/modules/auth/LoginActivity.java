@@ -164,6 +164,8 @@ public class LoginActivity extends AppCompatActivity {
                 .subscribe(success -> {
                     //Notify event to analytics
                     AnalyticsManager.eventLogin(this,success);
+                    //Close keyboard before leaving
+                    UiUtils.hideSoftKeyboard(this);
                     //Continue app flow
                     redirectToHome();
                 }, throwable -> {

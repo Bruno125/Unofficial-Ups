@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficialupc.utils.interfaces;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -9,4 +10,5 @@ import java.util.Date;
 public interface DateProvider {
     Date getNow();
     Date getNever();
+    DateFormat getLocalFormatter(String pattern);
 }

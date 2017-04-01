@@ -109,14 +109,18 @@ class ReserveViewModel {
         reserveEnabledSubject.onNext(!options.filter { it.isSelected }.isEmpty())
     }
 
-    fun requestedReserve(options: List<DisplayableReserveOption>): Observable<String>{
+    fun searchSelected(options: List<DisplayableReserveOption>): Observable<DisplayableReserveOption>{
         val selectedOption = options.filter { it.isSelected }.firstOrNull()
-        if (selectedOption != null) {
-            sendReserveEvent(selectedOption)
-            return repository.reserve(selectedOption)
-        } else{
-            val msg = stringProvider.getString(R.string.text_reserve_pick_option)
-            return Observable.just(msg)
+        if(selectedOption != null)
+            return Observable.just(selectedOption)
+        else
+            return Observable.error(Throwable(stringProvider.getString(R.string.text_reserve_pick_option)))
+    }
+
+    fun requestedReserve(options: List<DisplayableReserveOption>): Observable<String>{
+        return searchSelected(options).flatMap {
+            sendReserveEvent(it)
+            repository.reserve(it)
         }
     }
 

@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.IBinder;
 import android.support.annotation.ColorInt;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,19 @@ public class UiUtils {
         }
         textView.setText(result);
     }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        View focusedView = activity.getCurrentFocus();
+        if(focusedView == null)
+            return;
+        IBinder token = focusedView.getWindowToken();
+        if(token != null)
+            inputMethodManager.hideSoftInputFromWindow(token, 0);
+    }
+
 
     /**
      * Blend {@code color1} and {@code color2} using the given ratio.

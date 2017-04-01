@@ -81,17 +81,21 @@
     <string name="text_reserve_missing_filters">Completa los filtros para poder continuar</string>
     <string name="text_reserve_action">Reservar</string>
     <string name="text_reserve_pick_option">Escoje una opción para realizar tu reserva</string>
+    <string name="title_reserve_confirmation">Confirmación de reserva</string>
+    <string name="text_hint_reserve_confirmation">Por favor confirma que deseas reservar el recurso: %1$s</string>
+    <string name="date_format_reserve">EEEE, dd MMMM</string>
 
     <!-- Update app -->
     <string name="title_update_app">Actualización disponible</string>
     <string name="hint_update_app">Hay una nueva versión del app disponible. Y no pienso dejar de fastidiarte hasta que la instales.</string>
     <string name="text_update">Descargar</string>
 
-
     <!-- Common -->
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_accept">Aceptar</string>
+    <string name="text_cancel">Cancelar</string>
     <string name="text_remind_later">Recordar más tarde</string>
+
 
 </resources>

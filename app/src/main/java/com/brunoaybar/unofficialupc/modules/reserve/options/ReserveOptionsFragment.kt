@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficialupc.modules.reserve.options
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -91,16 +92,33 @@ class ReserveOptionsFragment : BaseFragment(), ReserveOptionsAdapter.Callback{
 
         when(btnReserve.isSelected){
             true -> {
-                isReserving = true
-                viewModel.requestedReserve(adapter.options)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ showMessageAndFinish(it) }, { displayError(it);  })
+                viewModel.searchSelected(adapter.options)
+                        .map { it.name }
+                        .subscribe( { askIfReallyWantsToReserve(it) }, { displayError(it)} )
             }
             false -> {
                 displayMessage(R.string.text_reserve_pick_option)
                 isReserving  = false
             }
         }
+    }
+
+    fun askIfReallyWantsToReserve(resourceName: String){
+        val hint = String.format(getString(R.string.text_hint_reserve_confirmation),resourceName)
+
+        AlertDialog.Builder(activity)
+                .setTitle(activity.getString(R.string.title_reserve_confirmation))
+                .setMessage(hint)
+                .setPositiveButton(R.string.text_reserve_action) { _, _ -> reserve() }
+                .setNegativeButton(R.string.text_cancel) { _, _ -> }
+                .show()
+    }
+
+    fun reserve(){
+        isReserving = true
+        viewModel.requestedReserve(adapter.options)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ showMessageAndFinish(it) }, { displayError(it);  })
     }
 
     fun showMessageAndFinish(message: String){

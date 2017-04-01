@@ -10,6 +10,7 @@ import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource;
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
+import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,6 +29,7 @@ public class DataModule {
     @Inject DateProvider dateProvider;
     @Inject InternetVerifier internetVerifier;
     @Inject AppRemoteConfig remoteConfig;
+    @Inject StringProvider stringProvider;
 
     public DataModule(){
         UpcApplication.getComponent().inject(this);
@@ -58,4 +60,8 @@ public class DataModule {
         return dateProvider;
     }
 
+    @Provides @Singleton
+    public StringProvider provideStringProvider(){
+        return stringProvider;
+    }
 }

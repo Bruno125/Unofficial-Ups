@@ -2,10 +2,14 @@ package com.brunoaybar.unofficialupc.modules.base;
 
 
 import android.content.Context;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.brunoaybar.unofficialupc.utils.UiUtils;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -46,6 +50,9 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    public void hideKeyboard(){
+        UiUtils.hideSoftKeyboard(getActivity());
+    }
 
     @Override
     public void onResume() {

@@ -1,5 +1,6 @@
 package com.brunoaybar.unofficialupc.data.repository.impl;
 
+import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter;
 import com.brunoaybar.unofficialupc.data.models.ReserveOption;
@@ -9,6 +10,7 @@ import com.brunoaybar.unofficialupc.data.source.injection.BaseDataComponent;
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource;
 import com.brunoaybar.unofficialupc.utils.Utils;
 import com.brunoaybar.unofficialupc.utils.interfaces.DateProvider;
+import com.brunoaybar.unofficialupc.utils.interfaces.StringProvider;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -40,6 +42,9 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
 
     @Inject
     DateProvider dateProvider;
+
+    @Inject
+    StringProvider stringProvider;
 
     public UpcUniversityInfoRepository(BaseDataComponent dataComponent){
         dataComponent.inject(this);
@@ -79,17 +84,17 @@ public class UpcUniversityInfoRepository implements UniversityInfoRepository{
     }
 
     private static final String KEY_DATE_FILTER = "dates";
-    private static final int AMOUNT_OF_DAYS = 7;
+    private static final int NUMBER_OF_DAYS = 2;
     private ReserveFilter setupCustomFilter(ReserveFilter filter){
         if (filter.getKey().equals(KEY_DATE_FILTER)){
             //Add next 7 days to values
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat codeFormat = new SimpleDateFormat("ddMMyyyy");
-            SimpleDateFormat valueFormat= new SimpleDateFormat("dd/MM/yy");
+            DateFormat codeFormat = new SimpleDateFormat("ddMMyyyy");
+            DateFormat valueFormat= dateProvider.getLocalFormatter(stringProvider.getString(R.string.date_format_reserve));
             List<ReserveFilter.ReserveFilterValue> values = new ArrayList<>();
             Date lastDate = dateProvider.getNow();
             values.add(new ReserveFilter.ReserveFilterValue(codeFormat.format(lastDate),valueFormat.format(lastDate)));
-            for(int i=0;i<AMOUNT_OF_DAYS;i++) {
+            for(int i=0;i<NUMBER_OF_DAYS;i++) {
                 c.setTime(lastDate);
                 c.add(Calendar.DATE,1);
                 lastDate = c.getTime();

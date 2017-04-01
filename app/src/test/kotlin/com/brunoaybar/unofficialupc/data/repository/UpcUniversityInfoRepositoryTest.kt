@@ -52,7 +52,7 @@ class UpcUniversityInfoRepositoryTest{
 
     //Does the same as above. I don't know which approach is better.
     //Downside of the one above is that we depend on the "equals" implementation of the tested value
-    //Downside of the one below is that it's more verbose
+    //"Downside" of the one below is that it's more verbose
     @Test
     fun shouldReturnSingleNotCustomFilterWithNoValues2(){
         val singleNotCustomFilterJson = "[{\"key\":\"test\",\"service_key\":\"test_key\",\"custom\": false,\"name\": \"Test filter\",\"values\":[]} ]"
@@ -63,11 +63,15 @@ class UpcUniversityInfoRepositoryTest{
 
         val actualResult = testSubscriber.onNextEvents.first()
         actualResult.size shouldEqual 1
-        actualResult[0].key shouldEqual "test"
-        actualResult[0].serviceKey shouldEqual "test_key"
-        actualResult[0].isCustom shouldEqual false
-        actualResult[0].name shouldEqual "Test filter"
-        actualResult[0].values shouldEqual arrayListOf()
+
+        actualResult.forEach {
+            it.key shouldEqual "test"
+            it.serviceKey shouldEqual "test_key"
+            it.isCustom shouldEqual false
+            it.name shouldEqual "Test filter"
+            it.values shouldEqual arrayListOf()
+        }
+
     }
 
 

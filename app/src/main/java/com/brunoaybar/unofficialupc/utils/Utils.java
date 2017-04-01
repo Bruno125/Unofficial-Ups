@@ -1,6 +1,7 @@
 package com.brunoaybar.unofficialupc.utils;
 
 import com.brunoaybar.unofficialupc.data.models.errors.NoInternetException;
+import com.brunoaybar.unofficialupc.data.source.remote.responses.ServiceException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -31,7 +32,9 @@ public class Utils {
     public static Throwable getError(Throwable source, String defaultMessage){
         if(source instanceof NoInternetException){
             return source;
-        }else{
+        } else if(source instanceof ServiceException){
+            return source;
+        } else{
             return new Throwable(defaultMessage);
         }
     }

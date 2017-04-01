@@ -26,6 +26,7 @@
     <string name="text_login">Iniciar sesión</string>
     <string name="text_remember">Recordar mis datos</string>
     <string name="text_loading_login">Iniciando sesión</string>
+    <string name="error_login">Ocurrió un error al iniciar sesión</string>
 
     <!-- Main -->
     <string name="logout_dialog_title">Cerrar sesión</string>

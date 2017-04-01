@@ -2,6 +2,7 @@ package com.brunoaybar.unofficialupc.modules.timetable;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,6 +118,11 @@ public class DayScheduleView extends LinearLayout {
             tviCodeAndSection.setText(event.getCourseCode() + " - " + event.getSection());
             tviName.setText(event.getCourseName());
             tviPlace.setText(event.getVenue() + " - " + event.getRoom());
+
+            if(event.getDuration() == 2){
+                tviName.setMaxLines(1);
+                tviName.setEllipsize(TextUtils.TruncateAt.END);
+            }
 
             addView(cardView);
         }

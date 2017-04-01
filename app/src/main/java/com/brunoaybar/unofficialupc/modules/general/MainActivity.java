@@ -45,9 +45,7 @@ public class MainActivity extends BaseActivity {
         setupFragments();
         bottomBar.setOnTabSelectListener(this::handleTabSelection);
         mViewModel = new MainViewModel();
-
-        AppRemoteConfig.getInstance().update(this);
-        new UpdateAlert(this).start();
+        setupRemote();
     }
 
     private void setupFragments(){
@@ -127,6 +125,16 @@ public class MainActivity extends BaseActivity {
         Intent i = new Intent(MainActivity.this,LoginActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+    }
+
+    private void setupRemote(){
+        AppRemoteConfig.getInstance().update(this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(completed -> {
+                    if(completed)
+                        new UpdateAlert(this).start();
+                });
+
     }
 
 }

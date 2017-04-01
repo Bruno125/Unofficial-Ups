@@ -43,11 +43,15 @@ public class AppRemoteConfig {
         //mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
     }
 
-    public void update(Activity activity){
-        mFirebaseRemoteConfig.fetch().addOnCompleteListener(activity, task -> {
-            if(task.isSuccessful())
-                mFirebaseRemoteConfig.activateFetched();
+    public Observable<Boolean> update(Activity activity){
+        return Observable.create( s -> {
+            mFirebaseRemoteConfig.fetch().addOnCompleteListener(activity, task -> {
+                if(task.isSuccessful())
+                    mFirebaseRemoteConfig.activateFetched();
+                s.onNext(task.isSuccessful());
+            });
         });
+
     }
 
     public double getMinimumGrade(){

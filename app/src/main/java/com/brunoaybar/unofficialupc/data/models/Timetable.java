@@ -1,6 +1,9 @@
 package com.brunoaybar.unofficialupc.data.models;
 
+import com.google.common.collect.Lists;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +30,10 @@ public final class Timetable {
     public Day getDay(Date date){
         String dateDesc = dateFormatter.format(date);
         return mDays.get(dateDesc);
+    }
+
+    public List<Day> getDaysList(){
+        return new ArrayList<>(mDays.values());
     }
 
     public static class Day{

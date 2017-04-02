@@ -41,7 +41,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="***REMOVED***" />
+            android:value="${fabric_io_id}" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

@@ -30,4 +30,6 @@ class MockDataModule {
     @Provides @Singleton
     fun providesDateProvider(): DateProvider = mock<DateProvider>()
 
+    @Provides @Singleton
+    fun providesStringProvider(): StringProvider = mock<StringProvider>()
 }

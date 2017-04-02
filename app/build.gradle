@@ -48,8 +48,19 @@ android {
 
     productFlavors {
         prod {
-            buildConfigField 'String', 'REST_URL', '"***REMOVED***"'
-            buildConfigField 'String', 'AMPLITUDE_SDK', '"***REMOVED***"'
+            def propsFile = rootProject.file('appconfig.properties')
+            if(propsFile.exists()){
+                def props = new Properties()
+                props.load(new FileInputStream(propsFile))
+                buildConfigField 'String', 'REST_URL', props["UPC_REST_URL"]
+                buildConfigField 'String', 'AMPLITUDE_SDK', props["AMPLITUDE_KEY"]
+                manifestPlaceholders = [fabric_io_id: props["FABRIC_ID"]]
+                resValue "string", "facebook_app_id", props["FACEBOOK_ID"]
+
+            }else{
+                //Wont compile, you need to create a appconfig.properties file at project root and set your values
+            }
+
         }
     }
 

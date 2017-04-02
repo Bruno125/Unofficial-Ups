@@ -1,4 +1,4 @@
-package com.brunoaybar.unofficialupc.data.repository.impl;
+package com.brunoaybar.unofficialupc.data.repository.impl.upc;
 
 import com.brunoaybar.unofficialupc.R;
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig;

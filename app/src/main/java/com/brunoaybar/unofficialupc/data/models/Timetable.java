@@ -41,6 +41,10 @@ public final class Timetable {
         private Date mDate;
         private List<Class> mClasses;
 
+        public Day() {
+            mClasses = new ArrayList<>();
+        }
+
         public int getCode() {
             return mCode;
         }
@@ -76,6 +80,20 @@ public final class Timetable {
         private String mSection;
         private String mRoom;
         private int mDuration;
+
+        public Class() {
+        }
+
+        public Class(String mCourseCode, String mCourseName, String mCourseShortName, Date mDate, String mVenue, String mSection, String mRoom, int mDuration) {
+            this.mCourseCode = mCourseCode;
+            this.mCourseName = mCourseName;
+            this.mCourseShortName = mCourseShortName;
+            this.mDate = mDate;
+            this.mVenue = mVenue;
+            this.mSection = mSection;
+            this.mRoom = mRoom;
+            this.mDuration = mDuration;
+        }
 
         public String getCourseName() {
             return mCourseName;

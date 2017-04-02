@@ -2,7 +2,7 @@ package com.brunoaybar.unofficialupc.data.repository
 
 import com.brunoaybar.unofficialupc.AndroidTest
 import com.brunoaybar.unofficialupc.data.models.User
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcLoginRepository
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource
 import com.brunoaybar.unofficialupc.data.source.preferences.UserPreferencesDataSource

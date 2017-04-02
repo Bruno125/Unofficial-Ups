@@ -41,6 +41,7 @@ public class CalculateActivity extends BaseActivity {
         mViewModel = new CalculateViewModel(this);
         mCourseViewModel = new CoursesViewModel();
 
+        btnCalculate.setSelected(true);
         btnCalculate.setOnClickListener(v -> mViewModel.requestedCalculate(calculationsView.getItems()));
     }
 

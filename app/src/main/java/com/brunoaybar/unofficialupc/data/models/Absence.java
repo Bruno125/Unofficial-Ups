@@ -12,6 +12,17 @@ public class Absence {
     private int total;
     private int maximum;
 
+    public Absence() {
+    }
+
+    public Absence(String code, String courseCode, String courseName, int total, int maximum) {
+        this.code = code;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.total = total;
+        this.maximum = maximum;
+    }
+
     public String getCode() {
         return code;
     }

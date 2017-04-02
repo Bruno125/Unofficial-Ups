@@ -11,6 +11,16 @@ public class Classmate {
     private String photo;
     private String career;
 
+    public Classmate() {
+    }
+
+    public Classmate(String name, String code, String photo, String career) {
+        this.name = name;
+        this.code = code;
+        this.photo = photo;
+        this.career = career;
+    }
+
     public String getName() {
         return name;
     }

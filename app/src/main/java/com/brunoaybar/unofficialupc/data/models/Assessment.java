@@ -12,6 +12,18 @@ public class Assessment {
     private double mWeight;
     private String mGrade;
 
+    public Assessment() {
+    }
+
+    public Assessment(String mCode, String mName, String mNickname, String mIndex, double mWeight, String mGrade) {
+        this.mCode = mCode;
+        this.mName = mName;
+        this.mNickname = mNickname;
+        this.mIndex = mIndex;
+        this.mWeight = mWeight;
+        this.mGrade = mGrade;
+    }
+
     public String getCode() {
         return mCode;
     }

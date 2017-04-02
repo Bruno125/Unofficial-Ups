@@ -47,6 +47,13 @@ android {
     }
 
     productFlavors {
+        demo {
+            buildConfigField 'String', 'REST_URL', '"https://wwww.demo.test"' //demo url
+            buildConfigField 'String', 'AMPLITUDE_SDK', '"6c4e9c09fbb393b193cab2d42cf31f4f"' //demo key
+            manifestPlaceholders = [fabric_io_id: "***REMOVED***"] //demo key
+            resValue "string", "facebook_app_id", "1898631080421022" //demo key
+        }
+
         prod {
             def propsFile = rootProject.file('appconfig.properties')
             if(propsFile.exists()){

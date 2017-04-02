@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
  * Created by brunoaybar on 14/10/2016.
  */
 
-class PreferenceUtils {
+public class PreferenceUtils {
 
     public static String getString(Context context, String key){
         return PreferencesFactory.getPreferences(context).getString(key,null);

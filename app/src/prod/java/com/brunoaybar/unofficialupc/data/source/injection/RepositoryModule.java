@@ -5,12 +5,11 @@ import com.brunoaybar.unofficialupc.data.repository.LoginRepository;
 import com.brunoaybar.unofficialupc.data.repository.SessionRepository;
 import com.brunoaybar.unofficialupc.data.repository.UniversityInfoRepository;
 import com.brunoaybar.unofficialupc.data.repository.UserRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcUniversityInfoRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcUserRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcLoginRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcSessionRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcUniversityInfoRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcUserRepository;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;

@@ -41,6 +41,11 @@ public class DataModule {
     }
 
     @Provides @Singleton
+    public Context provideContext(){
+        return context;
+    }
+
+    @Provides @Singleton
     public RemoteSource provideService(){
         return new UpcServiceDataSource();
     }

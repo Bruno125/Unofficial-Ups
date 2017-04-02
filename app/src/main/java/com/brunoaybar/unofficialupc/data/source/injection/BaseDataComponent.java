@@ -1,20 +1,24 @@
 package com.brunoaybar.unofficialupc.data.source.injection;
 
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcUniversityInfoRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcUserRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.demo.DemoLoginRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.demo.DemoSessionRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.demo.DemoUniversityInfoRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.demo.DemoUserRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcLoginRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcSessionRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcUniversityInfoRepository;
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcUserRepository;
 import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
 
-/**
- * Created by brunoaybar on 12/03/2017.
- */
-
 public interface BaseDataComponent {
-    //User repos
     void inject(UpcSessionRepository target);
     void inject(UpcLoginRepository target);
     void inject(UpcUserRepository target);
     void inject(UpcServiceDataSource target);
     void inject(UpcUniversityInfoRepository target);
+
+    void inject(DemoSessionRepository target);
+    void inject(DemoLoginRepository target);
+    void inject(DemoUserRepository target);
+    void inject(DemoUniversityInfoRepository target);
 }

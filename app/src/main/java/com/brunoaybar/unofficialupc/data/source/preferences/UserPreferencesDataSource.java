@@ -99,5 +99,4 @@ public class UserPreferencesDataSource implements ApplicationDao {
         String currentDateAndTime = updateFormat.format(mDateProvider.getNow());
         PreferenceUtils.saveString(mContext,KEY_LAST_UPDATE,currentDateAndTime);
     }
-
 }

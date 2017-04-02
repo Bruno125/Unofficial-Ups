@@ -1,10 +1,5 @@
 package com.brunoaybar.unofficialupc.data.source.injection;
 
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcLoginRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcSessionRepository;
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcUserRepository;
-import com.brunoaybar.unofficialupc.data.source.remote.UpcServiceDataSource;
-
 import javax.inject.Singleton;
 
 import dagger.Component;

@@ -1,4 +1,4 @@
-package com.brunoaybar.unofficialupc.data.repository.impl;
+package com.brunoaybar.unofficialupc.data.repository.impl.upc;
 
 import com.brunoaybar.unofficialupc.UpcApplication;
 import com.brunoaybar.unofficialupc.data.models.User;

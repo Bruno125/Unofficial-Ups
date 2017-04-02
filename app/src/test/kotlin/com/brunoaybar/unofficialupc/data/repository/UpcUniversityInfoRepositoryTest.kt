@@ -3,7 +3,7 @@ package com.brunoaybar.unofficialupc.data.repository
 
 import com.brunoaybar.unofficialupc.analytics.AppRemoteConfig
 import com.brunoaybar.unofficialupc.data.models.ReserveFilter
-import com.brunoaybar.unofficialupc.data.repository.impl.UpcUniversityInfoRepository
+import com.brunoaybar.unofficialupc.data.repository.impl.upc.UpcUniversityInfoRepository
 import com.brunoaybar.unofficialupc.data.source.interfaces.ApplicationDao
 import com.brunoaybar.unofficialupc.data.source.interfaces.RemoteSource
 import com.brunoaybar.unofficialupc.testUtils.getDataComponent

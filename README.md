@@ -8,7 +8,7 @@ This is a fan made android version of UPC's official application, which is no lo
 ## Setup
 
 1. Clone project
-2. Add google-services.json to your app module (at [this folder](app))
+2. Add google-services.json ([get one here](https://gist.github.com/Bruno125/2ef5baf7af90e0d0b16f43034ebce934) or use your own) to your app module (at [this folder](app))
 3. In case you haven't, download kotlin plugin in your Android Studio
 4. Before building, choose `demo` build variant (__not__ `prod`). If you want to use `prod`, read next sections.
 5. Run.
